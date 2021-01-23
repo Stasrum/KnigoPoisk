@@ -27,16 +27,22 @@ public class User {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "age")
+    private int age;
+
+    @Column(name = "email")
+    private String email;
+
     @Column(name = "enabled")
     private Boolean enabled;
 
-    @Column(name = "account_not_expired", nullable = false)
+    @Column(name = "account_not_expired")
     private Boolean accountNotExpired;
 
-    @Column(name = "credentials_non_expired", nullable = false)
+    @Column(name = "credentials_non_expired")
     private Boolean credentialsNotExpired;
 
-    @Column(name = "account_non_locked", nullable = false)
+    @Column(name = "account_non_locked")
     private Boolean accountNotLocked;
 
     @Column(name = "first_name")

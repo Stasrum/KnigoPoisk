@@ -7,7 +7,7 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "author")
+@Table(name = "authors")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,6 +20,4 @@ public class Author {
 
     @Column(unique = true, nullable = false, name = "name")
     private String name;
-
-
 }

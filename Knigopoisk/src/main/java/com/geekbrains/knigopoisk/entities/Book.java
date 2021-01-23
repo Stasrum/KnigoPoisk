@@ -43,6 +43,10 @@ public class Book {
     @JoinColumn(name = "genre_id")
     private Genre genre;
 
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
+
     @Column(name = "description")
     private String description;
 }
