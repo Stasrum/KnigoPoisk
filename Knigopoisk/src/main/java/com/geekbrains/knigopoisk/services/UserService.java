@@ -20,10 +20,6 @@ public class UserService {
         return (List<User>) userRerository.findAll();
     }
 
-    public User getUserByUserName(String userName){
-        return userRerository.findUserByusername(userName);
-    }
-
     public void saveUser(User user){
         userRerository.save(user);
     }
