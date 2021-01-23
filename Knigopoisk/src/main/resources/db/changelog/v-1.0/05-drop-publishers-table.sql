@@ -1,0 +1,2 @@
+DROP TABLE publishers
+GO
