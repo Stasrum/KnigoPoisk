@@ -28,7 +28,7 @@ public class User {
     private String password;
 
     @Column(name = "age")
-    private int age;
+    private Integer age;
 
     @Column(name = "email")
     private String email;
