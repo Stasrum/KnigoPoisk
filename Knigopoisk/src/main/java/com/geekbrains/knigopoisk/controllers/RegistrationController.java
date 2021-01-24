@@ -1,7 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
-import com.geekbrains.knigopoisk.entities.SystemUser;
 import com.geekbrains.knigopoisk.entities.User;
+import com.geekbrains.knigopoisk.entities.UserDto;
 import com.geekbrains.knigopoisk.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
@@ -29,28 +29,29 @@ public class RegistrationController {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping("/showRegistrationForm")
+    @GetMapping("/registrationForm")
     public String showMyLoginPage(Model theModel) {
-        theModel.addAttribute("systemUser", new SystemUser());
+        theModel.addAttribute("userDto", new UserDto());
         return "registration-form";
     }
 
     // Binding Result после @ValidModel !!!
     @PostMapping("/processRegistrationForm")
-    public String processRegistrationForm(@Valid @ModelAttribute("systemUser") SystemUser theSystemUser,
+    public String processRegistrationForm(@Valid @ModelAttribute("userDto") UserDto theUserDto,
                                           BindingResult theBindingResult, Model model) {
         if (theBindingResult.hasErrors()) {
             return "registration-form";
         }
-        String userName = theSystemUser.getUserName();
+        String userName = theUserDto.getUserName();
         User existing = userService.findByUserName(userName);
         if (existing != null) {
             // theSystemUser.setUserName(null);
-            model.addAttribute("systemUser", theSystemUser);
+            model.addAttribute("userDto", theUserDto);
             model.addAttribute("registrationError", "Пользователь с таким именем уже существует");
             return "registration-form";
         }
-        userService.save(theSystemUser);
+
+        userService.save(theUserDto);
 
         return "registration-confirmation";
     }
