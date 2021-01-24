@@ -1,20 +1,30 @@
 package com.geekbrains.knigopoisk.services;
 
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.entities.UserDto;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.geekbrains.knigopoisk.repositories.UserRerository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface UserService extends UserDetailsService {
-    User findByUserName(String userName);
+@Service
+public class UserService {
+    private UserRerository userRerository;
 
-    User save(UserDto userDto);
+    @Autowired
+    public void setUserRerository(UserRerository userRerository){
+        this.userRerository = userRerository;
+    }
 
-    boolean save(User user);
+    public List<User> getAllUsers(){
+        return (List<User>) userRerository.findAll();
+    }
 
-    boolean deleteByUserName(String userName);
+    public void saveUser(User user){
+        userRerository.save(user);
+    }
 
-    List<User> getAll();
-
+    public void deleteUser(Long id){
+        userRerository.deleteById(id);
+    }
 }
