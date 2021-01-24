@@ -8,12 +8,12 @@ import lombok.ToString;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "roles")
+@Table(name = "publishers")
 @Getter
 @Setter
 @NoArgsConstructor
 @ToString
-public class Role {
+public class Publisher {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,4 +21,7 @@ public class Role {
 
     @Column(unique = true, nullable = false)
     private String name;
+
+    private String description;
+
 }

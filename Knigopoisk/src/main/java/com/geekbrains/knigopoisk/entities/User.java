@@ -1,36 +1,60 @@
 package com.geekbrains.knigopoisk.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.List;
+import java.util.Collection;
 
-@Entity(name = "users")
-@Data
+@Entity
+@Table(name = "users")
+@Getter
+@Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class User{
+@ToString
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "username",unique = true, nullable = false)
     private String username;
+
+    @Column(name = "password", nullable = false)
     private String password;
-    @ManyToMany(fetch = FetchType.EAGER)
+
+    @Column(name = "age")
+    private int age;
+
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "enabled")
+    private Boolean enabled;
+
+    @Column(name = "account_not_expired")
+    private Boolean accountNotExpired;
+
+    @Column(name = "credentials_non_expired")
+    private Boolean credentialsNotExpired;
+
+    @Column(name = "account_non_locked")
+    private Boolean accountNotLocked;
+
+    @Column(name = "first_name")
+    private String firstName;
+
+    @Column(name = "last_name")
+    private String lastName;
+
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private List<Role> roles;
-    private boolean enabled;
-    private boolean accountNonExpired;
-    private boolean credentialsNonExpired;
-    private boolean accountNonLocked;
+    private Collection<Role> roles;
 
-    private String firstName;
-    private String lastName;
-    private Date birthDate;
 }
