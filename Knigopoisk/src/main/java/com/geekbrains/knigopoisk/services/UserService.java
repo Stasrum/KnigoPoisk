@@ -1,30 +1,43 @@
 package com.geekbrains.knigopoisk.services;
 
+import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.repositories.UserRerository;
+import com.geekbrains.knigopoisk.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.Collection;
+import java.util.stream.Collectors;
 
 @Service
-public class UserService {
-    private UserRerository userRerository;
+public class UserService implements UserDetailsService {
 
     @Autowired
-    public void setUserRerository(UserRerository userRerository){
-        this.userRerository = userRerository;
+    private UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findUserByUsername(username);
+        if (user == null) {
+            throw new UsernameNotFoundException("Invalid username or password.");
+        }
+
+        return new org.springframework.security.core.userdetails.User(
+                user.getUsername(),
+                user.getPassword(),
+                true,
+                true,
+                true,
+                true,
+                mapRolesToAuthorities(user.getRoles()));
     }
 
-    public List<User> getAllUsers(){
-        return (List<User>) userRerository.findAll();
-    }
-
-    public void saveUser(User user){
-        userRerository.save(user);
-    }
-
-    public void deleteUser(Long id){
-        userRerository.deleteById(id);
+    private Collection<? extends GrantedAuthority> mapRolesToAuthorities(Collection<Role> roles) {
+        return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 }
