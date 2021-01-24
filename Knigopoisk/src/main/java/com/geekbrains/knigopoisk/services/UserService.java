@@ -27,5 +27,4 @@ public class UserService {
     public void deleteUser(Long id){
         userRerository.deleteById(id);
     }
-
 }
