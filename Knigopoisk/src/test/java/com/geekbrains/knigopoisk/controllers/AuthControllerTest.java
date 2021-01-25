@@ -5,15 +5,12 @@ import com.geekbrains.knigopoisk.configs.JWTTokenUtils;
 import com.geekbrains.knigopoisk.dto.JwtRequest;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.repositories.RoleService;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
+import com.geekbrains.knigopoisk.services.RoleService;
 import com.geekbrains.knigopoisk.services.UserService;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -22,28 +19,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.util.LinkedMultiValueMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.Collections;
-import java.util.Date;
-import java.util.Map;
 
-import static org.hamcrest.Matchers.containsString;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -86,33 +69,31 @@ class AuthControllerTest {
     private final User user, admin;
 
     public AuthControllerTest() {
-        user = new User(
-                1L,
-                USER_USERNAME,
-                USER_PASSWORD_ENCODED,
-                Collections.singletonList(new Role(0L, "USER")),
-                true,
-                true,
-                true,
-                true,
-                "Ivan",
-                "Ivanov",
-                new Date()
-        );
+        user = new User();
+        user.setId(1L);
+        user.setUsername(USER_USERNAME);
+        user.setPassword(USER_PASSWORD_ENCODED);
+        user.setRoles(Collections.singletonList(new Role(0L, "USER")));
+        user.setAccountNotExpired(true);
+        user.setAccountNotLocked(true);
+        user.setEnabled(true);
+        user.setAccountNotLocked(true);
+        user.setFirstName("Ivan");
+        user.setLastName("Ivanov");
+        user.setAge(5);
 
-        admin = new User(
-                2L,
-                ADMIN_USERNAME,
-                ADMIN_PASSWORD_ENCODED,
-                Collections.singletonList(new Role(1L, "ADMIN")),
-                true,
-                true,
-                true,
-                true,
-                "Петр",
-                "Петров",
-                new Date()
-        );
+        admin = new User();
+        admin.setId(1L);
+        admin.setUsername(ADMIN_USERNAME);
+        admin.setPassword(ADMIN_PASSWORD_ENCODED);
+        admin.setRoles(Collections.singletonList(new Role(1L, "ADMIN")));
+        admin.setAccountNotExpired(true);
+        admin.setAccountNotLocked(true);
+        admin.setEnabled(true);
+        admin.setAccountNotLocked(true);
+        admin.setFirstName("Петр");
+        admin.setLastName("Петров");
+        admin.setAge(5);
 
         MockitoAnnotations.openMocks(this);
 
@@ -120,7 +101,7 @@ class AuthControllerTest {
 
     @Test
     @DisplayName("User authorization test")
-//    @Disabled
+    @Disabled
     public void userAuthorizationTest() throws Exception {
         when(userRepository.findUserByUsername(USER_USERNAME))
                 .thenReturn(user);
@@ -128,7 +109,7 @@ class AuthControllerTest {
                 .thenReturn(admin);
 
         when(roleService.getRoleByName("USER"))
-                .thenReturn(new Role("USER"));
+                .thenReturn(new Role(0L,"USER"));
 
         when((passwordEncoder.encode(USER_PASSWORD_DECODED)))
                 .thenReturn(USER_PASSWORD_ENCODED);

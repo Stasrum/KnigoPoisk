@@ -2,7 +2,6 @@ package com.geekbrains.knigopoisk.services;
 
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.repositories.RoleService;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -10,20 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 class UserServiceTest {
@@ -53,33 +44,31 @@ class UserServiceTest {
     private final User user, admin;
 
     public UserServiceTest() {
-        user = new User(
-                1L,
-                USER_USERNAME,
-                USER_PASSWORD_ENCODED,
-                Collections.singletonList(new Role(0L, "USER")),
-                true,
-                true,
-                true,
-                true,
-                "Ivan",
-                "Ivanov",
-                new Date()
-        );
+        user = new User();
+        user.setId(1L);
+        user.setUsername(USER_USERNAME);
+        user.setPassword(USER_PASSWORD_ENCODED);
+        user.setRoles(Collections.singletonList(new Role(0L, "USER")));
+        user.setAccountNotExpired(true);
+        user.setAccountNotLocked(true);
+        user.setEnabled(true);
+        user.setAccountNotLocked(true);
+        user.setFirstName("Ivan");
+        user.setLastName("Ivanov");
+        user.setAge(5);
 
-        admin = new User(
-                2L,
-                ADMIN_USERNAME,
-                ADMIN_PASSWORD_ENCODED,
-                Collections.singletonList(new Role(1L, "ADMIN")),
-                true,
-                true,
-                true,
-                true,
-                "Петр",
-                "Петров",
-                new Date()
-        );
+        admin = new User();
+        admin.setId(1L);
+        admin.setUsername(ADMIN_USERNAME);
+        admin.setPassword(ADMIN_PASSWORD_ENCODED);
+        admin.setRoles(Collections.singletonList(new Role(1L, "ADMIN")));
+        admin.setAccountNotExpired(true);
+        admin.setAccountNotLocked(true);
+        admin.setEnabled(true);
+        admin.setAccountNotLocked(true);
+        admin.setFirstName("Петр");
+        admin.setLastName("Петров");
+        admin.setAge(5);
 
         MockitoAnnotations.openMocks(this);
         when(userRepository.findUserByUsername(USER_USERNAME))
@@ -88,7 +77,7 @@ class UserServiceTest {
                 .thenReturn(admin);
 
         when(roleService.getRoleByName("USER"))
-                .thenReturn(new Role("USER"));
+                .thenReturn(new Role(0L, "USER"));
 
         when((passwordEncoder.encode(USER_PASSWORD_DECODED)))
                 .thenReturn(USER_PASSWORD_ENCODED);
