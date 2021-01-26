@@ -2,28 +2,26 @@ package com.geekbrains.knigopoisk.services;
 
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.repositories.BookRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class BookService {
-    private BookRepository bookRepository;
+    private final BookRepository bookRepository;
 
-    @Autowired
-    public void setBookRepository(BookRepository bookRepository){
-        this.bookRepository = bookRepository;
-    }
-    public List<Book> getAllBooks(){
-        return (List<Book>) bookRepository.findAll();
+    public List<Book> getAll(){
+        return bookRepository.findAll();
     }
 
-    public void saveBook(Book book){
-        bookRepository.save(book);
+    public Book save(Book book){
+        return bookRepository.save(book);
     }
 
-    public void deleteBook(Long id){
+    public void deleteById(Long id){
         bookRepository.deleteById(id);
     }
 }
