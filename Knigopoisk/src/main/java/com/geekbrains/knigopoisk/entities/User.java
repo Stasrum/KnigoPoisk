@@ -34,16 +34,16 @@ public class User {
     private String email;
 
     @Column(name = "enabled")
-    private Boolean enabled;
+    private boolean enabled;
 
     @Column(name = "account_not_expired")
-    private Boolean accountNotExpired;
+    private boolean accountNotExpired;
 
     @Column(name = "credentials_non_expired")
-    private Boolean credentialsNotExpired;
+    private boolean credentialsNotExpired;
 
     @Column(name = "account_non_locked")
-    private Boolean accountNotLocked;
+    private boolean accountNotLocked;
 
     @Column(name = "first_name")
     private String firstName;

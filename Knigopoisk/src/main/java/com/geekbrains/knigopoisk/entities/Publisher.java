@@ -22,6 +22,7 @@ public class Publisher {
     @Column(unique = true, nullable = false)
     private String name;
 
+    // ?
     private String description;
 
 }

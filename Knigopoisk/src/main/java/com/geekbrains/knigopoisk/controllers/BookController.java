@@ -1,7 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.entities.Book;
-import com.geekbrains.knigopoisk.services.BookService;
+import com.geekbrains.knigopoisk.services.impl.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,13 +19,15 @@ public class BookController {
     }
 
     @DeleteMapping("/books/{id}")
-    public void deleteBookById(@PathVariable("id") Long id){
+    public boolean deleteBookById(@PathVariable("id") Long id){
         bookService.deleteById(id);
+        return true;
+        //
     }
 
     @PostMapping(path = "/books/add", consumes = "application/json", produces = "application/json")
     public Book createBook(@RequestBody Book book) {
-        book.setId(null);
+
         return bookService.save(book);
     }
 }

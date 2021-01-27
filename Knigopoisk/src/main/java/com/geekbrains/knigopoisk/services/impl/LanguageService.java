@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.services;
+package com.geekbrains.knigopoisk.services.impl;
 
 import com.geekbrains.knigopoisk.entities.Language;
 import com.geekbrains.knigopoisk.repositories.LanguageRepository;
@@ -17,6 +17,7 @@ public class LanguageService {
     }
 
     public Language save(Language language) {
+        language.setId(null);
         return languageRepository.save(language);
     }
 }

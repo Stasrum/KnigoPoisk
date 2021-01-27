@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.responsies;
+package com.geekbrains.knigopoisk.exceptions;
 
 import lombok.Data;
 

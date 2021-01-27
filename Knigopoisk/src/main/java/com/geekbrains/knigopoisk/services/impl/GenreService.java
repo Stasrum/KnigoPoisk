@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.services;
+package com.geekbrains.knigopoisk.services.impl;
 
 import com.geekbrains.knigopoisk.entities.Genre;
 import com.geekbrains.knigopoisk.repositories.GenreRepository;

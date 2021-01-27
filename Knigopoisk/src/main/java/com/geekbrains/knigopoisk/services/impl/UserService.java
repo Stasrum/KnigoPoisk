@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.services;
+package com.geekbrains.knigopoisk.services.impl;
 
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
@@ -34,9 +34,9 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username);
+        User user = userRepository.findUserByUsername(username).orElseThrow();
         if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password.");
+            throw new UsernameNotFoundException("Не найден username or password.");
         }
 
         return new org.springframework.security.core.userdetails.User(

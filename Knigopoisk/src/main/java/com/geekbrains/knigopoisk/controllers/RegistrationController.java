@@ -2,7 +2,7 @@ package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.entities.UserDto;
-import com.geekbrains.knigopoisk.services.UserService;
+import com.geekbrains.knigopoisk.services.impl.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -37,21 +37,21 @@ public class RegistrationController {
 
     // Binding Result после @ValidModel !!!
     @PostMapping("/processRegistrationForm")
-    public String processRegistrationForm(@Valid @ModelAttribute("userDto") UserDto theUserDto,
+    public String processRegistrationForm(@Valid @ModelAttribute("userDto") UserDto requestUserDto,
                                           BindingResult theBindingResult, Model model) {
         if (theBindingResult.hasErrors()) {
             return "registration-form";
         }
-        String userName = theUserDto.getUserName();
+        String userName = requestUserDto.getUserName();
         User existing = userService.findByUserName(userName);
         if (existing != null) {
             // theSystemUser.setUserName(null);
-            model.addAttribute("userDto", theUserDto);
+            model.addAttribute("userDto", requestUserDto);
             model.addAttribute("registrationError", "Пользователь с таким именем уже существует");
             return "registration-form";
         }
 
-        userService.save(theUserDto);
+        userService.save(requestUserDto);
 
         return "registration-confirmation";
     }

@@ -1,26 +1,24 @@
 package com.geekbrains.knigopoisk.controllers;
 
+import com.geekbrains.knigopoisk.controllers.facade.LanguageControllerApi;
 import com.geekbrains.knigopoisk.entities.Language;
-import com.geekbrains.knigopoisk.services.LanguageService;
+import com.geekbrains.knigopoisk.services.impl.LanguageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping()
 @RequiredArgsConstructor
-public class LanguageController {
+public class LanguageController implements LanguageControllerApi {
     private final LanguageService languageService;
 
-    @GetMapping(value = "/languages", produces = "application/json")
+    @Override
     public List<Language> getAllLanguages() {
         return languageService.getAll();
     }
 
-    @PostMapping(path="/language/add", consumes = "application/json", produces = "application/json")
+    @Override
     public Language createLanguage(@RequestBody Language language) {
-        language.setId(null);
         return languageService.save(language);
     }
 }

@@ -1,7 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.entities.Author;
-import com.geekbrains.knigopoisk.services.AuthorService;
+import com.geekbrains.knigopoisk.services.impl.AuthorServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +11,7 @@ import java.util.List;
 @RequestMapping()
 @RequiredArgsConstructor
 public class AuthorController {
-    private final AuthorService authorService;
+    private final AuthorServiceImpl authorService;
 
     @GetMapping(value = "/authors", produces = "application/json")
     public List<Author> getAllAuthors() {
@@ -20,7 +20,7 @@ public class AuthorController {
 
     @PostMapping(path = "/author/add", consumes = "application/json", produces = "application/json")
     public Author createAuthor(@RequestBody Author author) {
-        author.setId(null);
+
         return authorService.save(author);
     }
 

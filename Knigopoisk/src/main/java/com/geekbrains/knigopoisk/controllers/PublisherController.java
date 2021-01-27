@@ -1,7 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.entities.Publisher;
-import com.geekbrains.knigopoisk.services.PublisherService;
+import com.geekbrains.knigopoisk.services.impl.PublisherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,7 +20,7 @@ public class PublisherController {
 
     @PostMapping(path="/publisher/add", consumes = "application/json", produces = "application/json")
     public Publisher createPublisher(@RequestBody Publisher publisher) {
-        publisher.setId(null);
+
         return publisherService.save(publisher);
     }
 }

@@ -35,7 +35,7 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwt);
             } catch (ExpiredJwtException e) {
-                e.getStackTrace();
+                e.getStackTrace(); // настроить логирование
             }
         }
 

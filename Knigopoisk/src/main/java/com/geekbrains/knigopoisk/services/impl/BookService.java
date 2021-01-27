@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.services;
+package com.geekbrains.knigopoisk.services.impl;
 
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.repositories.BookRepository;
@@ -18,6 +18,7 @@ public class BookService {
     }
 
     public Book save(Book book){
+        book.setId(null);
         return bookRepository.save(book);
     }
 

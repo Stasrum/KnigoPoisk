@@ -3,6 +3,8 @@ package com.geekbrains.knigopoisk.services;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
+import com.geekbrains.knigopoisk.services.impl.RoleService;
+import com.geekbrains.knigopoisk.services.impl.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

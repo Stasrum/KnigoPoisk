@@ -6,8 +6,8 @@ import com.geekbrains.knigopoisk.dto.JwtRequest;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
-import com.geekbrains.knigopoisk.services.RoleService;
-import com.geekbrains.knigopoisk.services.UserService;
+import com.geekbrains.knigopoisk.services.impl.RoleService;
+import com.geekbrains.knigopoisk.services.impl.UserService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -102,7 +102,7 @@ class AuthControllerTest {
     @Test
     @DisplayName("User authorization test")
     @Disabled
-    public void userAuthorizationTest() throws Exception {
+    void userAuthorizationTest() throws Exception {
         when(userRepository.findUserByUsername(USER_USERNAME))
                 .thenReturn(user);
         when(userRepository.findUserByUsername(ADMIN_USERNAME))

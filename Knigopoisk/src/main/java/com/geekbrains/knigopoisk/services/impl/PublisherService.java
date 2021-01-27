@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.services;
+package com.geekbrains.knigopoisk.services.impl;
 
 import com.geekbrains.knigopoisk.entities.Publisher;
 import com.geekbrains.knigopoisk.repositories.PublisherRepository;
@@ -17,6 +17,7 @@ public class PublisherService {
     }
 
     public Publisher save(Publisher publisher) {
+        publisher.setId(null);
         return publisherRepository.save(publisher);
     }
 }
