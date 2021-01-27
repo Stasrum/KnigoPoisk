@@ -2,28 +2,30 @@ package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.services.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping()
+@RequiredArgsConstructor
 public class BookController {
-    private BookService bookService;
+    private final BookService bookService;
 
-    @Autowired
-    public void setBookService(BookService bookService){
-        this.bookService = bookService;
+    @GetMapping(value = "/books", produces = "application/json")
+    public List<Book> getAllBooks(){
+        return bookService.getAll();
     }
 
-    @GetMapping("/allbooks")
-    public List<Book> getAllBook(){
-        return bookService.getAllBooks();
-    }
-
-    @GetMapping("/delbook/{id}")
+    @DeleteMapping("/books/{id}")
     public void deleteBookById(@PathVariable("id") Long id){
-        bookService.deleteBook(id);
+        bookService.deleteById(id);
+    }
+
+    @PostMapping(consumes = "application/json", produces = "application/json")
+    public Book createBook(@RequestBody Book book) {
+        book.setId(null);
+        return bookService.save(book);
     }
 }
