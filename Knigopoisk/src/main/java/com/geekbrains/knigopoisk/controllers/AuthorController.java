@@ -18,7 +18,7 @@ public class AuthorController {
         return authorService.getAll();
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/author/add", consumes = "application/json", produces = "application/json")
     public Author createAuthor(@RequestBody Author author) {
         author.setId(null);
         return authorService.save(author);

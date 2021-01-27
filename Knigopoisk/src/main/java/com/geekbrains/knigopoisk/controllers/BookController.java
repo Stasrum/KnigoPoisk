@@ -23,7 +23,7 @@ public class BookController {
         bookService.deleteById(id);
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/books/add", consumes = "application/json", produces = "application/json")
     public Book createBook(@RequestBody Book book) {
         book.setId(null);
         return bookService.save(book);

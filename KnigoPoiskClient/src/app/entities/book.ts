@@ -2,7 +2,7 @@ export class Book {
   constructor(
   public id: number,
   public title: string,
-  public author: Autor,
+  public author: Author,
   public year: number,
   public isbn: string,
   public lang: Lang,
@@ -23,7 +23,7 @@ export class addBook {
     public description: string){}
 }
 
-export class Autor {
+export class Author {
   constructor(
     public id: number,
     public name: string
