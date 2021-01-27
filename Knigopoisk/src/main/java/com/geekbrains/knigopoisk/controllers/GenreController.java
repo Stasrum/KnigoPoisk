@@ -18,7 +18,7 @@ public class GenreController {
         return genreService.getAll();
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(path="/genre/add", consumes = "application/json", produces = "application/json")
     public Genre createGenre(@RequestBody Genre genre) {
         genre.setId(null);
         return genreService.save(genre);

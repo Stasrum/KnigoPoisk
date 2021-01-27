@@ -18,7 +18,7 @@ public class LanguageController {
         return languageService.getAll();
     }
 
-    @PostMapping(consumes = "application/json", produces = "application/json")
+    @PostMapping(path="/language/add", consumes = "application/json", produces = "application/json")
     public Language createLanguage(@RequestBody Language language) {
         language.setId(null);
         return languageService.save(language);
