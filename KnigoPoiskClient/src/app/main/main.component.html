@@ -1,0 +1,22 @@
+<div class="p-5">
+  <table style="width: 100vw">
+    <tr>
+      <th>№</th>
+      <th>Название</th>
+      <th>Автор</th>
+      <th>Жанр</th>
+      <th>Издатель</th>
+      <th>Год издания</th>
+      <th>Описание</th>
+    </tr>
+    <tr *ngFor="let item of allBooks; let i = index">
+      <td>{{item.isbn}}</td>
+      <td>{{item.title}}</td>
+      <td>{{item.author.name}}</td>
+      <tb>{{item.genre.name}}</tb>
+      <td>{{item.publisher.name}}</td>
+      <td>{{item.year}}</td>
+      <td>{{item.description}}</td>
+    </tr>
+  </table>
+</div>

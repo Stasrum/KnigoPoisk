@@ -1,0 +1,68 @@
+<div class="parent">
+  <form class="child">
+    <div class="form-group">
+      <label>ISDN</label>
+      <input type="text" class="form-control" [(ngModel)]="newBook.isbn" name="isbn" required pattern="^[0-9]+$"
+             #isbn="ngModel">
+      <small class="text-danger" *ngIf="isbn.hasError('required')">
+        Поле обязательно для заполнения
+      </small>
+      <small class="text-danger" *ngIf="isbn.hasError('pattern')">
+        Использовать только цифры</small>
+    </div>
+    <div class="form-group">
+      <label>Название книги</label>
+      <input type="text" class="form-control" [(ngModel)]="newBook.title" name="title" required #title="ngModel">
+      <small class="text-danger" *ngIf="title.hasError('required')">
+        Поле обязательно для заполнения
+      </small>
+    </div>
+    <div class="form-group">
+      <label>Жанр</label>
+      <input type="text" class="form-control" [(ngModel)]="newBook.genre" name="genre" required #genge="ngModel">
+      <small class="text-danger" *ngIf="genge.hasError('required')">
+        Поле обязательно для заполнения
+      </small>
+    </div>
+    <div class="form-group">
+      <label>Автор книги</label>
+      <input type="text" class="form-control" [(ngModel)]="newBook.author" name="autor" required #autor="ngModel">
+      <small class="text-danger" *ngIf="autor.hasError('required')">
+        Поле обязательно для заполнения
+      </small>
+    </div>
+    <div class="form-group">
+      <label>Год выпуска</label>
+      <input type="text" class="form-control" [(ngModel)]="newBook.year" name="year" required pattern="^[0-9]+$"
+             #year="ngModel">
+      <small class="text-danger" *ngIf="year.hasError('required')">
+        Поле обязательно для заполнения
+      </small>
+      <small class="text-danger" *ngIf="isbn.hasError('pattern')">
+        Использовать только цифры</small>
+    </div>
+    <div class="form-group">
+      <label>Язык написания книги</label>
+      <input type="text" class="form-control" [(ngModel)]="newBook.lang" name="lang" required #lang=ngModel>
+      <small class="text-danger" *ngIf="lang.hasError('required')">
+        Поле обязательно для заполнения
+      </small>
+    </div>
+    <div class="form-group">
+      <label>Издатель</label>
+      <input type="text" class="form-control" [(ngModel)]="newBook.publisher" name="publisher" required
+             #publisher="ngModel">
+      <small class="text-danger" *ngIf="publisher.hasError('required')">
+        Поле обязательно для заполнения
+      </small>
+    </div>
+    <div class="form-group">
+      <label>Описание</label>
+      <textarea class="form-control" rows="3"></textarea>
+    </div>
+    <button
+      [disabled]="isbn.errors || title.errors || genge.errors || autor.errors || year.errors || lang.errors || publisher.errors"
+      type="submit" class="btn btn-primary" (click)="addNewBook()">Submit
+    </button>
+  </form>
+</div>
