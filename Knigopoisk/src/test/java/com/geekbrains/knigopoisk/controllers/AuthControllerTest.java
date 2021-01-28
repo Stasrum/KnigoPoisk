@@ -6,8 +6,8 @@ import com.geekbrains.knigopoisk.dto.JwtRequest;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
-import com.geekbrains.knigopoisk.services.RoleService;
-import com.geekbrains.knigopoisk.services.UserService;
+import com.geekbrains.knigopoisk.services.contracts.RoleService;
+import com.geekbrains.knigopoisk.services.impl.UserServiceImpl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -45,7 +45,7 @@ class AuthControllerTest {
     private BCryptPasswordEncoder passwordEncoder;
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @InjectMocks
     private JWTTokenUtils jwtTokenUtils;

@@ -1,10 +1,11 @@
-package com.geekbrains.knigopoisk.services;
+package com.geekbrains.knigopoisk.services.impl;
 
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.entities.UserDto;
 import com.geekbrains.knigopoisk.repositories.RoleRepository;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
+import com.geekbrains.knigopoisk.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserService implements UserDetailsService {
+public class UserServiceImpl implements UserService{
 
     @Autowired
     private RoleRepository roleRepository;
@@ -53,11 +54,13 @@ public class UserService implements UserDetailsService {
         return roles.stream().map(role -> new SimpleGrantedAuthority(role.getName())).collect(Collectors.toList());
     }
 
+    @Override
     @Transactional
     public User findByUserName(String userName) {
         return userRepository.findByUsername(userName);
     }
 
+    @Override
     @Transactional
     public User save(UserDto userDto) {
         User user = new User();
@@ -76,24 +79,28 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
+    @Override
     @Transactional
     public boolean save(User user) {
         userRepository.save(user);
         return true;
     }
 
+    @Override
     @Transactional
     public boolean deleteByUserName(String userName) {
         userRepository.deleteUserByUsername(userName);
         return true;
     }
 
+    @Override
     @Transactional
     public boolean deleteByUserId(Long id) {
         userRepository.deleteById(id);
         return true;
     }
 
+    @Override
     @Transactional
     public List<User> getAll() {
         return (List<User>) userRepository.findAll();

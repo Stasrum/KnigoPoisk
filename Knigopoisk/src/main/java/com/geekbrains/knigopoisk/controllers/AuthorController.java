@@ -1,7 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.entities.Author;
-import com.geekbrains.knigopoisk.services.AuthorService;
+import com.geekbrains.knigopoisk.services.contracts.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

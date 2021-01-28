@@ -2,7 +2,7 @@ package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.entities.UserDto;
-import com.geekbrains.knigopoisk.services.UserService;
+import com.geekbrains.knigopoisk.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;

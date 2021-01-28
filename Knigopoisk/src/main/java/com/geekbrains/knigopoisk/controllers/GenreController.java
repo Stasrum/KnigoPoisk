@@ -1,7 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.entities.Genre;
-import com.geekbrains.knigopoisk.services.GenreService;
+import com.geekbrains.knigopoisk.services.contracts.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

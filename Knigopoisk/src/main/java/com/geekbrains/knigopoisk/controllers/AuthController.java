@@ -4,7 +4,7 @@ import com.geekbrains.knigopoisk.configs.JWTTokenUtils;
 import com.geekbrains.knigopoisk.dto.JwtRequest;
 import com.geekbrains.knigopoisk.dto.JwtResponse;
 import com.geekbrains.knigopoisk.responsies.ReqErrorResponse;
-import com.geekbrains.knigopoisk.services.UserService;
+import com.geekbrains.knigopoisk.services.contracts.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
