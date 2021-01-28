@@ -1,8 +1,8 @@
 package com.geekbrains.knigopoisk.entities;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -10,21 +10,16 @@ import java.util.Collection;
 
 @Entity
 @Table(name = "users")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class User {
+public class User extends DafaultEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Long id;
-
-    @Column(name = "username",unique = true, nullable = false)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "password", nullable = false)
+    @Column(name = "password")
     private String password;
 
     @Column(name = "age")
@@ -36,7 +31,7 @@ public class User {
     @Column(name = "enabled")
     private Boolean enabled;
 
-    @Column(name = "account_not_expired")
+    @Column(name = "account_non_expired")
     private Boolean accountNotExpired;
 
     @Column(name = "credentials_non_expired")

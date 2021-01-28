@@ -1,6 +1,9 @@
 CREATE TABLE publishers (
-    id SERIAL,
-    name VARCHAR (45) NOT NULL,
+    id BIGSERIAL,
+    name VARCHAR (45) UNIQUE NOT NULL,
+    description VARCHAR(255),
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 )
 
