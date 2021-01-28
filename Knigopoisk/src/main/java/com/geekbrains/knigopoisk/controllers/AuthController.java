@@ -1,6 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.configs.JWTTokenUtils;
+import com.geekbrains.knigopoisk.controllers.facade.AuthControllerApi;
 import com.geekbrains.knigopoisk.dto.JwtRequest;
 import com.geekbrains.knigopoisk.dto.JwtResponse;
 import com.geekbrains.knigopoisk.responsies.ReqErrorResponse;
@@ -12,18 +13,15 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController implements AuthControllerApi {
     private final UserService userService;
     private final JWTTokenUtils jwtTokenUtil;
     private final AuthenticationManager authenticationManager;
 
-    @PostMapping("/auth")
+    @Override
     public ResponseEntity<?> createAuthToken(@RequestBody JwtRequest authRequest) {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
