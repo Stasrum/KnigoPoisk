@@ -1,24 +1,23 @@
 package com.geekbrains.knigopoisk.controllers;
 
+import com.geekbrains.knigopoisk.controllers.facade.PublisherControllerApi;
 import com.geekbrains.knigopoisk.entities.Publisher;
-import com.geekbrains.knigopoisk.services.PublisherService;
+import com.geekbrains.knigopoisk.services.contracts.PublisherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping()
 @RequiredArgsConstructor
-public class PublisherController {
+public class PublisherController implements PublisherControllerApi {
     private final PublisherService publisherService;
 
-    @GetMapping(value = "/publishers", produces = "application/json")
+    @Override
     public List<Publisher> getAllPublishers() {
         return publisherService.getAll();
     }
 
-    @PostMapping(path="/publisher/add", consumes = "application/json", produces = "application/json")
+    @Override
     public Publisher createPublisher(@RequestBody Publisher publisher) {
         publisher.setId(null);
         return publisherService.save(publisher);

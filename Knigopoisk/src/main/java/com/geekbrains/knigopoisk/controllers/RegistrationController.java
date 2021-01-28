@@ -1,8 +1,9 @@
 package com.geekbrains.knigopoisk.controllers;
 
+import com.geekbrains.knigopoisk.controllers.facade.RegistrationControllerApi;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.entities.UserDto;
-import com.geekbrains.knigopoisk.services.UserService;
+import com.geekbrains.knigopoisk.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
@@ -13,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Controller
-@RequestMapping("/register")
-public class RegistrationController {
+public class RegistrationController implements RegistrationControllerApi {
     private UserService userService;
 
     @Autowired
@@ -23,20 +22,20 @@ public class RegistrationController {
         this.userService = userService;
     }
 
-    @InitBinder
+    @Override
     public void initBinder(WebDataBinder dataBinder) {
         StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @GetMapping("/registrationForm")
+    @Override
     public String showMyLoginPage(Model theModel) {
         theModel.addAttribute("userDto", new UserDto());
         return "registration-form";
     }
 
     // Binding Result после @ValidModel !!!
-    @PostMapping("/processRegistrationForm")
+    @Override
     public String processRegistrationForm(@Valid @ModelAttribute("userDto") UserDto theUserDto,
                                           BindingResult theBindingResult, Model model) {
         if (theBindingResult.hasErrors()) {
