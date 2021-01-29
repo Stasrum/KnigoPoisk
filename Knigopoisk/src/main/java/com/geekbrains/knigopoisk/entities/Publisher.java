@@ -9,7 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name = "Publisher")
 @Table(name = "publishers")
 @Data
 @NoArgsConstructor

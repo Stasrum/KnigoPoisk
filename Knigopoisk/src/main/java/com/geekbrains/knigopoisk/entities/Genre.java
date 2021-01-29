@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-@Entity
+@Entity(name = "Genre")
 @Table(name = "genres")
 @Data
 @NoArgsConstructor

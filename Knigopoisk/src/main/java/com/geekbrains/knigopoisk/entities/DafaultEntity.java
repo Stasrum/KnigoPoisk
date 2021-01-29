@@ -26,6 +26,7 @@ public class DafaultEntity {
     @Column(name = "updated")
     private LocalDateTime updated;
 
+    // используется в тестах JWT
     public DafaultEntity(Long id) {
         this.id = id;
     }

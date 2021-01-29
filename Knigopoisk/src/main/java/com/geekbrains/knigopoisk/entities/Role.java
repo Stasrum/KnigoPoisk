@@ -9,7 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name = "Role")
 @Table(name = "roles")
 @Data
 @NoArgsConstructor
@@ -20,6 +20,7 @@ public class Role extends DafaultEntity{
     @Column(name = "name")
     private String name;
 
+    // используется в тестах JWT
     public Role(Long id, String name) {
         super(id);
         this.name = name;
