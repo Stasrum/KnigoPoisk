@@ -19,7 +19,6 @@ public class LanguageController implements LanguageControllerApi {
 
     @Override
     public Language createLanguage(@RequestBody Language language) {
-        language.setId(null);
         return languageService.save(language);
     }
 }
