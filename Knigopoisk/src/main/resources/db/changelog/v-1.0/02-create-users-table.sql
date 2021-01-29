@@ -1,7 +1,7 @@
 
 CREATE TABLE users (
-    id serial,
-    username varchar(255) NOT NULL ,
+    id BIGSERIAL,
+    username varchar(255) UNIQUE NOT NULL,
     password varchar(255) NOT NULL,
     age int,
     email varchar (255),
@@ -11,6 +11,8 @@ CREATE TABLE users (
     account_non_locked boolean,
     first_name varchar(255),
     last_name varchar(255),
+    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id))
 
 GO

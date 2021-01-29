@@ -1,27 +1,28 @@
 package com.geekbrains.knigopoisk.entities;
 
-import lombok.Getter;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
-@Entity
+@Entity(name = "Publisher")
 @Table(name = "publishers")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
 @ToString
-public class Publisher {
+public class Publisher extends DafaultEntity{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @Column(unique = true, nullable = false)
+    @NotNull(message = "Publisher name must be not null")
+    @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
     private String description;
 
 }
