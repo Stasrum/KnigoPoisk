@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "Publisher")
 @Table(name = "publishers")
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 @ToString
 public class Publisher extends DafaultEntity{
 
+    @NotNull(message = "Publisher name must be not null")
     @Column(name = "name")
     private String name;
 

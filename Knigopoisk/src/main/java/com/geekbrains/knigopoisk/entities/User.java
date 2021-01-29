@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity(name = "User")
@@ -16,6 +17,7 @@ import java.util.Collection;
 @ToString
 public class User extends DafaultEntity{
 
+    @NotNull(message = "Username must be not null")
     @Column(name = "username")
     private String username;
 
