@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Controller
+@RequestMapping("/register")
 public class RegistrationController implements RegistrationControllerApi {
     private UserService userService;
 

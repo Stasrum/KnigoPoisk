@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping()
 public interface GenreControllerApi {
     @GetMapping(value = "/genres", produces = "application/json")
     List<Genre> getAllGenres();
