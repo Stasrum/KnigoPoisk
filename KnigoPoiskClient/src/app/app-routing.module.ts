@@ -5,7 +5,8 @@ import {AddNewBookComponent} from './add-new-book/add-new-book.component';
 
 
 const appRoutes = [
-  {path: '', component: AddNewBookComponent},
+  {path: '', component: MainComponent},
+  {path: 'addbook', component: AddNewBookComponent},
   {path: '**', redirectTo: '/'}
 ];
 

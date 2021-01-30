@@ -5,6 +5,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "authors")
@@ -12,11 +13,8 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 
-public class Author {
+public class Author extends DefaultEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(unique = true, nullable = false, name = "name")
     private String name;

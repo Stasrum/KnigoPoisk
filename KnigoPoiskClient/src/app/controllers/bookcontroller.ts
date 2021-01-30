@@ -10,7 +10,7 @@ export class Bookcontroller {
   }
 
   getAllBooks() {
-    return this.http.get(this.path + 'allbooks');
+    return this.http.get(this.path + 'books');
   }
 
   createBook(book: Book){

@@ -22,6 +22,9 @@ export class AddNewBookComponent implements OnInit {
   public newObject: string;
   public newName: string;
   public newText: string;
+  public error = {
+    defaultMessage: undefined
+  };
 
   constructor(private authorcontroller: Authorcontroller,
               private langcontroller: Langcontroller,
@@ -39,11 +42,10 @@ export class AddNewBookComponent implements OnInit {
 
   addNewBook() {
     console.log(this.newBook);
-    this.bookcontroller.createBook(this.newBook).subscribe();
+    this.bookcontroller.createBook(this.newBook).subscribe(error => console.log(error));
   }
 
   addNewObject() {
-    this.visible = false;
     switch (this.addNew) {
       case 'жанр': {
         const genre = new Genre(null, this.newName);
@@ -56,8 +58,14 @@ export class AddNewBookComponent implements OnInit {
       case 'автора': {
         const author = new Author(null, this.newName);
         console.log(author);
-        this.authorcontroller.createAuthor(author).subscribe(rec => {
+        this.authorcontroller.createAuthor(author).subscribe((rec: any) => {
+          if (rec == author){
           this.authorcontroller.getAllAuthor().subscribe((res: any) => this.authors = res);
+          this.visible = false;
+          } else {
+            this.error = rec;
+            console.log(rec);
+          }
         });
         break;
       }
