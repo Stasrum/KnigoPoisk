@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
+@RestController
 public class LanguageController implements LanguageControllerApi {
     private final LanguageService languageService;
 

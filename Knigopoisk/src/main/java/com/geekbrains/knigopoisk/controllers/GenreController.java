@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequiredArgsConstructor
+@RestController
 public class GenreController implements GenreControllerApi {
     private final GenreService genreService;
 

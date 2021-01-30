@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping()
 public interface LanguageControllerApi {
     @GetMapping(value = "/languages", produces = "application/json")
         // handlers, advices

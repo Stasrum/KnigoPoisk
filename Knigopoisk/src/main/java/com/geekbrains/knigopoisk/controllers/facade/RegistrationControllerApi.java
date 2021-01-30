@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Controller
-@RequestMapping("/register")
 public interface RegistrationControllerApi {
     @InitBinder
     void initBinder(WebDataBinder dataBinder);

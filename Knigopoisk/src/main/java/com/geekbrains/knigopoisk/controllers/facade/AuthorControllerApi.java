@@ -5,8 +5,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RequestMapping()
 public interface AuthorControllerApi {
 
     @GetMapping(value = "/authors", produces = "application/json")
