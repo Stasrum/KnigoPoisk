@@ -12,6 +12,6 @@ public interface AuthorControllerApi {
     @GetMapping(value = "/authors", produces = "application/json")
     List<Author> getAllAuthors();
 
-    @PostMapping(path = "/author/add", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/author/add", consumes = "application/json", produces = "application/json")
     Author createAuthor(@RequestBody Author author);
 }

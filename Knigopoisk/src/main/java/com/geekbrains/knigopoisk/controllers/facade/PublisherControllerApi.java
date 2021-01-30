@@ -12,6 +12,6 @@ public interface PublisherControllerApi {
     @GetMapping(value = "/publishers", produces = "application/json")
     List<Publisher> getAllPublishers();
 
-    @PostMapping(path="/publisher/add", consumes = "application/json", produces = "application/json")
+    @PostMapping(value ="/publisher/add", consumes = "application/json", produces = "application/json")
     Publisher createPublisher(@RequestBody Publisher publisher);
 }

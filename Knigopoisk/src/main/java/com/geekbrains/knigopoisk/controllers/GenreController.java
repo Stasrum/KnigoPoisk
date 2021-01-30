@@ -19,7 +19,6 @@ public class GenreController implements GenreControllerApi {
 
     @Override
     public Genre createGenre(@RequestBody Genre genre) {
-        genre.setId(null);
         return genreService.save(genre);
     }
 }

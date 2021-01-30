@@ -18,8 +18,9 @@ public class BookController implements BookControllerApi {
     }
 
     @Override
-    public void deleteBookById(@PathVariable("id") Long id){
+    public boolean deleteBookById(@PathVariable("id") Long id){
         bookService.deleteById(id);
+        return true;
     }
 
     @Override

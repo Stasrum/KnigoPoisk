@@ -20,6 +20,7 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public Publisher save(Publisher publisher) {
+        publisher.setId(null);
         return publisherRepository.save(publisher);
     }
 }

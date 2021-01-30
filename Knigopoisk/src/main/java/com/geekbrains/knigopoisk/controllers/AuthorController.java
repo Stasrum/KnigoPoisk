@@ -19,7 +19,6 @@ public class AuthorController implements AuthorControllerApi {
 
     @Override
     public Author createAuthor(@RequestBody Author author) {
-        author.setId(null);
         return authorService.save(author);
     }
 

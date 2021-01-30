@@ -20,6 +20,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Author save(Author author) {
+        author.setId(null);
         return authorRepository.save(author);
     }
 }

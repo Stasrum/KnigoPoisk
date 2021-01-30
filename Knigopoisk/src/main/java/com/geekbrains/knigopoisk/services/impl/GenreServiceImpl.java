@@ -20,6 +20,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public Genre save(Genre genre) {
+        genre.setId(null);
         return genreRepository.save(genre);
     }
 }

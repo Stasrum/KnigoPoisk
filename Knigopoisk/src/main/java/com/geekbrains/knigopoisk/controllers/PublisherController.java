@@ -19,7 +19,6 @@ public class PublisherController implements PublisherControllerApi {
 
     @Override
     public Publisher createPublisher(@RequestBody Publisher publisher) {
-        publisher.setId(null);
         return publisherService.save(publisher);
     }
 }

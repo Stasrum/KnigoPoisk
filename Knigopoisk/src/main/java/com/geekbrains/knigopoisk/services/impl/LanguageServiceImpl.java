@@ -20,6 +20,7 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public Language save(Language language) {
+        language.setId(null);
         return languageRepository.save(language);
     }
 }
