@@ -5,18 +5,18 @@
 
     <div class="row">
     <div class="form-group col-6">
-      <label>ISBN (длина должна быть 12-13 символов)</label>
+      <label>ISBN</label>
       <input type="text" class="form-control" [(ngModel)]="newBook.isbn" name="isbn" required pattern="^[0-9]+$"
-             maxlength="13" #isbn="ngModel">
+             minlength="13" maxlength="13" #isbn="ngModel">
       <small class="text-danger" *ngIf="isbn.hasError('required')">
         Поле обязательно для заполнения
       </small>
       <small class="text-danger" *ngIf="isbn.hasError('pattern')">
         Использовать только цифры</small>
       <small class="text-danger" *ngIf="isbn.hasError('minlength')">
-        Минимум 12 символов</small>
+        13 символов</small>
       <small class="text-danger" *ngIf="isbn.hasError('maxlength')">
-        Минимум 13 символов</small>
+        13 символов</small>
     </div>
 
     <div class="form-group col-6">
@@ -131,7 +131,8 @@
     </div>
 
     <button
-      type="submit" [disabled]="newname.errors" class="btn btn-primary" (click)="addNewObject(); addNewForm.reset()">Submit
+      type="submit" [disabled]="newname.errors" class="btn btn-primary" (click)="addNewObject(); addNewForm.reset();
+      this.visible = false;">Submit
     </button>
   </form>
 </div>

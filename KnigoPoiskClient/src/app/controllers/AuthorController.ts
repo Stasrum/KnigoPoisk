@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Author} from '../entities/book';
+import {Author} from '../entities/Book';
+import {path} from "../entities/Constant";
 
 @Injectable({providedIn: 'root'})
-export class Authorcontroller {
-  path = 'http://localhost:8080/';
+export class AuthorController {
 
   constructor(private http: HttpClient) {
   }
 
   getAllAuthor() {
-    return this.http.get(this.path + 'authors');
+    return this.http.get(path + 'authors');
   }
 
   createAuthor(author: Author){
-    return this.http.post(this.path + 'author/add', author);
+    return this.http.post(path + 'author/add', author);
   }
 }
