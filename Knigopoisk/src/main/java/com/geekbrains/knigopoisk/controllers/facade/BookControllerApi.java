@@ -10,8 +10,8 @@ public interface BookControllerApi {
     @GetMapping(value = "/books", produces = "application/json")
     List<Book> getAllBooks();
 
-    @DeleteMapping("/books/{id}")
-    boolean deleteBookById(@PathVariable("id") Long id);
+    @GetMapping(value = "/books/delete/{id}")
+    boolean deleteById(@PathVariable("id") Long id);
 
     @PostMapping(value = "/books/add", consumes = "application/json", produces = "application/json")
     Book createBook(@RequestBody Book book);

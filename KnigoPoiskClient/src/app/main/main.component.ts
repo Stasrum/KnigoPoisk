@@ -18,4 +18,15 @@ export class MainComponent implements OnInit {
       console.log(this.allBooks);
     });
   }
+
+  deleteBook(id: number) {
+    this.bookcontroller.deleteById(id).subscribe((rec: any) => {
+      this.bookcontroller.getAllBooks().subscribe((record: any) => {
+        this.allBooks = record;
+      })
+      console.log(rec);
+    });
+  }
+
+
 }
