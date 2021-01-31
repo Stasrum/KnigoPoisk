@@ -2,7 +2,6 @@ package com.geekbrains.knigopoisk.services.contracts;
 
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.entities.UserDto;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
 
