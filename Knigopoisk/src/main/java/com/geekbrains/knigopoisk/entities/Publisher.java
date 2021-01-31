@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Publisher extends DafaultEntity{
+public class Publisher extends DefaultEntity {
 
     @NotNull(message = "Publisher name must be not null")
     @Column(name = "name")

@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Genre extends DafaultEntity {
+public class Genre extends DefaultEntity {
 
     @NotNull(message = "genre name must be not null")
     @Column(name = "name")
