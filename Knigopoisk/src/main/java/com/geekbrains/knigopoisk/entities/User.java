@@ -15,7 +15,7 @@ import java.util.Collection;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class User extends DafaultEntity{
+public class User extends DefaultEntity {
 
     @NotNull(message = "Username must be not null")
     @Column(name = "username")

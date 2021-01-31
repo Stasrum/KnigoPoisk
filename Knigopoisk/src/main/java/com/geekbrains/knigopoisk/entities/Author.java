@@ -18,11 +18,11 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Author extends DafaultEntity {
+public class Author extends DefaultEntity {
 
     @NotNull(message = "author name must be not null")
     @Column(name = "name")
-    @Size(min = 3 , max = 45, message = "3 - 45 symbols")
+    @Size(min = 3, max = 45, message = "3 - 45 symbols")
     private String name;
 
 }

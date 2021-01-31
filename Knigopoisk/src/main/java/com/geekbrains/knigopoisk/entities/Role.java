@@ -16,15 +16,10 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Role extends DafaultEntity{
+public class Role extends DefaultEntity {
 
     @NotNull(message = "Role name must be not null")
     @Column(name = "name")
     private String name;
 
-    // используется в тестах JWT
-    public Role(Long id, String name) {
-        super(id);
-        this.name = name;
-    }
 }

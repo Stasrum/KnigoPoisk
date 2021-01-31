@@ -16,9 +16,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Language extends DafaultEntity{
+public class Language extends DefaultEntity {
 
     @NotNull(message = "Language name must be not null")
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 }
