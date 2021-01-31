@@ -5,6 +5,8 @@ import {LangController} from '../controllers/LangController';
 import {GenreController} from '../controllers/GenreController';
 import {PublisherController} from '../controllers/PublisherController';
 import {BookController} from '../controllers/BookController';
+import {ActivatedRoute} from "@angular/router";
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-add-new-book',
@@ -12,7 +14,7 @@ import {BookController} from '../controllers/BookController';
   styleUrls: ['./add-book.component.css']
 })
 export class AddBookComponent implements OnInit {
-  public newBook = new Book(null, '', null, null, null, null, null, null, '');
+  public newBook:Book;
   public authors: Array<Author>;
   public languages: Array<Lang>;
   public genres: Array<Genre>;
@@ -25,12 +27,17 @@ export class AddBookComponent implements OnInit {
   public error = {
     defaultMessage: undefined
   };
+  private subscription: Subscription;
+  //public editBook: Book;
 
   constructor(private authorcontroller: AuthorController,
               private langcontroller: LangController,
               private genrecontroller: GenreController,
               public publishercontroller: PublisherController,
-              private bookcontroller: BookController) {
+              private bookcontroller: BookController,
+              private activateRoute: ActivatedRoute) {
+  this.subscription = activateRoute.params.subscribe((rec:any) => this.newBook = rec);
+
   }
 
   ngOnInit(): void {
@@ -38,7 +45,13 @@ export class AddBookComponent implements OnInit {
     this.langcontroller.getAllLang().subscribe((rec: any) => this.languages = rec);
     this.genrecontroller.getAllGenre().subscribe((rec: any) => this.genres = rec);
     this.publishercontroller.getAllPublisher().subscribe((rec: any) => this.publishers = rec);
+    console.log(this.newBook);
+    if(!this.newBook){
+      this.newBook = new Book(null, '', null, null, null, null, null, null, '');
+    }
   }
+
+
 
   addNewBook() {
     console.log(this.newBook);

@@ -8,6 +8,7 @@ import {LoginUserComponent} from './login-user/login-user.component';
 const appRoutes = [
   {path: '', component: MainComponent},
   {path: 'login', component: LoginUserComponent},
+  {path: 'addbook/:book', component: AddBookComponent},
   {path: 'addbook', component: AddBookComponent},
   {path: '**', redirectTo: '/'}
 ];
