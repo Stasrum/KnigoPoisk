@@ -1,19 +1,18 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Book} from '../entities/book';
+import {Book} from '../entities/Book';
+import { path } from '../entities/Constant';
 
 @Injectable({providedIn: 'root'})
-export class Bookcontroller {
-  path = 'http://localhost:8080/';
-
+export class BookController {
   constructor(private http: HttpClient) {
   }
 
   getAllBooks() {
-    return this.http.get(this.path + 'allbooks');
+    return this.http.get(path + 'books');
   }
 
   createBook(book: Book){
-    return this.http.post(this.path + 'books/add', book);
+    return this.http.post(path + 'books/add', book);
   }
 }

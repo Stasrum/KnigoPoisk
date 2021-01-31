@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {Book} from '../entities/book';
-import {Bookcontroller} from '../controllers/bookcontroller';
+import {Book} from '../entities/Book';
+import {BookController} from '../controllers/BookController';
 
 @Component({
   selector: 'app-main',
@@ -10,7 +10,7 @@ import {Bookcontroller} from '../controllers/bookcontroller';
 export class MainComponent implements OnInit {
   public allBooks: Array<Book>;
 
-  constructor(private bookcontroller: Bookcontroller) {
+  constructor(private bookcontroller: BookController) {
   }
   ngOnInit(): void {
     this.bookcontroller.getAllBooks().subscribe((rec: any) => {

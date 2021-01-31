@@ -1,11 +1,14 @@
 import { NgModule } from '@angular/core';
 import {RouterModule} from '@angular/router';
 import {MainComponent} from './main/main.component';
-import {AddNewBookComponent} from './add-new-book/add-new-book.component';
+import {AddBookComponent} from './add-book/add-book.component';
+import {LoginUserComponent} from './login-user/login-user.component';
 
 
 const appRoutes = [
-  {path: '', component: AddNewBookComponent},
+  {path: '', component: MainComponent},
+  {path: 'login', component: LoginUserComponent},
+  {path: 'addbook', component: AddBookComponent},
   {path: '**', redirectTo: '/'}
 ];
 

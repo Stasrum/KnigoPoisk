@@ -1,17 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {Author, Book, Genre, Lang, Publisher} from '../entities/book';
-import {Authorcontroller} from '../controllers/authorcontroller';
-import {Langcontroller} from '../controllers/langcontroller';
-import {Genrecontroller} from '../controllers/genrecontroller';
-import {Publishercontroller} from '../controllers/publishercontroller';
-import {Bookcontroller} from '../controllers/bookcontroller';
+import {Author, Book, Genre, Lang, Publisher} from '../entities/Book';
+import {AuthorController} from '../controllers/AuthorController';
+import {LangController} from '../controllers/LangController';
+import {GenreController} from '../controllers/GenreController';
+import {PublisherController} from '../controllers/PublisherController';
+import {BookController} from '../controllers/BookController';
 
 @Component({
   selector: 'app-add-new-book',
-  templateUrl: './add-new-book.component.html',
-  styleUrls: ['./add-new-book.component.css']
+  templateUrl: './add-book.component.html',
+  styleUrls: ['./add-book.component.css']
 })
-export class AddNewBookComponent implements OnInit {
+export class AddBookComponent implements OnInit {
   public newBook = new Book(null, '', null, null, null, null, null, null, '');
   public authors: Array<Author>;
   public languages: Array<Lang>;
@@ -22,12 +22,15 @@ export class AddNewBookComponent implements OnInit {
   public newObject: string;
   public newName: string;
   public newText: string;
+  public error = {
+    defaultMessage: undefined
+  };
 
-  constructor(private authorcontroller: Authorcontroller,
-              private langcontroller: Langcontroller,
-              private genrecontroller: Genrecontroller,
-              public publishercontroller: Publishercontroller,
-              public bookcontroller: Bookcontroller) {
+  constructor(private authorcontroller: AuthorController,
+              private langcontroller: LangController,
+              private genrecontroller: GenreController,
+              public publishercontroller: PublisherController,
+              private bookcontroller: BookController) {
   }
 
   ngOnInit(): void {
@@ -39,11 +42,10 @@ export class AddNewBookComponent implements OnInit {
 
   addNewBook() {
     console.log(this.newBook);
-    this.bookcontroller.createBook(this.newBook).subscribe();
+    this.bookcontroller.createBook(this.newBook).subscribe(error => console.log(error));
   }
 
   addNewObject() {
-    this.visible = false;
     switch (this.addNew) {
       case 'жанр': {
         const genre = new Genre(null, this.newName);
@@ -56,7 +58,7 @@ export class AddNewBookComponent implements OnInit {
       case 'автора': {
         const author = new Author(null, this.newName);
         console.log(author);
-        this.authorcontroller.createAuthor(author).subscribe(rec => {
+        this.authorcontroller.createAuthor(author).subscribe((rec: any) => {
           this.authorcontroller.getAllAuthor().subscribe((res: any) => this.authors = res);
         });
         break;
