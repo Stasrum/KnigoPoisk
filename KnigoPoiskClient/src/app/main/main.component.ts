@@ -24,7 +24,6 @@ export class MainComponent implements OnInit {
       this.bookcontroller.getAll().subscribe((record: any) => {
         this.allBooks = record;
       })
-      console.log(rec);
     });
   }
 

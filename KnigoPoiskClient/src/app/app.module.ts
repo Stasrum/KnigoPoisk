@@ -5,7 +5,7 @@ import { AppComponent } from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { MainComponent } from './main/main.component';
-import { AddBookComponent } from './add-book/add-book.component';
+import { AdminBookComponent } from './admin-book/admin-book.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { LoginUserComponent } from './login-user/login-user.component';
 import {JwtInterceptor} from "./controllers/JwtInterceptor";
@@ -14,7 +14,7 @@ import {JwtInterceptor} from "./controllers/JwtInterceptor";
   declarations: [
     AppComponent,
     MainComponent,
-    AddBookComponent,
+    AdminBookComponent,
     LoginUserComponent
   ],
   imports: [

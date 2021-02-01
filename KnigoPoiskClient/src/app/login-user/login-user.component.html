@@ -1,5 +1,5 @@
 <div class="parent p-4">
-  <form #formLogin="ngForm" class="child">
+  <form #formLogin="ngForm" class="child shadowBorder p-4">
     <div class="form-group">
       <label>Логин</label>
       <input type="text" class="form-control" [(ngModel)]="user.username" name="login" required #login="ngModel">
@@ -21,7 +21,10 @@
     </div>
     <button
       [disabled]="login.errors || password.errors"
-      type="submit" class="btn btn-primary" (click)="loginUser(user); formLogin.reset()">Submit
+      type="submit" class="btn btn-warning" (click)="loginUser(user); formLogin.reset()">Войти
+    </button>
+    <button
+      class="btn btn-warning mt-3" [routerLink]="['']">Отмена
     </button>
   </form>
 </div>
