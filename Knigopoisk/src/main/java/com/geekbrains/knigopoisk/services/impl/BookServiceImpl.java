@@ -4,7 +4,9 @@ import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.repositories.BookRepository;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,4 +31,10 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(id);
         return true;
     }
+
+    @Override
+    public Page<Book> findAll(Specification<Book> spec, int page, int size) {
+        return bookRepository.findAll(spec, PageRequest.of(page, size));
+    }
+
 }
