@@ -13,9 +13,9 @@
         </connectionSource>
     </appender>
 
-    <root level="WARN" >
+    <logger name="com.geekbrains.knigopoisk" level="WARN">
         <appender-ref ref="DB" />
-    </root>
+    </logger>
     <root level="DEBUG">
         <appender-ref ref="STDOUT" />
     </root>
