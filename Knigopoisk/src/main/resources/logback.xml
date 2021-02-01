@@ -3,6 +3,9 @@
         <encoder>
             <pattern>%-4relative [%thread] %-5level %logger{35} - %msg %n</pattern>
         </encoder>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>DEBUG</level>
+        </filter>
     </appender>
     <appender name="DB" class="ch.qos.logback.classic.db.DBAppender">
         <connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">
@@ -11,12 +14,12 @@
             <user>postgres</user>
             <password>123456</password>
         </connectionSource>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>WARN</level>
+        </filter>
     </appender>
-
-    <logger name="com.geekbrains.knigopoisk" level="WARN">
-        <appender-ref ref="DB" />
-    </logger>
     <root level="DEBUG">
+        <appender-ref ref="DB" />
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>
