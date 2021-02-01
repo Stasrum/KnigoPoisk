@@ -13,7 +13,7 @@
       <div class="input-group-prepend">
         <input type="{{passwordCheck}}" class="form-control" [(ngModel)]="user.password" name="password" required
                #password="ngModel">
-        <span class="input-group-text" (click)="visiblePassword()">+</span>
+        <span class="input-group-text" (click)="visiblePassword()"><img src="../../assets/eye.png" height="15" width="20"/></span>
       </div>
       <small class="text-danger" *ngIf="password.hasError('required')">
         Поле обязательно для заполнения

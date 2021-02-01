@@ -5,7 +5,6 @@ import com.geekbrains.knigopoisk.exceptions.BookNotFoundException;
 import com.geekbrains.knigopoisk.repositories.BookRepository;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,5 +34,11 @@ public class BookServiceImpl implements BookService {
         bookRepository.delete(book.get());
         //bookRepository.deleteById(id);
         return true;
+    }
+
+    @Override
+    public Optional<Book> findById(Long id) {
+        Optional<Book> book =  bookRepository.findById(id);
+        return book;
     }
 }
