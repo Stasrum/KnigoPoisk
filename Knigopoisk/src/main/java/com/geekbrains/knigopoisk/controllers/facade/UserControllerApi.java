@@ -11,6 +11,6 @@ public interface UserControllerApi {
     @GetMapping("/allusers")
     List<User> getAllUser();
 
-    @GetMapping("/deluser/{id}")
+    @GetMapping("/deleteuser/{id}")
     void deleteUserById(@PathVariable("id") Long id);
 }

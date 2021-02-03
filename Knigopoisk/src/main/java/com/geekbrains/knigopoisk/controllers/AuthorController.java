@@ -7,9 +7,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import org.springframework.validation.annotation.Validated;
 
 @RequiredArgsConstructor
 @RestController
+@Validated
 public class AuthorController implements AuthorControllerApi {
     private final AuthorService authorService;
 
@@ -19,7 +21,7 @@ public class AuthorController implements AuthorControllerApi {
     }
 
     @Override
-    public Author createAuthor(@RequestBody Author author) {
+    public Author createAuthor(@RequestBody @Valid Author author) {
         return authorService.save(author);
     }
 

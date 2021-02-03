@@ -10,6 +10,6 @@ public interface LanguageControllerApi {
         // handlers, advices
     List<Language> getAllLanguages(); // Throws ваши кастомные исключения
 
-    @PostMapping(value ="/language/add", consumes = "application/json", produces = "application/json")
+    @PostMapping(value ="/language/create", consumes = "application/json", produces = "application/json")
     Language createLanguage(@RequestBody Language language);
 }
