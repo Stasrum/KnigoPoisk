@@ -8,6 +8,7 @@ import lombok.ToString;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
+import java.util.Date;
 
 @Entity(name = "User")
 @Table(name = "users")
@@ -25,7 +26,7 @@ public class User extends DefaultEntity {
     private String password;
 
     @Column(name = "age")
-    private Integer age;
+    private Date birthDate;
 
     @Column(name = "email")
     private String email;

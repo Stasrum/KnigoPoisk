@@ -30,7 +30,7 @@
                 </header>
 
                 <div class="card-body">
-                    <form th:action="@{/register/processRegistrationForm}"
+                    <form th:action="@{/register/process}"
                           th:object="${userDto}" method="post" class="form-horizontal">
 
                         <div class="form-group">
@@ -94,11 +94,11 @@
                             />
                         </div>
 
-                        <!-- BirthYear -->
-                        <div class="text-danger" th:if="${#fields.hasErrors('birthYear')}" th:errors="*{birthYear}"/>
+                        <!-- BirthDate -->
+                        <div class="text-danger" th:if="${#fields.hasErrors('birthDate')}" th:errors="*{birthDate}"/>
                         <div style="margin-bottom: 25px" class="input-group">
-                            <input th:field="*{birthYear}" placeholder="год рождения (*)" class="form-control"
-                                   th:classappend="${#fields.hasErrors('birthYear') ? 'is-invalid' : 'is-valid'}"
+                            <input th:field="*{birthDate}" placeholder="год рождения (*)" class="form-control"
+                                   th:classappend="${#fields.hasErrors('birthDate') ? 'is-invalid' : 'is-valid'}"
                             />
                         </div>
 

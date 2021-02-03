@@ -7,11 +7,11 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-@Constraint(validatedBy = BirthYearValidator.class)
+@Constraint(validatedBy = BirthDateValidator.class)
 @Target({ElementType.TYPE, ElementType.FIELD, ElementType.ANNOTATION_TYPE})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface BirthYearValidation {
-	String message() default "недопустимый год рождения";
+public @interface BirthDateValidation {
+	String message() default "требуется корректная дата в формате YYYY.MM.DD";
 
 	Class<?>[] groups() default {};
 
