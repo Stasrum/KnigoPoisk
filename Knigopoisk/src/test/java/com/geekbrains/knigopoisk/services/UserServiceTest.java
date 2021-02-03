@@ -1,6 +1,6 @@
 package com.geekbrains.knigopoisk.services;
 
-import com.geekbrains.knigopoisk.entities.Role;
+import com.geekbrains.knigopoisk.configs.Roles;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
 import com.geekbrains.knigopoisk.services.contracts.RoleService;
@@ -15,8 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Collections;
-
+import static com.geekbrains.knigopoisk.testUtils.Users.*;
 import static org.mockito.Mockito.when;
 
 class UserServiceTest {
@@ -33,44 +32,12 @@ class UserServiceTest {
     @InjectMocks
     private UserServiceImpl userService;
 
-    private final String
-            ADMIN_USERNAME = "admin@mail.com",
-            ADMIN_PASSWORD_ENCODED = "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
-            ADMIN_PASSWORD_DECODED = "1234",
-            USER_USERNAME = "user@mail.com",
-            USER_PASSWORD_ENCODED = "$2a$10$ts2FXg1jVvuuEIJqIItTB.Ra1ZklHcSYyrnt3AkGVJkekFUjWcu9K",
-            USER_PASSWORD_DECODED = "1234",
-            BAD_USERNAME = "baduser@mail.com",
-            BAD_PASSWORD = "12345";
-
     private final User user, admin;
 
     public UserServiceTest() {
-        user = new User();
-        user.setId(1L);
-        user.setUsername(USER_USERNAME);
-        user.setPassword(USER_PASSWORD_ENCODED);
-        user.setRoles(Collections.singletonList(new Role(0L, "USER")));
-        user.setAccountNotExpired(true);
-        user.setAccountNotLocked(true);
-        user.setEnabled(true);
-        user.setAccountNotLocked(true);
-        user.setFirstName("Ivan");
-        user.setLastName("Ivanov");
-        user.setAge(5);
+        user = getUser();
 
-        admin = new User();
-        admin.setId(1L);
-        admin.setUsername(ADMIN_USERNAME);
-        admin.setPassword(ADMIN_PASSWORD_ENCODED);
-        admin.setRoles(Collections.singletonList(new Role(1L, "ADMIN")));
-        admin.setAccountNotExpired(true);
-        admin.setAccountNotLocked(true);
-        admin.setEnabled(true);
-        admin.setAccountNotLocked(true);
-        admin.setFirstName("Петр");
-        admin.setLastName("Петров");
-        admin.setAge(5);
+        admin = getAdmin();
 
         MockitoAnnotations.openMocks(this);
         when(userRepository.findUserByUsername(USER_USERNAME))
@@ -78,8 +45,8 @@ class UserServiceTest {
         when(userRepository.findUserByUsername(ADMIN_USERNAME))
                 .thenReturn(admin);
 
-        when(roleService.getRoleByName("USER"))
-                .thenReturn(new Role(0L, "USER"));
+        when(roleService.getRoleByName(Roles.ROLE_USER.name()))
+                .thenReturn(getRoleUser());
 
         when((passwordEncoder.encode(USER_PASSWORD_DECODED)))
                 .thenReturn(USER_PASSWORD_ENCODED);

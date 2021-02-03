@@ -15,7 +15,7 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Book extends DafaultEntity {
+public class Book extends DefaultEntity {
 
     @NotNull(message = "title must be not null")
     @Column(name = "title")

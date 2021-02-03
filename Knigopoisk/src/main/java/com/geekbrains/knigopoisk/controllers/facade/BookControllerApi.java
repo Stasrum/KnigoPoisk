@@ -13,8 +13,8 @@ public interface BookControllerApi {
     Page<BookDto> getAllBooks(@RequestParam(defaultValue = "1", name = "b") Integer page,
                               @RequestParam Map<String, String> params);
 
-    @DeleteMapping("/books/{id}")
-    boolean deleteBookById(@PathVariable("id") Long id);
+    @GetMapping(value = "/books/delete/{id}")
+    boolean deleteById(@PathVariable("id") Long id);
 
     @PostMapping(value = "/books/add", consumes = "application/json", produces = "application/json")
     Book createBook(@RequestBody Book book);

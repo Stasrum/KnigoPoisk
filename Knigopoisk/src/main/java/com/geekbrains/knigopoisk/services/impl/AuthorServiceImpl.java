@@ -6,6 +6,7 @@ import com.geekbrains.knigopoisk.services.contracts.AuthorService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -21,6 +22,12 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Author save(Author author) {
         author.setId(null);
+        return authorRepository.save(author);
+    }
+
+    @Override
+    public Author update(Author author) {
+        author.setUpdated(OffsetDateTime.now());
         return authorRepository.save(author);
     }
 }

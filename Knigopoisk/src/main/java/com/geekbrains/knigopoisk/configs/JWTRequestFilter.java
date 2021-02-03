@@ -1,7 +1,9 @@
 package com.geekbrains.knigopoisk.configs;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,6 +19,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class JWTRequestFilter extends OncePerRequestFilter {
 
     private final String AUTH_HEADER_NAME = "Authorization";
@@ -34,8 +37,8 @@ public class JWTRequestFilter extends OncePerRequestFilter {
             jwt = authHeader.substring(AUTH_HEADER_START_LETTERS.length());
             try {
                 username = jwtTokenUtil.getUsernameFromToken(jwt);
-            } catch (ExpiredJwtException e) {
-                e.getStackTrace();
+            } catch (ExpiredJwtException | SignatureException e) {
+                log.warn(e.toString());
             }
         }
 

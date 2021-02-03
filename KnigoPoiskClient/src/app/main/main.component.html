@@ -1,5 +1,5 @@
 <div class="p-5">
-  <table style="width: 100vw">
+  <table style="width: 100%">
     <tr>
       <th>№</th>
       <th>Название</th>
@@ -8,6 +8,7 @@
       <th>Издатель</th>
       <th>Год издания</th>
       <th>Описание</th>
+      <th></th>
     </tr>
     <tr *ngFor="let item of allBooks; let i = index">
       <td>{{item.isbn}}</td>
@@ -17,6 +18,10 @@
       <td>{{item.publisher.name}}</td>
       <td>{{item.year}}</td>
       <td>{{item.description}}</td>
+      <td>
+        <button class="btn btn-warning" (click)="deleteBook(item.id)">Удалить</button>
+
+        <button class="btn btn-danger" [routerLink]="['/addbook',item]">Изменить</button> </td>
     </tr>
   </table>
 </div>

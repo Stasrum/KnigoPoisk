@@ -1,19 +1,19 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Lang} from '../entities/book';
+import {Lang} from '../entities/Book';
+import {path} from "../entities/Constant";
 
 @Injectable({providedIn: 'root'})
-export class Langcontroller{
-  path = 'http://localhost:8080/';
+export class LangController {
 
   constructor(private http: HttpClient) {
   }
 
   getAllLang() {
-    return this.http.get(this.path + 'languages');
+    return this.http.get(path + 'languages');
   }
 
   createLang(lang: Lang){
-    return this.http.post(this.path + 'language/add', lang);
+    return this.http.post(path + 'language/add', lang);
   }
 }

@@ -7,27 +7,22 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @MappedSuperclass
 @NoArgsConstructor
 @AllArgsConstructor
-public class DafaultEntity {
+public class DefaultEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @CreationTimestamp
     @Column(name = "created")
-    private LocalDateTime created;
+    private OffsetDateTime created;
 
     @UpdateTimestamp
     @Column(name = "updated")
-    private LocalDateTime updated;
-
-    // используется в тестах JWT
-    public DafaultEntity(Long id) {
-        this.id = id;
-    }
+    private OffsetDateTime updated;
 }
