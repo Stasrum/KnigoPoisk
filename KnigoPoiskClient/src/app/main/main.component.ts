@@ -14,14 +14,14 @@ export class MainComponent implements OnInit {
   }
   ngOnInit(): void {
     this.bookcontroller.getAll().subscribe((rec: any) => {
-      this.allBooks = rec;
+      this.allBooks = rec.content;
     });
   }
 
   deleteBook(id: number) {
     this.bookcontroller.deleteById(id).subscribe((rec: any) => {
       this.bookcontroller.getAll().subscribe((record: any) => {
-        this.allBooks = record;
+        this.allBooks = record.content;
       })
     });
   }

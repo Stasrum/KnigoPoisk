@@ -6,13 +6,14 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 @Data
 @NoArgsConstructor
 public class BookDto {
     private Long id;
-    private LocalDateTime created;
-    private LocalDateTime updated;
+    private OffsetDateTime created;
+    private OffsetDateTime updated;
     private Author author;
     private int year;
     private Language lang;
