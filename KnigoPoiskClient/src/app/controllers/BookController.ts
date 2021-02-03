@@ -9,7 +9,7 @@ export class BookController {
   }
 
   getAll() {
-    return this.http.get(path + 'books');
+    return this.http.get(path + 'books?d=1');
   }
 
   findById(id: number) {
