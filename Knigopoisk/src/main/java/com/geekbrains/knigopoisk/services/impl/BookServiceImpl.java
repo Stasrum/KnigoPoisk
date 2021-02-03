@@ -5,6 +5,9 @@ import com.geekbrains.knigopoisk.exceptions.BookNotFoundException;
 import com.geekbrains.knigopoisk.repositories.BookRepository;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,4 +44,10 @@ public class BookServiceImpl implements BookService {
         Optional<Book> book =  bookRepository.findById(id);
         return book;
     }
+  
+    @Override
+    public Page<Book> findAll(Specification<Book> spec, int page, int size) {
+        return bookRepository.findAll(spec, PageRequest.of(page, size));
+    }
+
 }

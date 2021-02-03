@@ -1,0 +1,3 @@
+CREATE SEQUENCE logging_event_id_seq MINVALUE 1 START 1
+
+GO
