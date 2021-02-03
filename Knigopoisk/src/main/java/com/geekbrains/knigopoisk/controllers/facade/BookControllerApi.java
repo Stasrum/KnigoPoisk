@@ -5,6 +5,7 @@ import com.geekbrains.knigopoisk.entities.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
+import java.util.Optional;
 
 public interface BookControllerApi {
 
