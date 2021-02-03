@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {loginUser} from '../entities/User';
 import {AuthController} from '../controllers/AuthController';
 import {Router} from "@angular/router";
-import {HttpClient, HttpHeaders, HttpRequest, HttpResponse} from "@angular/common/http";
+import {AppComponent} from "../app.component";
 
 @Component({
   selector: 'app-login-user',
@@ -22,9 +22,10 @@ export class LoginUserComponent implements OnInit {
 
   loginUser(user: loginUser) {
     this.authController.authUser(user).subscribe((rec: any) => {
-        localStorage.setItem('auth_token', rec.token);
-        this.router.navigateByUrl('');
-    });
+      localStorage.setItem('auth_token', rec.token);
+      this.router.navigateByUrl('');
+      });
+    localStorage.setItem('user', user.username);
   }
 
   visiblePassword() {

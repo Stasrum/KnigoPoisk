@@ -15,7 +15,6 @@ export class MainComponent implements OnInit {
   ngOnInit(): void {
     this.bookcontroller.getAll().subscribe((rec: any) => {
       this.allBooks = rec;
-      console.log(this.allBooks);
     });
   }
 

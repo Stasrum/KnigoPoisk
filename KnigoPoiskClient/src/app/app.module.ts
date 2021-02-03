@@ -8,14 +8,16 @@ import { MainComponent } from './main/main.component';
 import { AdminBookComponent } from './admin-book/admin-book.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { LoginUserComponent } from './login-user/login-user.component';
-import {JwtInterceptor} from "./controllers/JwtInterceptor";
+import {Interceptor} from "./controllers/Interceptor";
+import { ModalWindowComponent } from './modal-window/modal-window.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
     AdminBookComponent,
-    LoginUserComponent
+    LoginUserComponent,
+    ModalWindowComponent
   ],
   imports: [
     BrowserModule,
@@ -25,7 +27,7 @@ import {JwtInterceptor} from "./controllers/JwtInterceptor";
     ReactiveFormsModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}
   ],
   bootstrap: [AppComponent]
 })
