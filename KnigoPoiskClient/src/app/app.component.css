@@ -1,11 +1,1 @@
-.parent {
-  min-height: 10vh;
-  display: flex;
-}
-.child {
-  margin: auto;
-  font-size: 40pt;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+

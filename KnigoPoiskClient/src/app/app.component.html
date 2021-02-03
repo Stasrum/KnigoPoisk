@@ -1,15 +1,1 @@
-<div class="parent">
-    <div class="child">
-      WELCOM to KnigoPoisk
-      <img src="../assets/spring@angular.png" height="89" width="500">
-      <div>
-        <button class="btn btn-warning m-1" [routerLink]="['']">Главная</button>
-        <button class="btn btn-warning m-1" [routerLink]="['/addbook']">+ Kнига </button>
-        <button class="btn btn-warning m-1">+ Пользователь </button>
-        <button *ngIf="!username" class="btn btn-warning m-1" [routerLink]="['/login']">Вход</button>
-        <button *ngIf="username" class="btn btn-warning m-1" (click)="delJwt()" [routerLink]="['']">{{username}}</button>
-      </div>
-    </div>
-  </div>
-
-<!--<router-outlet></router-outlet>-->
+<router-outlet></router-outlet>

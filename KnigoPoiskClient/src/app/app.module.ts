@@ -10,6 +10,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import { LoginUserComponent } from './login-user/login-user.component';
 import {Interceptor} from "./controllers/Interceptor";
 import { ModalWindowComponent } from './modal-window/modal-window.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ModalWindowComponent } from './modal-window/modal-window.component';
     MainComponent,
     AdminBookComponent,
     LoginUserComponent,
-    ModalWindowComponent
+    ModalWindowComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
