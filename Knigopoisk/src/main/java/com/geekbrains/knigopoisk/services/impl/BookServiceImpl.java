@@ -40,6 +40,12 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Optional<Book> findById(Long id) {
+        Optional<Book> book =  bookRepository.findById(id);
+        return book;
+    }
+  
+    @Override
     public Page<Book> findAll(Specification<Book> spec, int page, int size) {
         return bookRepository.findAll(spec, PageRequest.of(page, size));
     }

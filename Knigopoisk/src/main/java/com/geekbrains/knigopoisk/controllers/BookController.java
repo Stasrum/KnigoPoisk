@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Map;
 import java.util.stream.Collectors;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -32,6 +32,11 @@ public class BookController implements BookControllerApi {
     }
 
     @Override
+    public Optional<Book> findById(Long id) {
+        return bookService.findById(id);
+    }
+
+    @Override
     public boolean deleteById(@PathVariable("id") Long id){
         bookService.deleteById(id);
         return true;
@@ -39,7 +44,7 @@ public class BookController implements BookControllerApi {
 
     @Override
     public Book createBook(@RequestBody Book book) {
-        book.setId(null);
+//        book.setId(null);
         return bookService.save(book);
     }
 }

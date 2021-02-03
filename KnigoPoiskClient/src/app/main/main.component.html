@@ -1,27 +1,36 @@
+<app-header></app-header>
 <div class="p-5">
-  <table style="width: 100%">
+  <table class="table table-striped">
+    <thead>
     <tr>
-      <th>№</th>
-      <th>Название</th>
-      <th>Автор</th>
-      <th>Жанр</th>
-      <th>Издатель</th>
-      <th>Год издания</th>
-      <th>Описание</th>
-      <th></th>
+      <th scope="col">№</th>
+      <th scope="col">ISBN</th>
+      <th scope="col">Название</th>
+      <th scope="col">Автор</th>
+      <th scope="col">Жанр</th>
+      <th scope="col">Издатель</th>
+      <th scope="col">Год издания</th>
+      <th scope="col">Описание</th>
+      <th scope="col" width="120px">Редактор</th>
     </tr>
+    </thead>
+    <tbody>
     <tr *ngFor="let item of allBooks; let i = index">
+      <th scope="row">{{i+1}}</th>
       <td>{{item.isbn}}</td>
       <td>{{item.title}}</td>
       <td>{{item.author.name}}</td>
-      <tb>{{item.genre.name}}</tb>
+      <td>{{item.genre.name}}</td>
       <td>{{item.publisher.name}}</td>
       <td>{{item.year}}</td>
       <td>{{item.description}}</td>
       <td>
-        <button class="btn btn-warning" (click)="deleteBook(item.id)">Удалить</button>
-
-        <button class="btn btn-danger" [routerLink]="['/addbook',item]">Изменить</button> </td>
+        <button class="btn btn-warning mr-1" [routerLink]="['/addbook',item.id]"><img src="../../assets/pen.png"
+                                                                                     height="15" width="15"/></button>
+        <button class="btn btn-danger ml-1" (click)="deleteBook(item.id)"><img src="../../assets/trash.png" height="15"
+                                                                              width="15"></button>
+      </td>
     </tr>
+    </tbody>
   </table>
 </div>

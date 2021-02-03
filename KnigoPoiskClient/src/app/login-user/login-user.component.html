@@ -1,5 +1,6 @@
+<app-header></app-header>
 <div class="parent p-4">
-  <form #formLogin="ngForm" class="child">
+  <form #formLogin="ngForm" class="child shadowBorder p-4">
     <div class="form-group">
       <label>Логин</label>
       <input type="text" class="form-control" [(ngModel)]="user.username" name="login" required #login="ngModel">
@@ -13,7 +14,7 @@
       <div class="input-group-prepend">
         <input type="{{passwordCheck}}" class="form-control" [(ngModel)]="user.password" name="password" required
                #password="ngModel">
-        <span class="input-group-text" (click)="visiblePassword()">+</span>
+        <span class="input-group-text" (click)="visiblePassword()"><img src="../../assets/eye.png" height="15" width="20"/></span>
       </div>
       <small class="text-danger" *ngIf="password.hasError('required')">
         Поле обязательно для заполнения
@@ -21,7 +22,10 @@
     </div>
     <button
       [disabled]="login.errors || password.errors"
-      type="submit" class="btn btn-primary" (click)="loginUser(user); formLogin.reset()">Submit
+      type="submit" class="btn btn-warning" (click)="loginUser(user); formLogin.reset()">Войти
+    </button>
+    <button
+      class="btn btn-warning mt-3" [routerLink]="['']">Отмена
     </button>
   </form>
 </div>

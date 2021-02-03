@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface BookService {
 
@@ -14,5 +15,8 @@ public interface BookService {
 
     boolean deleteById(Long id);
 
+    Optional<Book> findById(Long id);
+
     Page<Book> findAll(Specification<Book> spec, int page, int size);
+
 }

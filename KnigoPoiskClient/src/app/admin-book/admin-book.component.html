@@ -1,0 +1,148 @@
+<!--Изменение книги-->
+<app-header></app-header>
+<div class="parent p-4">
+  <form #formnewbook="ngForm" class="child">
+    <h5 *ngIf="!id">Добавление новой книги</h5>
+    <h5 *ngIf="id">Редактирование книги</h5>
+    <div class="row pt-2">
+      <div class="form-group col-6">
+        <label>ISBN</label>
+        <input type="text" class="form-control" [(ngModel)]="newBook.isbn" name="isbn" required pattern="^[0-9]+$"
+               minlength="13" maxlength="13" #isbn="ngModel" placeholder="Введите ISBN номер книги">
+        <small class="text-danger" *ngIf="isbn.hasError('required')">
+          Поле обязательно для заполнения
+        </small>
+        <small class="text-danger" *ngIf="isbn.hasError('pattern')">
+          Использовать только цифры</small>
+        <small class="text-danger" *ngIf="isbn.hasError('minlength')">
+          13 символов</small>
+        <small class="text-danger" *ngIf="isbn.hasError('maxlength')">
+          13 символов</small>
+      </div>
+
+      <div class="form-group col-6">
+        <label>Название книги</label>
+        <input type="text" class="form-control" [(ngModel)]="newBook.title" name="title" required #title="ngModel"
+               placeholder="Введите название книги">
+        <small class="text-danger" *ngIf="title.hasError('required')">
+          Поле обязательно для заполнения
+        </small>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-6">
+        <label>Жанр</label>
+        <div class="input-group-prepend">
+          <select type="text" class="custom-select" [(ngModel)]="edit[0]" name="genre" required #genre="ngModel">
+            <option [ngValue]="0" disabled>Выберите или добавте жанр книги</option>
+            <option *ngFor="let item of genres" [ngValue]='item.id'>{{item.name}}</option>
+          </select>
+          <div class="input-group-text" (click)="visibleAdd('жанр')">+</div>
+        </div>
+        <small class="text-danger" *ngIf="edit[0] == 0">
+          Поле обязательно для заполнения
+        </small>
+      </div>
+
+      <div class="form-group col-6">
+        <label>Автор книги</label>
+        <div class="input-group-prepend">
+          <select type="text" class="custom-select" [(ngModel)]="edit[1]" name="autor">
+            <option [ngValue]="0" disabled>Выберите или добавте автора книги</option>
+            <option *ngFor="let item of authors" [ngValue]='item.id'>{{item.name}}</option>
+          </select>
+          <div class="input-group-text" (click)="visibleAdd('автора')">+</div>
+        </div>
+        <small class="text-danger" *ngIf="edit[1] == 0">
+          Поле обязательно для заполнения
+        </small>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group col-4">
+        <label>Год публикации</label>
+        <input type="text" class="form-control" [(ngModel)]="newBook.year" name="year" required
+               pattern="[1-2]{1}[0-9]{3}" maxlength="4" minlength="4"
+               #year="ngModel" placeholder="Введите год публикации книги">
+        <small class="text-danger" *ngIf="year.hasError('required')">
+          Поле обязательно для заполнения
+        </small>
+        <small class="text-danger" *ngIf="year.hasError('pattern')">
+          Использовать только цифры</small>
+      </div>
+
+      <div class="form-group col-4">
+        <label>Язык написания книги</label>
+        <div class="input-group-prepend">
+          <select type="text" class="custom-select" [(ngModel)]="edit[2]" name="lang">
+            <option [ngValue]="0" disabled>Выберите или добавте язык книги</option>
+            <option *ngFor="let item of languages" [ngValue]='item.id'>{{item.name}}</option>
+          </select>
+          <div class="input-group-text" (click)="visibleAdd('язык')">+</div>
+        </div>
+        <small class="text-danger" *ngIf="edit[2] == 0">
+          Поле обязательно для заполнения
+        </small>
+      </div>
+
+      <div class="form-group col-4">
+        <label>Издатель</label>
+        <div class="input-group-prepend">
+          <select type="text" class="custom-select" [(ngModel)]="edit[3]" name="publisher">
+            <option [ngValue]="0" disabled>Выберите или добавте издателя книги</option>
+            <option *ngFor="let item of publishers" [ngValue]='item.id'>{{item.name}}</option>
+          </select>
+          <span class="input-group-text" (click)="visibleAdd('издателя')">+</span>
+        </div>
+        <small class="text-danger" *ngIf="edit[3] == 0">
+          Поле обязательно для заполнения
+        </small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Описание</label>
+      <textarea class="form-control" rows="3" [(ngModel)]="newBook.description"
+                name="description" placeholder="Введите описание книги"></textarea>
+    </div>
+    <div class="row p-3">
+      <div class="col-7"></div>
+      <button
+        [disabled]="isbn.errors || title.errors || edit[0] == 0 || edit[1] == 0 || year.errors || edit[2] == 0 || edit[3] == 0"
+        type="submit" class="btn btn-warning col-2" (click)="addNewBook(); formnewbook.reset()">Записать
+      </button>
+      <div class="col-1"></div>
+      <button (click)="visible = false" class=" btn btn-warning col-2" [routerLink]="['']">Отмена</button>
+    </div>
+  </form>
+</div>
+
+<!--Добавление дополнительных зависимостей-->
+
+<div class="parent addNew" *ngIf="visible">
+  <form class="child p-4 shadowBorder" #addNewForm="ngForm">
+    <div class="form-group">
+      <h5>Добавить {{addNew}} книги</h5>
+      <input type="text" class="form-control" [(ngModel)]="newName" name="newname" required #newname="ngModel">
+      <small class="text-danger" *ngIf="newname.hasError('required')">
+        Поле обязательно для заполнения
+      </small>
+    </div>
+
+    <div class="form-group" *ngIf="addNew == 'издателя'">
+      <label>Описание</label>
+      <textarea class="form-control" rows="3" [(ngModel)]="newText"
+                name="description"></textarea>
+    </div>
+    <div class="row p-3">
+      <div class="col-7"></div>
+      <button type="submit" [disabled]="newname.errors" class="btn btn-warning col-2" (click)="addNewObject(); addNewForm.reset();
+      this.visible = false;">Записать
+      </button>
+      <div class="col-1"></div>
+      <button (click)="visible = false" class=" btn btn-warning col-2">Отмена</button>
+    </div>
+  </form>
+</div>

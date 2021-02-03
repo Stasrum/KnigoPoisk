@@ -13,18 +13,16 @@ export class MainComponent implements OnInit {
   constructor(private bookcontroller: BookController) {
   }
   ngOnInit(): void {
-    this.bookcontroller.getAllBooks().subscribe((rec: any) => {
+    this.bookcontroller.getAll().subscribe((rec: any) => {
       this.allBooks = rec;
-      console.log(this.allBooks);
     });
   }
 
   deleteBook(id: number) {
     this.bookcontroller.deleteById(id).subscribe((rec: any) => {
-      this.bookcontroller.getAllBooks().subscribe((record: any) => {
+      this.bookcontroller.getAll().subscribe((record: any) => {
         this.allBooks = record;
       })
-      console.log(rec);
     });
   }
 

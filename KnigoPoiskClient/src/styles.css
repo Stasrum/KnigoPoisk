@@ -5,5 +5,27 @@
   margin: auto;
   display: flex;
   flex-direction: column;
-  width:40%
+  width:70%
+}
+.shadowBorder{
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .3);
+  border-radius: 10px;
+  border: solid 1px darkgrey;
+}
+.modal-content{
+  background-color: rgba(255, 255, 255, 1);
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .3);
+  border-radius: 10px;
+}
+.modal-dialog{
+  margin: 0.4rem 1rem auto auto;
+}
+.modal-backdrop.show {
+  opacity: 0;
+}
+.modal-header{
+  background-color: rgba(255, 0, 0, 1);
+  border-radius: 10px 10px 0 0;
+  padding: 1rem 1rem;
+  color: white;
 }
