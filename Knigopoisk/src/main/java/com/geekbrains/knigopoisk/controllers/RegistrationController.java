@@ -1,21 +1,25 @@
 package com.geekbrains.knigopoisk.controllers;
 
+import com.geekbrains.knigopoisk.api.ApiError;
 import com.geekbrains.knigopoisk.controllers.facade.RegistrationControllerApi;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.entities.UserDto;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
-@Controller
-@RequestMapping("/register")
+@RestController
+@RequestMapping("/users")
 public class RegistrationController implements RegistrationControllerApi {
     private UserService userService;
 
@@ -30,30 +34,23 @@ public class RegistrationController implements RegistrationControllerApi {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @Override
-    public String showMyLoginPage(Model theModel) {
-        theModel.addAttribute("userDto", new UserDto());
-        return "registration-form";
-    }
-
     // Binding Result после @ValidModel !!!
     @Override
-    public String processRegistrationForm(@Valid @ModelAttribute("userDto") UserDto theUserDto,
-                                          BindingResult theBindingResult, Model model) {
+    @RequestMapping("/register")
+    public ApiError register(@Valid @ModelAttribute("userDto") UserDto theUserDto, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
-            return "registration-form";
+            return new ApiError(HttpStatus.BAD_REQUEST, "Ошибки в полях", theBindingResult.getFieldErrors().stream()
+                    .map(fe -> fe.getField() + " - " + fe.getDefaultMessage()).collect(Collectors.toList()));
         }
+
         String userName = theUserDto.getUserName();
-        User existing = userService.findByUserName(userName);
-        if (existing != null) {
-            // theSystemUser.setUserName(null);
-            model.addAttribute("userDto", theUserDto);
-            model.addAttribute("registrationError", "Пользователь с таким именем уже существует");
-            return "registration-form";
+        User existingUser = userService.findByUserName(userName);
+        if (existingUser != null) {
+            return new ApiError(HttpStatus.BAD_REQUEST, "Пользователь с таким логином уже существует", "");
         }
 
         userService.save(theUserDto);
 
-        return "registration-confirmation";
+        return new ApiError(HttpStatus.OK, "Регистрация успешно завершена", Collections.EMPTY_LIST);
     }
 }

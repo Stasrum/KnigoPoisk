@@ -1,6 +1,6 @@
 package com.geekbrains.knigopoisk.entities;
 
-import com.geekbrains.knigopoisk.validation.BirthYearValidation;
+import com.geekbrains.knigopoisk.validation.BirthDayValidation;
 import com.geekbrains.knigopoisk.validation.EmailValidation;
 import com.geekbrains.knigopoisk.validation.FieldMatchValidation;
 import lombok.Data;
@@ -16,7 +16,6 @@ import javax.validation.constraints.Size;
 public class UserDto {
     @NotNull(message = "требуется")
     @Size(min = 3, message = "не менее 3 символов")
-//    @Pattern(regexp = "^[a-zA-Z0-9]{5}", message = "only 5 letters/digits")
     private String userName;
 
     @NotNull(message = "требуется")
@@ -39,8 +38,7 @@ public class UserDto {
     @NotNull(message = "требуется")
     private String email;
 
-    @BirthYearValidation
+    @BirthDayValidation
     @NotNull(message = "требуется")
-    @Size(min = 4, max = 4, message = "год в 4-х значном формате")
-    private String birthYear;
+    private String birthDay;
 }

@@ -4,6 +4,7 @@ package com.geekbrains.knigopoisk.testUtils;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
 
+import java.time.LocalDate;
 import java.util.Collections;
 
 import static com.geekbrains.knigopoisk.configs.Roles.ROLE_ADMIN;
@@ -36,7 +37,7 @@ public class Users {
         admin.setCredentialsNotExpired(true);
         admin.setFirstName("Петр");
         admin.setLastName("Петров");
-        admin.setAge(18);
+        admin.setBirthDay(LocalDate.now().minusYears(18L));
         admin.setEmail("admin@mail.com");
 
         return admin;
@@ -56,7 +57,7 @@ public class Users {
         user.setCredentialsNotExpired(true);
         user.setFirstName("Ivan");
         user.setLastName("Ivanov");
-        user.setAge(35);
+        user.setBirthDay(LocalDate.now().minusYears(35L));
         user.setEmail("user@mail.com");
 
         return user;
@@ -77,7 +78,7 @@ public class Users {
         user.setCredentialsNotExpired(true);
         user.setFirstName("");
         user.setLastName("");
-        user.setAge(null);
+        user.setBirthDay(null);
         user.setEmail(null);
 
         return user;
