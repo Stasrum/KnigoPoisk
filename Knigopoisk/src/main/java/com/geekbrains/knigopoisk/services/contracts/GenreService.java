@@ -9,4 +9,6 @@ public interface GenreService {
     List<Genre> getAll();
 
     Genre save(Genre genre);
+
+    Genre update(Genre genre);
 }
