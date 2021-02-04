@@ -1,5 +1,6 @@
 package com.geekbrains.knigopoisk.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,9 +21,11 @@ public class DefaultEntity {
 
     @CreationTimestamp
     @Column(name = "created")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private OffsetDateTime created;
 
     @UpdateTimestamp
     @Column(name = "updated")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss.SSS")
     private OffsetDateTime updated;
 }
