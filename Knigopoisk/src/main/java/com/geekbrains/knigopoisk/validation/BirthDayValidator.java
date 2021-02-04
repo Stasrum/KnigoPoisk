@@ -1,16 +1,14 @@
 package com.geekbrains.knigopoisk.validation;
 
 
-import com.geekbrains.knigopoisk.utils.DateUtils;
-
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class BirthDateValidator implements ConstraintValidator<BirthDateValidation, String> {
-    public static final String DATE_PATTERN = "^((19|20)\\d{2})\\.(0?[1-9]|1[012])\\.(0?[1-9]|[12][0-9]|3[01])$";
+public class BirthDayValidator implements ConstraintValidator<BirthDayValidation, String> {
+    public static final String DATE_PATTERN = "^((19|20)\\d{2})\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
 
     @Override
     public boolean isValid(final String birthDate, final ConstraintValidatorContext context) {
@@ -33,7 +31,7 @@ public class BirthDateValidator implements ConstraintValidator<BirthDateValidati
                 }
             }
 
-            return GregorianCalendar.getInstance().getTime().after(DateUtils.parseDate(birthDate));
+            return LocalDate.now().isAfter(LocalDate.of(year, month, day));
         }
 
         return false;

@@ -1,6 +1,6 @@
 package com.geekbrains.knigopoisk.entities;
 
-import com.geekbrains.knigopoisk.validation.BirthDateValidation;
+import com.geekbrains.knigopoisk.validation.BirthDayValidation;
 import com.geekbrains.knigopoisk.validation.EmailValidation;
 import com.geekbrains.knigopoisk.validation.FieldMatchValidation;
 import lombok.Data;
@@ -38,7 +38,7 @@ public class UserDto {
     @NotNull(message = "требуется")
     private String email;
 
-    @BirthDateValidation
+    @BirthDayValidation
     @NotNull(message = "требуется")
-    private String birthDate;
+    private String birthDay;
 }

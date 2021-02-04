@@ -1,5 +1,6 @@
 package com.geekbrains.knigopoisk.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,8 +8,8 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.time.LocalDate;
 import java.util.Collection;
-import java.util.Date;
 
 @Entity(name = "User")
 @Table(name = "users")
@@ -25,8 +26,9 @@ public class User extends DefaultEntity {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "age")
-    private Date birthDate;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "birth_day")
+    private LocalDate birthDay;
 
     @Column(name = "email")
     private String email;
@@ -54,5 +56,6 @@ public class User extends DefaultEntity {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Collection<Role> roles;
+
 
 }

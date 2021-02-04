@@ -6,7 +6,6 @@ import com.geekbrains.knigopoisk.entities.UserDto;
 import com.geekbrains.knigopoisk.repositories.RoleRepository;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
-import com.geekbrains.knigopoisk.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +15,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -73,7 +74,7 @@ public class UserServiceImpl implements UserService {
         user.setAccountNotLocked(true);
         user.setCredentialsNotExpired(true);
         user.setEmail(userDto.getEmail());
-        user.setBirthDate(DateUtils.parseDate(userDto.getBirthDate()));
+        user.setBirthDay(LocalDate.parse(userDto.getBirthDay(), DateTimeFormatter.ISO_LOCAL_DATE));
         user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USER")));
 
         return userRepository.save(user);
