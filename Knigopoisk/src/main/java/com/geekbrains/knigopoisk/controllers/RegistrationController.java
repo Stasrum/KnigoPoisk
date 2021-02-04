@@ -1,12 +1,13 @@
 package com.geekbrains.knigopoisk.controllers;
 
+import com.geekbrains.knigopoisk.api.ApiError;
 import com.geekbrains.knigopoisk.controllers.facade.RegistrationControllerApi;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.entities.UserDto;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.StringTrimmerEditor;
-import org.springframework.ui.Model;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/register")
+@RequestMapping("/users")
 public class RegistrationController implements RegistrationControllerApi {
     private UserService userService;
 
@@ -31,31 +34,23 @@ public class RegistrationController implements RegistrationControllerApi {
         dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
     }
 
-    @Override
-    @RequestMapping("/form")
-    public UserDto showMyLoginPage(Model theModel) {
-        return new UserDto();
-    }
-
     // Binding Result после @ValidModel !!!
     @Override
-    @RequestMapping("/process")
-    public User processRegistrationForm(@Valid @ModelAttribute("userDto") UserDto theUserDto, BindingResult theBindingResult) {
-
+    @RequestMapping("/register")
+    public ApiError register(@Valid @ModelAttribute("userDto") UserDto theUserDto, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
-//            return new ApiError(HttpStatus.BAD_REQUEST, "ошибки в полях", theBindingResult.getFieldErrors().stream()
-//                    .map(fe -> fe.getField() + " - " + fe.getDefaultMessage()).collect(Collectors.toList()));
-//            throw new MethodArgumentNotValidException( ,theBindingResult);
+            return new ApiError(HttpStatus.BAD_REQUEST, "Ошибки в полях", theBindingResult.getFieldErrors().stream()
+                    .map(fe -> fe.getField() + " - " + fe.getDefaultMessage()).collect(Collectors.toList()));
         }
 
         String userName = theUserDto.getUserName();
         User existingUser = userService.findByUserName(userName);
         if (existingUser != null) {
-//            return new ApiError(HttpStatus.BAD_REQUEST, "уже существует", "");
+            return new ApiError(HttpStatus.BAD_REQUEST, "Пользователь с таким логином уже существует", "");
         }
 
         userService.save(theUserDto);
 
-        return existingUser;
+        return new ApiError(HttpStatus.OK, "Регистрация успешно завершена", Collections.EMPTY_LIST);
     }
 }
