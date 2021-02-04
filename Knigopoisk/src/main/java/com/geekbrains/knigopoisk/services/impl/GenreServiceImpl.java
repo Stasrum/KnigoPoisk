@@ -6,6 +6,7 @@ import com.geekbrains.knigopoisk.services.contracts.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -21,6 +22,12 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public Genre save(Genre genre) {
         genre.setId(null);
+        return genreRepository.save(genre);
+    }
+
+    @Override
+    public Genre update(Genre genre) {
+        genre.setUpdated(OffsetDateTime.now());
         return genreRepository.save(genre);
     }
 }

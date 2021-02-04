@@ -19,4 +19,5 @@ public interface BookService {
 
     Page<Book> findAll(Specification<Book> spec, int page, int size);
 
+    Book update(Book book);
 }

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,6 +26,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book save(Book book){
+        book.setId(null);
         return bookRepository.save(book);
     }
 
@@ -50,4 +52,9 @@ public class BookServiceImpl implements BookService {
         return bookRepository.findAll(spec, PageRequest.of(page, size));
     }
 
+    @Override
+    public Book update(Book book) {
+        book.setUpdated(OffsetDateTime.now());
+        return bookRepository.save(book);
+    }
 }
