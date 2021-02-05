@@ -9,4 +9,6 @@ public interface LanguageService {
     List<Language> getAll();
 
     Language save(Language language);
+
+    Language update(Language language);
 }

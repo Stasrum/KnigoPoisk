@@ -10,17 +10,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private RoleRepository roleRepository;
@@ -71,7 +74,7 @@ public class UserServiceImpl implements UserService{
         user.setAccountNotLocked(true);
         user.setCredentialsNotExpired(true);
         user.setEmail(userDto.getEmail());
-        user.setAge(Integer.parseInt(userDto.getBirthYear()));
+        user.setBirthDay(LocalDate.parse(userDto.getBirthDay(), DateTimeFormatter.ISO_LOCAL_DATE));
         user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USER")));
 
         return userRepository.save(user);

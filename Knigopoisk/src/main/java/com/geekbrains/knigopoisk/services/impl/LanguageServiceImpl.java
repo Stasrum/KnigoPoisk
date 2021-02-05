@@ -6,6 +6,7 @@ import com.geekbrains.knigopoisk.services.contracts.LanguageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @Service
@@ -21,6 +22,12 @@ public class LanguageServiceImpl implements LanguageService {
     @Override
     public Language save(Language language) {
         language.setId(null);
+        return languageRepository.save(language);
+    }
+
+    @Override
+    public Language update(Language language) {
+        language.setUpdated(OffsetDateTime.now());
         return languageRepository.save(language);
     }
 }
