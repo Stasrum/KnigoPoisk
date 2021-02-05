@@ -34,10 +34,16 @@ export class Interceptor implements HttpInterceptor {
       tap(
         (event) => {
           if (event instanceof HttpResponse) {
-            // console.log(event);
+            console.log(event);
             if (event.url.includes('add')) {
-              this.message = 'Записано в базу';
-              this.errok = 'ok';
+              if (event.body.id) {
+                this.message = 'Записано в базу';
+                this.errok = 'ok';
+              }
+              if (event.body.status == "BAD_REQUEST") {
+                this.message = event.body.status;
+                this.errok = 'error';
+              }
               this.open()
             }
           }

@@ -21,7 +21,7 @@ public interface BookControllerApi {
     @GetMapping(value = "/books/delete/{id}")
     boolean deleteById(@PathVariable("id") @NotNull Long id);
 
-    @PostMapping(value = "/books/add", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/books/create", consumes = "application/json", produces = "application/json")
     Book createBook(@RequestBody Book book);
 
 }

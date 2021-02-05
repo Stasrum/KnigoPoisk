@@ -13,6 +13,6 @@ export class AuthController{
   }
 
   registrationUser(userDto: UserDto){
-    return this.http.post(path + 'processRegistrationForm', userDto)
+    return this.http.post(path + 'users/register', userDto)
   }
 }

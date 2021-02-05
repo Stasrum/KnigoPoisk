@@ -8,7 +8,7 @@ import {AuthController} from "../controllers/AuthController";
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  public userDto: UserDto = new UserDto('Dimusy', 'Dmitriy', 'Novikov', 'Password1!', 'Password1!', 'dimusy@mail.ru', '1978');
+  public userDto: UserDto = new UserDto('Dimusy', 'Dmitriy', 'Novikov', 'Password1!', 'Password1!', 'dimusy@mail.ru', '1978-07-16');
   visiblePassword = 'password';
 
   constructor(private authController: AuthController) {
@@ -25,6 +25,7 @@ export class RegistrationComponent implements OnInit {
   }
 
   registration() {
+    console.log(this.userDto);
     this.authController.registrationUser(this.userDto).subscribe(rec => console.log(rec), error => console.log(error));
   }
 }

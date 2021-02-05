@@ -7,6 +7,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 
@@ -15,5 +16,5 @@ public interface RegistrationControllerApi {
     void initBinder(WebDataBinder dataBinder);
 
     @PostMapping("/process")
-    ApiError register(@Valid @ModelAttribute("userDto") UserDto theUserDto, BindingResult theBindingResult);
+    ApiError register(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
 }

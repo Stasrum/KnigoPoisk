@@ -17,7 +17,7 @@ export class BookController {
   }
 
   create(book: Book) {
-    return this.http.post(path + 'books/add', book);
+    return this.http.post(path + 'books/create', book);
   }
 
   deleteById(id) {

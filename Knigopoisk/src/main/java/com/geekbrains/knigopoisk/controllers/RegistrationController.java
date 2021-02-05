@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -37,19 +38,19 @@ public class RegistrationController implements RegistrationControllerApi {
     // Binding Result после @ValidModel !!!
     @Override
     @RequestMapping("/register")
-    public ApiError register(@Valid @ModelAttribute("userDto") UserDto theUserDto, BindingResult theBindingResult) {
+    public ApiError register(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             return new ApiError(HttpStatus.BAD_REQUEST, "Ошибки в полях", theBindingResult.getFieldErrors().stream()
                     .map(fe -> fe.getField() + " - " + fe.getDefaultMessage()).collect(Collectors.toList()));
         }
 
-        String userName = theUserDto.getUserName();
+        String userName = userDto.getUserName();
         User existingUser = userService.findByUserName(userName);
         if (existingUser != null) {
             return new ApiError(HttpStatus.BAD_REQUEST, "Пользователь с таким логином уже существует", "");
         }
 
-        userService.save(theUserDto);
+        userService.save(userDto);
 
         return new ApiError(HttpStatus.OK, "Регистрация успешно завершена", Collections.EMPTY_LIST);
     }

@@ -1,5 +1,7 @@
 package com.geekbrains.knigopoisk.api;
 
+import com.geekbrains.knigopoisk.responsies.ReqErrorResponse;
+import org.postgresql.util.PSQLException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
@@ -10,6 +12,8 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -48,5 +52,9 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
                 apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-
+    @ExceptionHandler(PSQLException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    protected ResponseEntity<?> handle400() {
+        return new ResponseEntity<>(new ReqErrorResponse(HttpStatus.BAD_REQUEST.value(), "Ошибка записи в базу данных"), HttpStatus.BAD_REQUEST);
+    }
 }

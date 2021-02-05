@@ -14,6 +14,6 @@ export class AuthorController {
   }
 
   createAuthor(author: Author){
-    return this.http.post(path + 'author/add', author);
+    return this.http.post(path + 'author/create', author);
   }
 }

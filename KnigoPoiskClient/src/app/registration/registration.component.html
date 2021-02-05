@@ -64,11 +64,10 @@
         <small class="text-danger" *ngIf="email.hasError('pattern')">Не правильный формат E-mail</small>
       </div>
       <div class="form-group col-6">
-        <label>Год рождения</label>
-        <input type="text" class="form-control" [(ngModel)]="userDto.birthYear" name="birthYear" required
-               pattern="[0-9].{3}" #birthYear="ngModel">
+        <label>Дата рождения</label>
+        <input type="date" class="form-control" [(ngModel)]="userDto.birthDay" name="birthYear" required
+               #birthYear="ngModel">
         <small class="text-danger" *ngIf="birthYear.hasError('required')">Обязательно для заполнения</small>
-        <small class="text-danger" *ngIf="birthYear.hasError('pattern')">Год рождения 4 цифры</small>
       </div>
     </div>
 

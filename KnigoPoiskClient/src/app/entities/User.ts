@@ -13,7 +13,7 @@ export class UserDto{
     public password: string,
     public matchingPassword: string,
     public email: string,
-    public birthYear: string
+    public birthDay: string
   ) {
   }
 }

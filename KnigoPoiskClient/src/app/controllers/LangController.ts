@@ -14,6 +14,6 @@ export class LangController {
   }
 
   createLang(lang: Lang){
-    return this.http.post(path + 'language/add', lang);
+    return this.http.post(path + 'language/create', lang);
   }
 }
