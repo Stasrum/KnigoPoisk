@@ -20,6 +20,7 @@
         Поле обязательно для заполнения
       </small>
     </div>
+
     <button
       [disabled]="login.errors || password.errors"
       type="submit" class="btn btn-warning" (click)="loginUser(user); formLogin.reset()">Войти

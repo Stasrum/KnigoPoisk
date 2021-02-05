@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {loginUser} from '../entities/User';
+import {LoginUser} from '../entities/User';
 import {AuthController} from '../controllers/AuthController';
 import {Router} from "@angular/router";
 import {AppComponent} from "../app.component";
@@ -10,7 +10,7 @@ import {AppComponent} from "../app.component";
   styleUrls: ['./login-user.component.css']
 })
 export class LoginUserComponent implements OnInit {
-  public user: loginUser = new loginUser('', '');
+  public user: LoginUser = new LoginUser('', '');
   public passwordCheck = 'password';
 
   constructor(private router: Router,
@@ -20,7 +20,7 @@ export class LoginUserComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  loginUser(user: loginUser) {
+  loginUser(user: LoginUser) {
     this.authController.authUser(user).subscribe((rec: any) => {
       localStorage.setItem('auth_token', rec.token);
       this.router.navigateByUrl('');
