@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -9,6 +9,7 @@ import {NgbActiveModal} from "@ng-bootstrap/ng-bootstrap";
 export class ModalWindowComponent {
 
   @Input() name;
+  @Input() header: String;
 
   constructor(public activeModal: NgbActiveModal) {}
 }

@@ -4,3 +4,13 @@ export class loginUser {
     public password: string
   ) {}
 }
+
+export class userDto{
+  constructor(
+    public userName: string,
+    public firstName: string,
+    public lastName: string,
+
+  ) {
+  }
+}

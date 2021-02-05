@@ -29,3 +29,17 @@
   padding: 1rem 1rem;
   color: white;
 }
+.modal-header{
+  background-color: rgba(0, 255, 0, 1);
+  border-radius: 10px 10px 0 0;
+  padding: 1rem 1rem;
+  color: black;
+}
+.ok{
+  background-color: rgba(0, 255, 0, 1);
+  color: black;
+}
+.error{
+  background-color: rgba(255, 0, 0, 1);
+  color: white;
+}
