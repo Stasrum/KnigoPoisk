@@ -3,8 +3,8 @@ package com.geekbrains.knigopoisk.services.impl;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.entities.UserDto;
-import com.geekbrains.knigopoisk.repositories.RoleRepository;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
+import com.geekbrains.knigopoisk.services.contracts.RoleService;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private RoleRepository roleRepository;
+    private RoleService roleService;
 
     @Autowired
     private UserRepository userRepository;
@@ -38,7 +38,7 @@ public class UserServiceImpl implements UserService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findUserByUsername(username);
         if (user == null) {
-            throw new UsernameNotFoundException("Invalid username or password.");
+            throw new UsernameNotFoundException("Неверное имя пользователя или пароль.");
         }
 
         return new org.springframework.security.core.userdetails.User(
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
         user.setCredentialsNotExpired(true);
         user.setEmail(userDto.getEmail());
         user.setBirthDay(LocalDate.parse(userDto.getBirthDay(), DateTimeFormatter.ISO_LOCAL_DATE));
-        user.setRoles(Collections.singletonList(roleRepository.findByName("ROLE_USER")));
+        user.setRoles(Collections.singletonList(roleService.getRoleByName("USER")));
 
         return userRepository.save(user);
     }
