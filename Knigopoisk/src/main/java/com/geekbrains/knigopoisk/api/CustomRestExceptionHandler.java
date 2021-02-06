@@ -3,6 +3,7 @@ package com.geekbrains.knigopoisk.api;
 import com.geekbrains.knigopoisk.exceptions.UserAlreadyExistsException;
 import com.geekbrains.knigopoisk.exceptions.UserAttributeNotValidException;
 import lombok.extern.slf4j.Slf4j;
+import org.postgresql.util.PSQLException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 import org.springframework.web.multipart.support.MissingServletRequestPartException;
@@ -34,7 +36,7 @@ import java.util.stream.Collectors;
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     // 400
-
+private String test;
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
         logger.info(ex.getClass().getName());
@@ -162,14 +164,14 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     // 500
 
-    @ExceptionHandler({Exception.class})
-    public ResponseEntity<Object> handleAll(final Exception ex, final WebRequest request) {
-        logger.info(ex.getClass().getName());
-        logger.error("error", ex);
-        //
-        final ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "error occurred");
-        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
-    }
+//    @ExceptionHandler({Exception.class})
+//    public ResponseEntity<Object> handleAll(final Exception ex, final WebRequest request) {
+//        logger.info(ex.getClass().getName());
+//        logger.error("error", ex);
+//        //
+//        final ApiError apiError = new ApiError(HttpStatus.INTERNAL_SERVER_ERROR, ex.getLocalizedMessage(), "error occurred");
+//        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+//    }
 
     // custom 400
 
@@ -192,5 +194,12 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), Collections.EMPTY_LIST);
 
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler(PSQLException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handle400() {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Ощибка уникальности записи", Collections.EMPTY_LIST);
+        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 }

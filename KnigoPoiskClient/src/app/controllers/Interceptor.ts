@@ -15,7 +15,8 @@ import {ModalWindowComponent} from "../modal-window/modal-window.component";
 
 @Injectable()
 export class Interceptor implements HttpInterceptor {
-  private message: string
+  private message: string;
+  private errok: string;
 
   constructor(private modalService: NgbModal) {
   }
@@ -32,18 +33,25 @@ export class Interceptor implements HttpInterceptor {
     return next.handle(request).pipe(
       tap(
         (event) => {
-          if (event instanceof HttpResponse)
-            console.log(event);
+          if (event instanceof HttpResponse) {
+            // console.log(event);
+            if (event.url.includes('create')) {
+                this.message = 'Записано в базу';
+                this.errok = 'ok';
+              this.open()
+            }
+          }
         },
         (err) => {
           if (err instanceof HttpErrorResponse) {
-            console.log(err);
+            // console.log(err);
             if (err.status == 401) {
               this.message = err.error.message;
             }
-            if (err.status == 500) {
-              this.message = "Поле заполненно не правильно ";
+            if (err.status == 400) {
+              this.message = err.error.message;
             }
+            this.errok = 'error';
             this.open();
           }
         }
@@ -54,5 +62,8 @@ export class Interceptor implements HttpInterceptor {
   open() {
     const modalRef = this.modalService.open(ModalWindowComponent);
     modalRef.componentInstance.name = this.message;
+    this.message = '';
+    modalRef.componentInstance.header = this.errok;
+    this.errok = '';
   }
 }

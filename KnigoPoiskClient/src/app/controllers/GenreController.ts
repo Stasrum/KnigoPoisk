@@ -14,6 +14,6 @@ export class GenreController {
   }
 
   createGenre(genre: Genre){
-    return this.http.post(path + 'genre/add', genre);
+    return this.http.post(path + 'genre/create', genre);
   }
 }

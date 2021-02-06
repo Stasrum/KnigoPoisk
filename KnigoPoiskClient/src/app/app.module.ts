@@ -11,6 +11,7 @@ import { LoginUserComponent } from './login-user/login-user.component';
 import {Interceptor} from "./controllers/Interceptor";
 import { ModalWindowComponent } from './modal-window/modal-window.component';
 import { HeaderComponent } from './header/header.component';
+import { RegistrationComponent } from './registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { HeaderComponent } from './header/header.component';
     AdminBookComponent,
     LoginUserComponent,
     ModalWindowComponent,
-    HeaderComponent
+    HeaderComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,

@@ -14,6 +14,6 @@ export class PublisherController {
   }
 
   createPublisher(publisher: Publisher){
-    return this.http.post(path + 'publisher/add', publisher);
+    return this.http.post(path + 'publisher/create', publisher);
   }
 }
