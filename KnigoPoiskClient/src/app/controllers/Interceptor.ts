@@ -34,16 +34,10 @@ export class Interceptor implements HttpInterceptor {
       tap(
         (event) => {
           if (event instanceof HttpResponse) {
-            console.log(event);
-            if (event.url.includes('add')) {
-              if (event.body.id) {
+            // console.log(event);
+            if (event.url.includes('create')) {
                 this.message = 'Записано в базу';
                 this.errok = 'ok';
-              }
-              if (event.body.status == "BAD_REQUEST") {
-                this.message = event.body.status;
-                this.errok = 'error';
-              }
               this.open()
             }
           }
@@ -68,6 +62,8 @@ export class Interceptor implements HttpInterceptor {
   open() {
     const modalRef = this.modalService.open(ModalWindowComponent);
     modalRef.componentInstance.name = this.message;
+    this.message = '';
     modalRef.componentInstance.header = this.errok;
+    this.errok = '';
   }
 }
