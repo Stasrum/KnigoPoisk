@@ -18,10 +18,13 @@ public class Genre extends DefaultEntity {
     @Column(name = "name")
     private String name;
 
-    // TODO Развязать циклическую зависимость
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "books_genres",
-//            joinColumns = @JoinColumn(name = "genre_id"),
-//            inverseJoinColumns = @JoinColumn(name = "book_id"))
-//    private Collection<Book> books;
+    @Column(name = "description")
+    private String description;
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "books_genres",
+            joinColumns = @JoinColumn(name = "genre_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private Collection<Book> books;
 }

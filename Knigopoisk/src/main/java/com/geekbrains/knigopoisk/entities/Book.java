@@ -29,6 +29,7 @@ public class Book extends DefaultEntity {
     @Column(name = "year")
     private int year;
 
+    @NotNull(message = "isbn must be not null")
     @Column(name = "isbn")
     @Size(min = 13, max = 13, message = "13 symbols")
     private String isbn;
@@ -45,11 +46,9 @@ public class Book extends DefaultEntity {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "books_publishers",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "publisher_id"))
-    private List<Publisher> publishers;
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
 
     @Column(name = "description")
     private String description;

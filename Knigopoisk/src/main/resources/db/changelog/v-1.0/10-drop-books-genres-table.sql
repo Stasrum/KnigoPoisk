@@ -1,0 +1,11 @@
+ALTER TABLE IF EXISTS books_genres DROP CONSTRAINT FKlv42b6uemg63q27om39jjbt9o
+
+GO
+
+ALTER TABLE IF EXISTS books_genres DROP CONSTRAINT FKgkat05y2cec3tcpl6ur250sd0
+
+GO
+
+DROP TABLE books_genres
+
+GO
