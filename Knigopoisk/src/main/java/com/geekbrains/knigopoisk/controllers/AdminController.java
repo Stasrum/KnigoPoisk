@@ -17,7 +17,7 @@ public class AdminController implements AdminControllerApi {
     private BookService bookService;
 
     @Override
-    public ResponseEntity<?> addBook(BookDto bookDto) {
+    public ResponseEntity<Book> addBook(BookDto bookDto) {
         return null;
     }
 

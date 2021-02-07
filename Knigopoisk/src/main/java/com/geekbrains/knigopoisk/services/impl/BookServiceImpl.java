@@ -32,7 +32,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto save(BookDto bookDto) {
+    public Book save(BookDto bookDto) {
         Book book = new Book();
         book.setId(bookDto.getId());
         book.setTitle(book.getTitle());
@@ -47,9 +47,7 @@ public class BookServiceImpl implements BookService {
         if (bookDto.getId()==null){
             book.setCreated(OffsetDateTime.now());
         }
-        Book newBook = bookRepository.save(book);
-        bookDto.setId(newBook.getId());
-        return bookDto;
+        return bookRepository.save(book);
     }
 
     @Override

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface AdminControllerApi {
 
     @PostMapping("/books/add")
-    ResponseEntity<?> addBook(BookDto bookDto);
+    ResponseEntity<Book> addBook(BookDto bookDto);
 
     @GetMapping("/books/{id}")
     ResponseEntity<Book> getBookById(@PathVariable("id") Long id);
