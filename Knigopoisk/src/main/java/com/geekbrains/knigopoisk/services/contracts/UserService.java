@@ -1,7 +1,7 @@
 package com.geekbrains.knigopoisk.services.contracts;
 
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.entities.UserDto;
+import com.geekbrains.knigopoisk.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
 

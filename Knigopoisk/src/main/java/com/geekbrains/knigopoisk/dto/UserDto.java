@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.entities;
+package com.geekbrains.knigopoisk.dto;
 
 import com.geekbrains.knigopoisk.validation.BirthDayValidation;
 import com.geekbrains.knigopoisk.validation.EmailValidation;

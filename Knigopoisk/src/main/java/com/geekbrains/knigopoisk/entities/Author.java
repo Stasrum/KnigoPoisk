@@ -21,6 +21,9 @@ public class Author extends DefaultEntity {
     @Size(min = 3, max = 45, message = "3 - 45 symbols")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     // TODO Развязать циклическую зависимость
 //    @ManyToMany(fetch = FetchType.LAZY)
 //    @JoinTable(name = "books_authors",

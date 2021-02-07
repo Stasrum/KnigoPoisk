@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 public class AuthorDto {
     private Long id;
     private String name;
+    private String description;
 
     public AuthorDto(Author author) {
         this.id = author.getId();
         this.name = author.getName();
+        this.description = author.getDescription();
     }
 }

@@ -2,7 +2,7 @@ package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.UserControllerApi;
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.entities.UserDto;
+import com.geekbrains.knigopoisk.dto.UserDto;
 import com.geekbrains.knigopoisk.exceptions.UserAlreadyExistsException;
 import com.geekbrains.knigopoisk.exceptions.UserAttributeNotValidException;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
