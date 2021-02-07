@@ -19,6 +19,12 @@ public interface UserService extends UserDetailsService {
     User save(UserDto userDto);
 
     @Transactional
+    boolean updateUserDetailsFromUserDto(UserDto userDto);
+
+    @Transactional
+    boolean updateUserPasswordFromUserDto(UserDto userDto);
+
+    @Transactional
     boolean save(User user);
 
     @Transactional
