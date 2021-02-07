@@ -1,7 +1,7 @@
 package com.geekbrains.knigopoisk.controllers.facade;
 
-import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.dto.UserDto;
+import com.geekbrains.knigopoisk.entities.User;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,4 +22,10 @@ public interface UserControllerApi {
 
     @PostMapping("/users/register")
     void register(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
+
+    @PostMapping("/users/edit}")
+    void edit(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
+
+    @PostMapping("/users/changePassword}")
+    void changePassword(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
 }
