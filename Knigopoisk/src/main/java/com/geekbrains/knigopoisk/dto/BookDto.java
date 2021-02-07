@@ -7,6 +7,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 import java.time.OffsetDateTime;
+import java.util.Collection;
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -14,11 +16,11 @@ public class BookDto {
     private Long id;
     private OffsetDateTime created;
     private OffsetDateTime updated;
-    private Author author;
+    private List<Author> authors;
     private int year;
-    private Language lang;
-    private Genre genre;
-    private Publisher publisher;
+    private List<Language> languages;
+    private List<Genre> genres;
+    private List<Publisher> publishers;
     private String description;
 
     @NotNull(message = "title must be not null")
@@ -33,11 +35,11 @@ public class BookDto {
         this.title = book.getTitle();
         this.created = book.getCreated();
         this.updated = book.getUpdated();
-        this.author = book.getAuthor();
+        this.authors = book.getAuthors();
         this.year = book.getYear();
-        this.lang = book.getLang();
-        this.genre = book.getGenre();
-        this.publisher = book.getPublisher();
+        this.languages = book.getLanguages();
+        this.genres = book.getGenres();
+        this.publishers = book.getPublishers();
         this.description = book.getDescription();
         this.isbn = book.getIsbn();
     }

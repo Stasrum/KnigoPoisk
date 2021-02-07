@@ -1,14 +1,10 @@
 package com.geekbrains.knigopoisk.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.Collection;
 
 @Entity(name = "Genre")
 @Table(name = "genres")
@@ -21,4 +17,11 @@ public class Genre extends DefaultEntity {
     @NotNull(message = "genre name must be not null")
     @Column(name = "name")
     private String name;
+
+    // TODO Развязать циклическую зависимость
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "books_genres",
+//            joinColumns = @JoinColumn(name = "genre_id"),
+//            inverseJoinColumns = @JoinColumn(name = "book_id"))
+//    private Collection<Book> books;
 }
