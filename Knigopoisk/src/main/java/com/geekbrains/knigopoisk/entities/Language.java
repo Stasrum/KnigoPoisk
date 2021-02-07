@@ -18,10 +18,10 @@ public class Language extends DefaultEntity {
     @Column(name = "name")
     private String name;
 
-    //TODO Развязать циклическую зависимость
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "books_languages",
-//            joinColumns = @JoinColumn(name = "language_id"),
-//            inverseJoinColumns = @JoinColumn(name = "book_id"))
-//    private Collection<Book> books;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "books_languages",
+            joinColumns = @JoinColumn(name = "language_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private Collection<Book> books;
 }

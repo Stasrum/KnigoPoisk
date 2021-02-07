@@ -7,5 +7,10 @@ CREATE TABLE languages (
 )
 
 GO
-INSERT INTO languages (name) VALUES ('Русский'), ('Английский'), ('Немецкий')
+
+INSERT INTO languages (name) VALUES ('Русский'),
+                                    ('Английский'),
+                                    ('Немецкий'),
+                                    ('Французский')
+
 GO
