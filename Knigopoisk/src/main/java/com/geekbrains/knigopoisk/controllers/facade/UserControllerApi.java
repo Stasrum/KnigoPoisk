@@ -15,7 +15,10 @@ import java.util.List;
 public interface UserControllerApi {
 
     @GetMapping("/users")
-    List<User> getAllUser();
+    List<UserDto> getAllUser();
+
+    @GetMapping("/users/{id}")
+    UserDto getUser(@PathVariable("id") @NotNull Long id);
 
     @GetMapping("/users/delete/{id}")
     void deleteUserById(@PathVariable("id") @NotNull Long id);
@@ -23,9 +26,9 @@ public interface UserControllerApi {
     @PostMapping("/users/register")
     void register(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
 
-    @PostMapping("/users/edit}")
-    void edit(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
+    @PostMapping("/users/update")
+    void update(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
 
-    @PostMapping("/users/changePassword}")
+    @PostMapping("/users/changePassword")
     void changePassword(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
 }
