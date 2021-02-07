@@ -40,10 +40,26 @@ public class BookServiceImpl implements BookService {
     @Override
     public Book add(BookDto bookDto) {
         Book book = new Book();
+        getBookFromBookDto(bookDto, book);
+
+        book.setCreated(OffsetDateTime.now());
+
+        return bookRepository.save(book);
+    }
+
+    @Override
+    public Book edit(BookDto bookDto) {
+        Book book = bookRepository.findById(bookDto.getId()).orElseThrow(()->new BookNotFoundException("Book isn't found"));
+        getBookFromBookDto(bookDto, book);
+
+        return bookRepository.save(book);
+    }
+
+    private void getBookFromBookDto(BookDto bookDto, Book book) {
         book.setTitle(bookDto.getTitle());
         List<Author> authors = new ArrayList<>();
-        for (Author author: bookDto.getAuthors()){
-            Author a = authorRepository.findOneByName(author.getName()).orElseThrow(()->new AuthorNotFoundException("Author isn't found"));
+        for (Author author : bookDto.getAuthors()) {
+            Author a = authorRepository.findOneByName(author.getName()).orElseThrow(() -> new AuthorNotFoundException("Author isn't found"));
             authors.add(a);
         }
         book.setAuthors(authors);
@@ -53,22 +69,22 @@ public class BookServiceImpl implements BookService {
         book.setIsbn(bookDto.getIsbn());
 
         List<Language> languages = new ArrayList<>();
-        for (Language language: bookDto.getLanguages()){
-            Language l = languageRepository.findOneByName(language.getName()).orElseThrow(()->new LanguageNotFoundException("Language isn't found"));
+        for (Language language : bookDto.getLanguages()) {
+            Language l = languageRepository.findOneByName(language.getName()).orElseThrow(() -> new LanguageNotFoundException("Language isn't found"));
             languages.add(l);
         }
         book.setLanguages(languages);
 
         List<Genre> genres = new ArrayList<>();
-        for (Genre genre: bookDto.getGenres()){
-            Genre g = genreRepository.findOneByName(genre.getName()).orElseThrow(()->new GenreNotFoundException("Genre isn't found"));
+        for (Genre genre : bookDto.getGenres()) {
+            Genre g = genreRepository.findOneByName(genre.getName()).orElseThrow(() -> new GenreNotFoundException("Genre isn't found"));
             genres.add(g);
         }
         book.setGenres(genres);
 
         List<Publisher> publishers = new ArrayList<>();
-        for (Publisher publisher: bookDto.getPublishers()){
-            Publisher p = publisherRepository.findOneByName(publisher.getName()).orElseThrow(()->new PublisherNotFoundException("Publisher isn't found"));
+        for (Publisher publisher : bookDto.getPublishers()) {
+            Publisher p = publisherRepository.findOneByName(publisher.getName()).orElseThrow(() -> new PublisherNotFoundException("Publisher isn't found"));
             publishers.add(p);
         }
         book.setPublishers(publishers);
@@ -76,10 +92,6 @@ public class BookServiceImpl implements BookService {
         book.setDescription(bookDto.getDescription());
 
         book.setUpdated(OffsetDateTime.now());
-
-        book.setCreated(OffsetDateTime.now());
-
-        return bookRepository.save(book);
     }
 
     @Override

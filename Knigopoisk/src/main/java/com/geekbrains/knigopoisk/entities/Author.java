@@ -1,15 +1,12 @@
 package com.geekbrains.knigopoisk.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Collection;
-
+import java.util.Objects;
 
 @Entity(name = "Author")
 @Table(name = "authors")
@@ -24,10 +21,10 @@ public class Author extends DefaultEntity {
     @Size(min = 3, max = 45, message = "3 - 45 symbols")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "books_authors",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Collection<Book> books;
-
+    // TODO Развязать циклическую зависимость
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "books_authors",
+//            joinColumns = @JoinColumn(name = "author_id"),
+//            inverseJoinColumns = @JoinColumn(name = "book_id"))
+//    private Collection<Book> books;
 }

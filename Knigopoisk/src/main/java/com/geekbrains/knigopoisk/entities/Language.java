@@ -1,9 +1,6 @@
 package com.geekbrains.knigopoisk.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -21,9 +18,10 @@ public class Language extends DefaultEntity {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "books_languages",
-            joinColumns = @JoinColumn(name = "language_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id"))
-    private Collection<Book> books;
+    //TODO Развязать циклическую зависимость
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "books_languages",
+//            joinColumns = @JoinColumn(name = "language_id"),
+//            inverseJoinColumns = @JoinColumn(name = "book_id"))
+//    private Collection<Book> books;
 }

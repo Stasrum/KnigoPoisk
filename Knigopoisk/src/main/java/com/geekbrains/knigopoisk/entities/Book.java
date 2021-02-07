@@ -1,14 +1,10 @@
 package com.geekbrains.knigopoisk.entities;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.Collection;
 import java.util.List;
 
 @Entity(name = "Book")
@@ -59,6 +55,7 @@ public class Book extends DefaultEntity {
     private String description;
 
     // Заглушки
+    // TODO Удалить после того, как таблица будет поправлена
     @Column(name = "author_id")
     private int authorId = 1;
     @Column(name = "publisher_id")

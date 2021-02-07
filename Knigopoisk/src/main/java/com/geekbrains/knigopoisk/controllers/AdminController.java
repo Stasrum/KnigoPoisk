@@ -26,7 +26,7 @@ public class AdminController implements AdminControllerApi {
     @Override
     public ResponseEntity<?> addBook(@RequestBody @Valid BookDto bookDto) {
         if (bookDto==null){
-            log.info("Request for book adding is empty");
+            log.warn("Request for book adding is empty");
             return new ResponseEntity<>(new ReqErrorResponse(HttpStatus.BAD_REQUEST.value(), "Request for book adding is empty"), HttpStatus.BAD_REQUEST);
         }
         return ResponseEntity.ok(bookService.add(bookDto));
@@ -38,8 +38,12 @@ public class AdminController implements AdminControllerApi {
     }
 
     @Override
-    public ResponseEntity<Book> editBook(@RequestBody BookDto bookDto) {
-        return null;
+    public ResponseEntity<?> editBook(@RequestBody @Valid BookDto bookDto) {
+        if (bookDto==null){
+            log.warn("Request for book editing is empty");
+            return new ResponseEntity<>(new ReqErrorResponse(HttpStatus.BAD_REQUEST.value(), "Request for book editing is empty"), HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(bookService.edit(bookDto));
     }
 
     @Override
