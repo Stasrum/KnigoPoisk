@@ -37,7 +37,8 @@ import java.util.stream.Collectors;
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     // 400
-private String test;
+    private String test;
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
         logger.info(ex.getClass().getName());
@@ -181,8 +182,9 @@ private String test;
         logger.info(ex.getClass().getName());
 
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
-                ex.getBindingResult().getFieldErrors().stream()
-                        .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                ex.getErrors().stream()
+                        .filter(objectError -> objectError instanceof FieldError)
+                        .map(error -> ((FieldError) error).getField() + ": " + ((FieldError) error).getDefaultMessage())
                         .collect(Collectors.toList()));
 
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
