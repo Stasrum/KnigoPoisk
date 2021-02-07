@@ -1,5 +1,6 @@
 package com.geekbrains.knigopoisk.services.contracts;
 
+import com.geekbrains.knigopoisk.dto.BookDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -12,6 +13,10 @@ public interface BookService {
     List<Book> getAll();
 
     Book save(Book book);
+
+    Book add(BookDto bookDto);
+
+    Book edit(BookDto bookDto);
 
     boolean deleteById(Long id);
 
