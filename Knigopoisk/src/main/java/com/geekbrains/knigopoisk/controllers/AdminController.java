@@ -5,15 +5,20 @@ import com.geekbrains.knigopoisk.dto.BookDto;
 import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.User;
+import com.geekbrains.knigopoisk.services.contracts.BookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequiredArgsConstructor
 @RestController
 public class AdminController implements AdminControllerApi {
 
-    @Override
-    public void addBook(BookDto bookDto) {
+    private BookService bookService;
 
+    @Override
+    public ResponseEntity<?> addBook(BookDto bookDto) {
+        return null;
     }
 
     @Override
@@ -22,8 +27,8 @@ public class AdminController implements AdminControllerApi {
     }
 
     @Override
-    public void editBook(BookDto bookDto) {
-
+    public ResponseEntity<?> editBook(BookDto bookDto) {
+        return null;
     }
 
     @Override
@@ -32,7 +37,7 @@ public class AdminController implements AdminControllerApi {
     }
 
     @Override
-    public void editUser(UserForAdminsEditDto userDto) {
-
+    public ResponseEntity<?> editUser(UserForAdminsEditDto userDto) {
+        return null;
     }
 }

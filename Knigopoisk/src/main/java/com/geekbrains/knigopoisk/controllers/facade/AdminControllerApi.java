@@ -14,17 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public interface AdminControllerApi {
 
     @PostMapping("/books/add")
-    void addBook(BookDto bookDto);
+    ResponseEntity<?> addBook(BookDto bookDto);
 
     @GetMapping("/books/{id}")
     ResponseEntity<Book> getBookById(@PathVariable("id") Long id);
 
     @PostMapping("/books/edit")
-    void editBook(BookDto bookDto);
+    ResponseEntity<?> editBook(BookDto bookDto);
 
     @GetMapping("/users/{id}")
     ResponseEntity<User> getUserById(@PathVariable("id") Long id);
 
     @PostMapping("/users/edit")
-    void editUser(UserForAdminsEditDto userDto);
+    ResponseEntity<?> editUser(UserForAdminsEditDto userDto);
 }

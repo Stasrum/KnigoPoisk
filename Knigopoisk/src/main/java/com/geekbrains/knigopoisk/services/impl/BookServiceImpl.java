@@ -1,5 +1,6 @@
 package com.geekbrains.knigopoisk.services.impl;
 
+import com.geekbrains.knigopoisk.dto.BookDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.exceptions.BookNotFoundException;
 import com.geekbrains.knigopoisk.repositories.BookRepository;
@@ -28,6 +29,27 @@ public class BookServiceImpl implements BookService {
     public Book save(Book book){
         book.setId(null);
         return bookRepository.save(book);
+    }
+
+    @Override
+    public BookDto save(BookDto bookDto) {
+        Book book = new Book();
+        book.setId(bookDto.getId());
+        book.setTitle(book.getTitle());
+        book.setAuthor(bookDto.getAuthor());
+        book.setYear(bookDto.getYear());
+        book.setIsbn(book.getIsbn());
+        book.setLang(bookDto.getLang());
+        book.setGenre(book.getGenre());
+        book.setPublisher(book.getPublisher());
+        book.setDescription(bookDto.getDescription());
+        book.setUpdated(OffsetDateTime.now());
+        if (bookDto.getId()==null){
+            book.setCreated(OffsetDateTime.now());
+        }
+        Book newBook = bookRepository.save(book);
+        bookDto.setId(newBook.getId());
+        return bookDto;
     }
 
     @Override
