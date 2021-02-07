@@ -10,7 +10,7 @@
         <input type="text" class="form-control" [(ngModel)]="newBook.isbn" name="isbn" required pattern="^[0-9]+$"
                minlength="13" maxlength="13" #isbn="ngModel" placeholder="Введите ISBN номер книги">
         <small class="text-danger" *ngIf="isbn.hasError('required')">
-          Поле обязательно для заполнения
+          Обязательно для заполнения
         </small>
         <small class="text-danger" *ngIf="isbn.hasError('pattern')">
           Использовать только цифры</small>
@@ -22,10 +22,13 @@
 
       <div class="form-group col-6">
         <label>Название книги</label>
-        <input type="text" class="form-control" [(ngModel)]="newBook.title" name="title" required #title="ngModel"
+        <input type="text" class="form-control" [(ngModel)]="newBook.title" name="title" required minlength="4" #title="ngModel"
                placeholder="Введите название книги">
         <small class="text-danger" *ngIf="title.hasError('required')">
-          Поле обязательно для заполнения
+          Обязательно для заполнения
+        </small>
+        <small class="text-danger" *ngIf="title.hasError('minlenght')">
+          Минимум 4 символа
         </small>
       </div>
     </div>
@@ -41,7 +44,7 @@
           <div class="input-group-text" (click)="visibleAdd('жанр')">+</div>
         </div>
         <small class="text-danger" *ngIf="edit[0] == 0">
-          Поле обязательно для заполнения
+          Обязательно для заполнения
         </small>
       </div>
 
@@ -55,7 +58,7 @@
           <div class="input-group-text" (click)="visibleAdd('автора')">+</div>
         </div>
         <small class="text-danger" *ngIf="edit[1] == 0">
-          Поле обязательно для заполнения
+          Обязательно для заполнения
         </small>
       </div>
     </div>
@@ -67,7 +70,7 @@
                pattern="[1-2]{1}[0-9]{3}" maxlength="4" minlength="4"
                #year="ngModel" placeholder="Введите год публикации книги">
         <small class="text-danger" *ngIf="year.hasError('required')">
-          Поле обязательно для заполнения
+          Обязательно для заполнения
         </small>
         <small class="text-danger" *ngIf="year.hasError('pattern')">
           Использовать только цифры</small>
@@ -83,7 +86,7 @@
           <div class="input-group-text" (click)="visibleAdd('язык')">+</div>
         </div>
         <small class="text-danger" *ngIf="edit[2] == 0">
-          Поле обязательно для заполнения
+          Обязательно для заполнения
         </small>
       </div>
 
@@ -97,7 +100,7 @@
           <span class="input-group-text" (click)="visibleAdd('издателя')">+</span>
         </div>
         <small class="text-danger" *ngIf="edit[3] == 0">
-          Поле обязательно для заполнения
+          Обязательно для заполнения
         </small>
       </div>
     </div>

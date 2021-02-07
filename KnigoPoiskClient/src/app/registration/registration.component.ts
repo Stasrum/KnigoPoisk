@@ -8,7 +8,7 @@ import {AuthController} from "../controllers/AuthController";
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-  public userDto: UserDto = new UserDto('Dimusy', 'Dmitriy', 'Novikov', 'Password1!', 'Password1!', 'dimusy@mail.ru', '1978-07-16');
+  public userDto: UserDto = new UserDto('', '', '', '', '', '', '');
   visiblePassword = 'password';
 
   constructor(private authController: AuthController) {
