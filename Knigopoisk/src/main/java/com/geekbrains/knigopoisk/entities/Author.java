@@ -5,11 +5,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collection;
 
 
 @Entity(name = "Author")
@@ -24,5 +23,11 @@ public class Author extends DefaultEntity {
     @Column(name = "name")
     @Size(min = 3, max = 45, message = "3 - 45 symbols")
     private String name;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "books_authors",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private Collection<Book> books;
 
 }

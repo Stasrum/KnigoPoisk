@@ -5,20 +5,31 @@ import com.geekbrains.knigopoisk.dto.BookDto;
 import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.User;
+import com.geekbrains.knigopoisk.responsies.ReqErrorResponse;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
-import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequiredArgsConstructor
+import javax.validation.Valid;
+
 @RestController
+@Slf4j
 public class AdminController implements AdminControllerApi {
 
+    @Autowired
     private BookService bookService;
 
     @Override
-    public ResponseEntity<Book> addBook(BookDto bookDto) {
-        return null;
+    public ResponseEntity<?> addBook(@RequestBody @Valid BookDto bookDto) {
+        if (bookDto==null){
+            log.info("Request for book adding is empty");
+            return new ResponseEntity<>(new ReqErrorResponse(HttpStatus.BAD_REQUEST.value(), "Request for book adding is empty"), HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(bookService.add(bookDto));
     }
 
     @Override
@@ -27,7 +38,7 @@ public class AdminController implements AdminControllerApi {
     }
 
     @Override
-    public ResponseEntity<?> editBook(BookDto bookDto) {
+    public ResponseEntity<Book> editBook(@RequestBody BookDto bookDto) {
         return null;
     }
 
@@ -37,7 +48,7 @@ public class AdminController implements AdminControllerApi {
     }
 
     @Override
-    public ResponseEntity<?> editUser(UserForAdminsEditDto userDto) {
+    public ResponseEntity<User> editUser(@RequestBody UserForAdminsEditDto userDto) {
         return null;
     }
 }

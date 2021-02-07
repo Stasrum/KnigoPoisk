@@ -14,7 +14,7 @@ public interface BookService {
 
     Book save(Book book);
 
-    Book save(BookDto bookDto);
+    Book add(BookDto bookDto);
 
     boolean deleteById(Long id);
 
