@@ -1,6 +1,9 @@
 package com.geekbrains.knigopoisk.services.impl;
 
+import com.geekbrains.knigopoisk.dto.AuthorDto;
 import com.geekbrains.knigopoisk.dto.BookDto;
+import com.geekbrains.knigopoisk.dto.GenreDto;
+import com.geekbrains.knigopoisk.dto.LanguageDto;
 import com.geekbrains.knigopoisk.entities.*;
 import com.geekbrains.knigopoisk.exceptions.*;
 import com.geekbrains.knigopoisk.repositories.*;
@@ -38,27 +41,26 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book add(BookDto bookDto) {
+    public BookDto add(BookDto bookDto) {
         Book book = new Book();
         getBookFromBookDto(bookDto, book);
-
         book.setCreated(OffsetDateTime.now());
-
-        return bookRepository.save(book);
+        Book b = bookRepository.save(book);
+        return new BookDto(b);
     }
 
     @Override
-    public Book edit(BookDto bookDto) {
+    public BookDto edit(BookDto bookDto) {
         Book book = bookRepository.findById(bookDto.getId()).orElseThrow(()->new BookNotFoundException("Book isn't found"));
         getBookFromBookDto(bookDto, book);
-
-        return bookRepository.save(book);
+        Book b = bookRepository.save(book);
+        return new BookDto(b);
     }
 
     private void getBookFromBookDto(BookDto bookDto, Book book) {
         book.setTitle(bookDto.getTitle());
         List<Author> authors = new ArrayList<>();
-        for (Author author : bookDto.getAuthors()) {
+        for (AuthorDto author : bookDto.getAuthors()) {
             Author a = authorRepository.findOneByName(author.getName()).orElseThrow(() -> new AuthorNotFoundException("Author isn't found"));
             authors.add(a);
         }
@@ -69,25 +71,21 @@ public class BookServiceImpl implements BookService {
         book.setIsbn(bookDto.getIsbn());
 
         List<Language> languages = new ArrayList<>();
-        for (Language language : bookDto.getLanguages()) {
+        for (LanguageDto language : bookDto.getLanguages()) {
             Language l = languageRepository.findOneByName(language.getName()).orElseThrow(() -> new LanguageNotFoundException("Language isn't found"));
             languages.add(l);
         }
         book.setLanguages(languages);
 
         List<Genre> genres = new ArrayList<>();
-        for (Genre genre : bookDto.getGenres()) {
+        for (GenreDto genre : bookDto.getGenres()) {
             Genre g = genreRepository.findOneByName(genre.getName()).orElseThrow(() -> new GenreNotFoundException("Genre isn't found"));
             genres.add(g);
         }
         book.setGenres(genres);
 
-        List<Publisher> publishers = new ArrayList<>();
-        for (Publisher publisher : bookDto.getPublishers()) {
-            Publisher p = publisherRepository.findOneByName(publisher.getName()).orElseThrow(() -> new PublisherNotFoundException("Publisher isn't found"));
-            publishers.add(p);
-        }
-        book.setPublishers(publishers);
+        Publisher publisher = publisherRepository.findOneByName(bookDto.getPublisher().getName()).orElseThrow(() -> new PublisherNotFoundException("Publisher isn't found"));
+        book.setPublisher(publisher);
 
         book.setDescription(bookDto.getDescription());
 

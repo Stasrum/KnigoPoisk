@@ -45,11 +45,9 @@ public class Book extends DefaultEntity {
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     private List<Genre> genres;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "books_publishers",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "publisher_id"))
-    private List<Publisher> publishers;
+    @ManyToOne
+    @JoinColumn(name = "publisher_id")
+    private Publisher publisher;
 
     @Column(name = "description")
     private String description;
@@ -58,8 +56,8 @@ public class Book extends DefaultEntity {
     // TODO Удалить после того, как таблица будет поправлена
     @Column(name = "author_id")
     private int authorId = 1;
-    @Column(name = "publisher_id")
-    private int publisherId = 1;
+//    @Column(name = "publisher_id")
+//    private int publisherId = 1;
     @Column(name = "lang_id")
     private int langId = 1;
     @Column(name = "genre_id")

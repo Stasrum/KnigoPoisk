@@ -5,22 +5,18 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 public class BookDto {
     private Long id;
-    private OffsetDateTime created;
-    private OffsetDateTime updated;
-    private List<Author> authors;
+    private List<AuthorDto> authors;
     private int year;
-    private List<Language> languages;
-    private List<Genre> genres;
-    private List<Publisher> publishers;
+    private List<LanguageDto> languages;
+    private List<GenreDto> genres;
+    private PublisherDto publisher;
     private String description;
 
     @NotNull(message = "title must be not null")
@@ -33,13 +29,32 @@ public class BookDto {
     public BookDto(Book book) {
         this.id = book.getId();
         this.title = book.getTitle();
-        this.created = book.getCreated();
-        this.updated = book.getUpdated();
-        this.authors = book.getAuthors();
+
+        List<AuthorDto> aDto = new ArrayList<>();
+        for(Author a: book.getAuthors()){
+            aDto.add(new AuthorDto(a));
+        }
+        this.authors = aDto;
+
         this.year = book.getYear();
-        this.languages = book.getLanguages();
-        this.genres = book.getGenres();
-        this.publishers = book.getPublishers();
+
+        List<LanguageDto> lDto = new ArrayList<>();
+        for(Language l: book.getLanguages()){
+            lDto.add(new LanguageDto(l));
+        }
+        this.languages = lDto;
+
+        List<GenreDto> gDto = new ArrayList<>();
+        for(Genre g: book.getGenres()){
+            gDto.add(new GenreDto(g));
+        }
+        this.genres = gDto;
+
+        PublisherDto publisherDto = new PublisherDto();
+        publisherDto.setId(book.getPublisher().getId());
+        publisherDto.setName(book.getPublisher().getName());
+        publisherDto.setDescription(book.getPublisher().getDescription());
+        this.publisher = publisherDto;
         this.description = book.getDescription();
         this.isbn = book.getIsbn();
     }
