@@ -14,6 +14,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @FieldMatchValidation(first = "password", second = "matchingPassword", message = "пароль должен совпадать")
 public class UserDto {
+    private Long id;
+
     @NotNull(message = "требуется")
     @Size(min = 3, message = "не менее 3 символов")
     private String userName;

@@ -20,10 +20,10 @@ public class UserForAdminsEditDto {
     public static UserForAdminsEditDto toUserForAdminsEditDto(User user){
         UserForAdminsEditDto userForAdminsEditDto = new UserForAdminsEditDto();
         userForAdminsEditDto.setId(user.getId());
-        userForAdminsEditDto.setEnabled(user.getEnabled());
-        userForAdminsEditDto.setAccountNotExpired(user.getAccountNotExpired());
-        userForAdminsEditDto.setCredentialsNotExpired(user.getCredentialsNotExpired());
-        userForAdminsEditDto.setAccountNotLocked(user.getAccountNotLocked());
+        userForAdminsEditDto.setEnabled(user.isEnabled());
+        userForAdminsEditDto.setAccountNotExpired(user.isAccountNotExpired());
+        userForAdminsEditDto.setCredentialsNotExpired(user.isCredentialsNotExpired());
+        userForAdminsEditDto.setAccountNotLocked(user.isAccountNotLocked());
         userForAdminsEditDto.setRoles(user.getRoles());
         return userForAdminsEditDto;
     }

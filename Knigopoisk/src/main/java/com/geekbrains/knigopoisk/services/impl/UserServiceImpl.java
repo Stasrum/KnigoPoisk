@@ -1,10 +1,10 @@
 package com.geekbrains.knigopoisk.services.impl;
 
+import com.geekbrains.knigopoisk.dto.UserDto;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.dto.UserDto;
+import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
-import com.geekbrains.knigopoisk.services.contracts.RoleService;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -15,24 +15,22 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private RoleService roleService;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private UserMapper mapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -56,6 +54,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<User> findByUserId(Long userId) {
+        return userRepository.findById(userId);
+    }
+
+    @Override
     @Transactional
     public User findByUserName(String userName) {
         return userRepository.findByUsername(userName);
@@ -64,20 +67,26 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User save(UserDto userDto) {
-        User user = new User();
-        user.setUsername(userDto.getUserName());
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        user.setFirstName(userDto.getFirstName());
-        user.setLastName(userDto.getLastName());
-        user.setEnabled(true);
-        user.setAccountNotExpired(true);
-        user.setAccountNotLocked(true);
-        user.setCredentialsNotExpired(true);
-        user.setEmail(userDto.getEmail());
-        user.setBirthDay(LocalDate.parse(userDto.getBirthDay(), DateTimeFormatter.ISO_LOCAL_DATE));
-        user.setRoles(Collections.singletonList(roleService.getRoleByName("USER")));
-
+        User user = mapper.getUserFromUserDto(userDto);
         return userRepository.save(user);
+    }
+
+    @Override
+    public boolean updateUserDetailsFromUserDto(UserDto userDto) {
+        Long userId = userDto.getId();
+        User existingUser = findByUserId(userId).orElseThrow();
+        mapper.updateUserDetailsFromUserDto(userDto, existingUser);
+
+        return save(existingUser);
+    }
+
+    @Override
+    public boolean updateUserPasswordFromUserDto(UserDto userDto) {
+        Long userId = userDto.getId();
+        User existingUser = findByUserId(userId).orElseThrow();
+        existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+
+        return save(existingUser);
     }
 
     @Override

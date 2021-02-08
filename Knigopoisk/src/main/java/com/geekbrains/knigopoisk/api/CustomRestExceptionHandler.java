@@ -29,6 +29,7 @@ import javax.validation.ConstraintViolationException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -36,7 +37,8 @@ import java.util.stream.Collectors;
 public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     // 400
-private String test;
+    private String test;
+
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(final MethodArgumentNotValidException ex, final HttpHeaders headers, final HttpStatus status, final WebRequest request) {
         logger.info(ex.getClass().getName());
@@ -176,19 +178,20 @@ private String test;
     // custom 400
 
     @ExceptionHandler({UserAttributeNotValidException.class})
-    public ResponseEntity<Object> handleAll(final UserAttributeNotValidException ex, final WebRequest request) {
+    public ResponseEntity<Object> handleUserAttributeNotValidException(final UserAttributeNotValidException ex, final WebRequest request) {
         logger.info(ex.getClass().getName());
 
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
-                ex.getBindingResult().getFieldErrors().stream()
-                        .map(error -> error.getField() + ": " + error.getDefaultMessage())
+                ex.getErrors().stream()
+                        .filter(objectError -> objectError instanceof FieldError)
+                        .map(error -> ((FieldError) error).getField() + ": " + ((FieldError) error).getDefaultMessage())
                         .collect(Collectors.toList()));
 
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
     @ExceptionHandler({UserAlreadyExistsException.class})
-    public ResponseEntity<Object> handleAll(final UserAlreadyExistsException ex, final WebRequest request) {
+    public ResponseEntity<Object> handleUserAlreadyExistsException(final UserAlreadyExistsException ex, final WebRequest request) {
         logger.info(ex.getClass().getName());
 
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), Collections.EMPTY_LIST);
@@ -199,7 +202,14 @@ private String test;
     @ExceptionHandler(PSQLException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handle400() {
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Ощибка уникальности записи", Collections.EMPTY_LIST);
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Ошибка уникальности записи", Collections.EMPTY_LIST);
+        return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler(NoSuchElementException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Object> handleOptionalNoSuchElementException(NoSuchElementException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Элемент не найден", Collections.singletonList(ex.getLocalizedMessage()));
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 }
