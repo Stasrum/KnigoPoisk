@@ -40,9 +40,9 @@ class UserServiceTest {
         admin = getAdmin();
 
         MockitoAnnotations.openMocks(this);
-        when(userRepository.findUserByUsername(USER_USERNAME))
+        when(userRepository.findUserByUsername(USER_USERNAME).get())
                 .thenReturn(user);
-        when(userRepository.findUserByUsername(ADMIN_USERNAME))
+        when(userRepository.findUserByUsername(ADMIN_USERNAME).get())
                 .thenReturn(admin);
 
         when(roleService.getRoleByName(Roles.ROLE_USER.name()))
