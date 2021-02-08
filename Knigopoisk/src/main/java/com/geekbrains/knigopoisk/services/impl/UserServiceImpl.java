@@ -2,7 +2,7 @@ package com.geekbrains.knigopoisk.services.impl;
 
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.entities.UserDto;
+import com.geekbrains.knigopoisk.dto.UserDto;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
 import com.geekbrains.knigopoisk.services.contracts.RoleService;
 import com.geekbrains.knigopoisk.services.contracts.UserService;

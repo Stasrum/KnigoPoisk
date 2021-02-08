@@ -1,7 +1,7 @@
 package com.geekbrains.knigopoisk.controllers.facade;
 
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.entities.UserDto;
+import com.geekbrains.knigopoisk.dto.UserDto;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

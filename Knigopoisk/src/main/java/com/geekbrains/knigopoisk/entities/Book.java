@@ -57,8 +57,8 @@ public class Book extends DefaultEntity {
     // TODO Удалить после того, как таблица будет поправлена
     @Column(name = "author_id")
     private int authorId = 1;
-    @Column(name = "publisher_id")
-    private int publisherId = 1;
+//    @Column(name = "publisher_id")
+//    private int publisherId = 1;
     @Column(name = "lang_id")
     private int langId = 1;
     @Column(name = "genre_id")

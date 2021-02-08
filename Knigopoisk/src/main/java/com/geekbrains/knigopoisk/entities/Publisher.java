@@ -20,12 +20,4 @@ public class Publisher extends DefaultEntity {
 
     @Column(name = "description")
     private String description;
-
-    //TODO Развязать циклическую зависимость
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "books_publishers",
-//            joinColumns = @JoinColumn(name = "publisher_id"),
-//            inverseJoinColumns = @JoinColumn(name = "book_id"))
-//    private Collection<Book> books;
-
 }
