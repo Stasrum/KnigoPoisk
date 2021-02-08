@@ -19,5 +19,3 @@ INSERT INTO books_authors (book_id, author_id)
            (4,4)
 
 GO
-
-
