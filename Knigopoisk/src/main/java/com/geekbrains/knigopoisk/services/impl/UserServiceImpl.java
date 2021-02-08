@@ -4,8 +4,10 @@ import com.geekbrains.knigopoisk.dto.UserDto;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
+import com.geekbrains.knigopoisk.exceptions.UserNotFoundException;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,6 +23,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -34,10 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("Неверное имя пользователя или пароль.");
-        }
+        User user = userRepository.findUserByUsername(username).orElseThrow(()->new UsernameNotFoundException("Неверное имя пользователя или пароль."));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
@@ -61,7 +61,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public User findByUserName(String userName) {
-        return userRepository.findByUsername(userName);
+
+        return userRepository.findByUsername(userName).orElseThrow(()->new UserNotFoundException("User name = <"+userName+"> not found"));
     }
 
     @Override
@@ -73,20 +74,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean updateUserDetailsFromUserDto(UserDto userDto) {
-        Long userId = userDto.getId();
-        User existingUser = findByUserId(userId).orElseThrow();
-        mapper.updateUserDetailsFromUserDto(userDto, existingUser);
+        User user = findByUserId(userDto.getId()).orElseThrow(()->new UserNotFoundException("User id = <"+userDto.getId()+"> name = <"+userDto.getUserName()+"> not found"));
+        mapper.updateUserDetailsFromUserDto(userDto, user);
 
-        return save(existingUser);
+        return save(user);
     }
 
     @Override
     public boolean updateUserPasswordFromUserDto(UserDto userDto) {
         Long userId = userDto.getId();
-        User existingUser = findByUserId(userId).orElseThrow();
-        existingUser.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        User user = findByUserId(userId).orElseThrow(()->new UserNotFoundException("User id = <"+userId+"> name = <"+userDto.getUserName()+"> not found"));
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
 
-        return save(existingUser);
+        return save(user);
     }
 
     @Override
@@ -113,6 +113,6 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional
     public List<User> getAll() {
-        return (List<User>) userRepository.findAll();
+        return userRepository.findAll();
     }
 }

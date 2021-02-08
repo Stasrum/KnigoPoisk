@@ -1,7 +1,6 @@
 package com.geekbrains.knigopoisk.api;
 
-import com.geekbrains.knigopoisk.exceptions.UserAlreadyExistsException;
-import com.geekbrains.knigopoisk.exceptions.UserAttributeNotValidException;
+import com.geekbrains.knigopoisk.exceptions.*;
 import lombok.extern.slf4j.Slf4j;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.TypeMismatchException;
@@ -30,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.Flow;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -206,10 +206,12 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-    @ExceptionHandler(NoSuchElementException.class)
+    @ExceptionHandler({NoSuchElementException.class, AuthorNotFoundException.class,BookNotFoundException.class, GenreNotFoundException.class,LanguageNotFoundException.class, PublisherNotFoundException.class,UserNotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ResponseEntity<Object> handleOptionalNoSuchElementException(NoSuchElementException ex) {
-        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Элемент не найден", Collections.singletonList(ex.getLocalizedMessage()));
+    public ResponseEntity<Object> handleBadElementException(RuntimeException ex) {
+        ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), Collections.emptyList());
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
+
+
 }

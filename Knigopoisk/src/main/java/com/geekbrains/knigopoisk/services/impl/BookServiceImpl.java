@@ -106,6 +106,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public Optional<Book> findById(Long id) {
         Optional<Book> book = bookRepository.findById(id);
+        if (!book.isPresent()) { throw  new BookNotFoundException("Книга с таким ID не найдена");}
         return book;
     }
 
