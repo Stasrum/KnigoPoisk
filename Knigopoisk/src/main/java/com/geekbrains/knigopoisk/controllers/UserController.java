@@ -1,17 +1,17 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.UserControllerApi;
-import com.geekbrains.knigopoisk.dto.UserDto;
+import com.geekbrains.knigopoisk.dto.UserDetailsDto;
+import com.geekbrains.knigopoisk.dto.UserPasswordDto;
+import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
+import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.exceptions.UserAlreadyExistsException;
 import com.geekbrains.knigopoisk.exceptions.UserAttributeNotValidException;
-import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -19,33 +19,29 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 public class UserController implements UserControllerApi {
     private UserService userService;
+    @Autowired
+    private UserMapper mapper;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
     }
 
-    @Autowired
-    private UserMapper mapper;
-
     @Override
-    public List<UserDto> getAllUser() {
-        List<UserDto> userDtoList = mapper.getUserDtoListFromUserList(userService.getAll());
+    public List<UserDetailsDto> getAllUser() {
+        List<UserDetailsDto> userDtoList = mapper.getUserDetailsDtoListFromUserList(userService.getAll());
         return userDtoList;
     }
 
     @Override
-    public UserDto getUser(@NotNull Long id) {
-        User user = userService.findByUserId(id).orElseThrow();
-        UserDto userDto = mapper.getUserDtoFromUser(user);
-        return userDto;
+    public UserDetailsDto getUser(@NotNull Long id) {
+        User user = userService.findByUserId(id);
+        return mapper.getUserDetailsDtoFromUser(user);
     }
 
     @Override
@@ -56,47 +52,36 @@ public class UserController implements UserControllerApi {
     // Binding Result после @ValidModel !!!
     @Override
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult) {
+    public void register(@Valid @RequestBody UserRegistrationDto userRegistrationDto, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
-            throw new UserAttributeNotValidException("Ошибка валидации", theBindingResult.getAllErrors());
+            throw new UserAttributeNotValidException("Ошибка валидации", theBindingResult);
         }
 
-        String userName = userDto.getUserName();
-        User existingUser = userService.findByUserName(userName);
-        if (existingUser != null) {
+        String userName = userRegistrationDto.getUserName();
+        if (userService.isUserByNameExists(userName)) {
             throw new UserAlreadyExistsException("Пользователь с таким именем уже существует");
         }
 
-        userService.save(userDto);
+        userService.save(userRegistrationDto);
     }
 
     @Override
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void update(@Valid UserDto userDto, BindingResult theBindingResult) {
-        List<ObjectError> errors = theBindingResult.getAllErrors().stream()
-                .filter(errObj -> (!(errObj instanceof FieldError)) || Arrays.stream(new String[]{"password", "matchingPassword"})
-                        .noneMatch(fieldName -> ((FieldError) errObj).getField().equals(fieldName)))
-                .collect(Collectors.toList());
-
-        if (errors.size() > 0) {
-            throw new UserAttributeNotValidException("Ошибка валидации", errors);
+    public void update(@Valid UserDetailsDto userDetailsDto, BindingResult theBindingResult, @NotNull @PathVariable Long id) {
+        if (theBindingResult.hasErrors()) {
+            throw new UserAttributeNotValidException("Ошибка валидации", theBindingResult);
         }
 
-        userService.updateUserDetailsFromUserDto(userDto);
+        userService.updateUserDetailsFromUserDetailsDto(id, userDetailsDto);
     }
 
     @Override
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void changePassword(@Valid UserDto userDto, BindingResult theBindingResult) {
-        List<ObjectError> errors = theBindingResult.getAllErrors().stream()
-                .filter(errObj -> errObj instanceof FieldError && Arrays.stream(new String[]{"password", "matchingPassword"})
-                        .anyMatch(fieldName -> ((FieldError) errObj).getField().equals(fieldName)))
-                .collect(Collectors.toList());
-
-        if (errors.size() > 0) {
-            throw new UserAttributeNotValidException("Ошибка валидации", errors);
+    public void changePassword(@Valid UserPasswordDto userPasswordDto, BindingResult theBindingResult, @NotNull @PathVariable Long id) {
+        if (theBindingResult.hasErrors()) {
+            throw new UserAttributeNotValidException("Ошибка валидации", theBindingResult);
         }
 
-        userService.updateUserPasswordFromUserDto(userDto);
+        userService.updateUserPasswordFromUserPasswordDto(id, userPasswordDto);
     }
 }

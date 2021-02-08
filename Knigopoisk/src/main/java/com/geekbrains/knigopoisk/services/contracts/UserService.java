@@ -1,28 +1,29 @@
 package com.geekbrains.knigopoisk.services.contracts;
 
+import com.geekbrains.knigopoisk.dto.UserDetailsDto;
+import com.geekbrains.knigopoisk.dto.UserPasswordDto;
+import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.dto.UserDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface UserService extends UserDetailsService {
     @Transactional
-    Optional<User> findByUserId(Long userId);
+    User findByUserId(Long userId);
 
     @Transactional
     User findByUserName(String userName);
 
     @Transactional
-    User save(UserDto userDto);
+    User save(UserRegistrationDto userRegistrationDto);
 
     @Transactional
-    boolean updateUserDetailsFromUserDto(UserDto userDto);
+    boolean updateUserDetailsFromUserDetailsDto(Long userId, UserDetailsDto userDetailsDto);
 
     @Transactional
-    boolean updateUserPasswordFromUserDto(UserDto userDto);
+    boolean updateUserPasswordFromUserPasswordDto(Long userId, UserPasswordDto userPasswordDto);
 
     @Transactional
     boolean save(User user);
@@ -35,4 +36,7 @@ public interface UserService extends UserDetailsService {
 
     @Transactional
     List<User> getAll();
+
+    @Transactional
+    boolean isUserByNameExists(String userName);
 }

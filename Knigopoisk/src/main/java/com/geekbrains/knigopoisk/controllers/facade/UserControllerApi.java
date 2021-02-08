@@ -1,7 +1,8 @@
 package com.geekbrains.knigopoisk.controllers.facade;
 
-import com.geekbrains.knigopoisk.dto.UserDto;
-import com.geekbrains.knigopoisk.entities.User;
+import com.geekbrains.knigopoisk.dto.UserDetailsDto;
+import com.geekbrains.knigopoisk.dto.UserPasswordDto;
+import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,20 +16,21 @@ import java.util.List;
 public interface UserControllerApi {
 
     @GetMapping("/users")
-    List<UserDto> getAllUser();
+    List<UserDetailsDto> getAllUser();
 
     @GetMapping("/users/{id}")
-    UserDto getUser(@PathVariable("id") @NotNull Long id);
+    UserDetailsDto getUser(@PathVariable("id") @NotNull Long id);
 
     @GetMapping("/users/delete/{id}")
     void deleteUserById(@PathVariable("id") @NotNull Long id);
 
     @PostMapping("/users/register")
-    void register(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
+    void register(@Valid @RequestBody UserRegistrationDto userRegistrationDto, BindingResult theBindingResult);
 
-    @PostMapping("/users/update")
-    void update(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
+    @PostMapping("/users/update/{id}")
+    void update(@Valid @RequestBody UserDetailsDto userDetailsDto, BindingResult theBindingResult, @NotNull @PathVariable Long id);
 
-    @PostMapping("/users/changePassword")
-    void changePassword(@Valid @RequestBody UserDto userDto, BindingResult theBindingResult);
+    @PostMapping("/users/changePassword/{id}")
+    void changePassword(@Valid @RequestBody UserPasswordDto userPasswordDto, BindingResult theBindingResult,
+                        @NotNull @PathVariable Long id);
 }

@@ -182,9 +182,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         logger.info(ex.getClass().getName());
 
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
-                ex.getErrors().stream()
-                        .filter(objectError -> objectError instanceof FieldError)
-                        .map(error -> ((FieldError) error).getField() + ": " + ((FieldError) error).getDefaultMessage())
+                ex.getBindingResult().getFieldErrors().stream()
+                        .map(error -> error.getField() + ": " + error.getDefaultMessage())
                         .collect(Collectors.toList()));
 
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());

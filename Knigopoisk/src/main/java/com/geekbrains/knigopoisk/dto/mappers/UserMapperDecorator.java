@@ -1,6 +1,6 @@
 package com.geekbrains.knigopoisk.dto.mappers;
 
-import com.geekbrains.knigopoisk.dto.UserDto;
+import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.services.contracts.RoleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +22,9 @@ public abstract class UserMapperDecorator implements UserMapper {
     private RoleService roleService;
 
     @Override
-    public User getUserFromUserDto(UserDto userDto) {
-        User user = delegate.getUserFromUserDto(userDto);
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+    public User getUserFromUserRegistrationDto(UserRegistrationDto userRegistrationDto) {
+        User user = delegate.getUserFromUserRegistrationDto(userRegistrationDto);
+        user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
         user.setEnabled(true);
         user.setAccountNotExpired(true);
         user.setAccountNotLocked(true);
