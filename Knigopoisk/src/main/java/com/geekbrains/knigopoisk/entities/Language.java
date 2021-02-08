@@ -21,7 +21,7 @@ public class Language extends DefaultEntity {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "books_languages",
-            joinColumns = @JoinColumn(name = "language_id"),
+            joinColumns = @JoinColumn(name = "lang_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     private Collection<Book> books;
 }
