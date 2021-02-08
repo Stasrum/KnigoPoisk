@@ -15,15 +15,12 @@ public interface UserMapper {
     User getUserFromUserRegistrationDto(UserRegistrationDto userRegistrationDto);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    @Mapping(target = "password", ignore = true)
     void updateUserFromUserDetailsDto(UserDetailsDto userDetailsDto, @MappingTarget User user);
 
     @Mapping(target = "userName", source = "username")
-    @Mapping(target = "password", ignore = true)
-    UserDetailsDto getUserDtoFromUser(User user);
+    UserDetailsDto getUserDetailsDtoFromUser(User user);
 
     @Mapping(target = "userName", source = "username")
-    @Mapping(target = "password", ignore = true)
     List<UserDetailsDto> getUserDetailsDtoListFromUserList(List<User> users);
 }
 

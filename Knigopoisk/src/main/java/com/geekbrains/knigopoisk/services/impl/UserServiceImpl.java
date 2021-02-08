@@ -1,9 +1,12 @@
 package com.geekbrains.knigopoisk.services.impl;
 
-import com.geekbrains.knigopoisk.dto.UserDto;
+
+import com.geekbrains.knigopoisk.dto.UserDetailsDto;
+import com.geekbrains.knigopoisk.dto.UserPasswordDto;
+import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
+import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
 import com.geekbrains.knigopoisk.exceptions.UserNotFoundException;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
@@ -19,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -33,11 +35,11 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Autowired
-    private UserMapper mapper;
+    private UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findUserByUsername(username).orElseThrow(()->new UsernameNotFoundException("Неверное имя пользователя или пароль."));
+        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Неверное имя пользователя или пароль."));
 
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
@@ -54,37 +56,40 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByUserId(Long userId) {
-        return userRepository.findById(userId);
+    public User findByUserId(Long userId) {
+        return userRepository.findById(userId).orElseThrow(() ->
+                new UserNotFoundException("User id = <" + userId + "> not found"));
     }
 
     @Override
     @Transactional
     public User findByUserName(String userName) {
-
-        return userRepository.findByUsername(userName).orElseThrow(()->new UserNotFoundException("User name = <"+userName+"> not found"));
+        return userRepository.findUserByUsername(userName).orElseThrow(() ->
+                new UserNotFoundException("User name = <" + userName + "> not found"));
     }
 
     @Override
     @Transactional
-    public User save(UserDto userDto) {
-        User user = mapper.getUserFromUserRegistrationDto(userDto);
+    public User save(UserRegistrationDto userRegistrationDto) {
+        User user = userMapper.getUserFromUserRegistrationDto(userRegistrationDto);
         return userRepository.save(user);
     }
 
     @Override
-    public boolean updateUserDetailsFromUserDto(UserDto userDto) {
-        User user = findByUserId(userDto.getId()).orElseThrow(()->new UserNotFoundException("User id = <"+userDto.getId()+"> name = <"+userDto.getUserName()+"> not found"));
-        mapper.updateUserDetailsFromUserDto(userDto, user);
+    public boolean updateUserDetailsFromUserDetailsDto(Long userId, UserDetailsDto userDetailsDto) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new UserNotFoundException("User id = <" + userDetailsDto.getId() + "> name = <" + userDetailsDto.getUserName() + "> not found"));
+        userMapper.updateUserFromUserDetailsDto(userDetailsDto, user);
+        userRepository.save(user);
 
-        return save(user);
+        return true;
     }
 
     @Override
-    public boolean updateUserPasswordFromUserDto(UserDto userDto) {
-        Long userId = userDto.getId();
-        User user = findByUserId(userId).orElseThrow(()->new UserNotFoundException("User id = <"+userId+"> name = <"+userDto.getUserName()+"> not found"));
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+    public boolean updateUserPasswordFromUserPasswordDto(Long userId, UserPasswordDto userPasswordDto) {
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new UserNotFoundException("User id = <" + userId + "> not found"));
+        user.setPassword(passwordEncoder.encode(userPasswordDto.getPassword()));
 
         return save(user);
     }
@@ -114,5 +119,10 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public List<User> getAll() {
         return userRepository.findAll();
+    }
+
+    @Override
+    public boolean isUserByNameExists(String userName) {
+        return userRepository.findUserByUsername(userName).isPresent();
     }
 }

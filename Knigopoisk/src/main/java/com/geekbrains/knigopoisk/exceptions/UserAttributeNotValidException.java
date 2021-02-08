@@ -1,16 +1,14 @@
 package com.geekbrains.knigopoisk.exceptions;
 
 import lombok.Data;
-import org.springframework.validation.ObjectError;
-
-import java.util.List;
+import org.springframework.validation.BindingResult;
 
 @Data
 public class UserAttributeNotValidException extends RuntimeException {
-    List<ObjectError> errors;
+    private BindingResult bindingResult;
 
-    public UserAttributeNotValidException(String message, List<ObjectError> errors) {
+    public UserAttributeNotValidException(String message, BindingResult bindingResult) {
         super(message);
-        this.errors = errors;
+        this.bindingResult = bindingResult;
     }
 }
