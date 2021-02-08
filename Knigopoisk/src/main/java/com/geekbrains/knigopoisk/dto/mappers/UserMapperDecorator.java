@@ -22,8 +22,8 @@ public abstract class UserMapperDecorator implements UserMapper {
     private RoleService roleService;
 
     @Override
-    public User getUserFromUserDto(UserDto userDto) {
-        User user = delegate.getUserFromUserDto(userDto);
+    public User getUserFromUserRegistrationDto(UserDto userDto) {
+        User user = delegate.getUserFromUserRegistrationDto(userDto);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setEnabled(true);
         user.setAccountNotExpired(true);
