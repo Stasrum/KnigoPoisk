@@ -20,7 +20,7 @@ public interface UserService extends UserDetailsService {
     User save(UserRegistrationDto userRegistrationDto);
 
     @Transactional
-    boolean updateUserDetailsFromUserDetailsDto(Long userId, UserDetailsDto userDetailsDto);
+    boolean updateUserDetailsFromUserDetailsDto(UserDetailsDto userDetailsDto);
 
     @Transactional
     boolean updateUserPasswordFromUserPasswordDto(Long userId, UserPasswordDto userPasswordDto);

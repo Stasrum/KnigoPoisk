@@ -76,8 +76,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean updateUserDetailsFromUserDetailsDto(Long userId, UserDetailsDto userDetailsDto) {
-        User user = userRepository.findById(userId).orElseThrow(() ->
+    public boolean updateUserDetailsFromUserDetailsDto(UserDetailsDto userDetailsDto) {
+        User user = userRepository.findById(userDetailsDto.getId()).orElseThrow(() ->
                 new UserNotFoundException("User id = <" + userDetailsDto.getId() + "> name = <" + userDetailsDto.getUserName() + "> not found"));
         userMapper.updateUserFromUserDetailsDto(userDetailsDto, user);
         userRepository.save(user);

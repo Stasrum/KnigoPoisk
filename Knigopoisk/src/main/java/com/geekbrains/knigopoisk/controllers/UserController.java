@@ -67,12 +67,12 @@ public class UserController implements UserControllerApi {
 
     @Override
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void update(@Valid UserDetailsDto userDetailsDto, BindingResult theBindingResult, @NotNull @PathVariable Long id) {
+    public void update(@Valid UserDetailsDto userDetailsDto, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             throw new UserAttributeNotValidException("Ошибка валидации", theBindingResult);
         }
 
-        userService.updateUserDetailsFromUserDetailsDto(id, userDetailsDto);
+        userService.updateUserDetailsFromUserDetailsDto(userDetailsDto);
     }
 
     @Override
