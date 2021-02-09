@@ -24,6 +24,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Collections;
+import java.util.Optional;
 
 import static com.geekbrains.knigopoisk.testUtils.Users.*;
 import static org.mockito.Mockito.when;
@@ -71,10 +72,10 @@ class AuthControllerTest {
     @DisplayName("User authorization test")
     @Disabled
     public void userAuthorizationTest() throws Exception {
-        when(userRepository.findUserByUsername(USER_USERNAME).get())
-                .thenReturn(user);
-        when(userRepository.findUserByUsername(ADMIN_USERNAME).get())
-                .thenReturn(admin);
+        when(userRepository.findUserByUsername(USER_USERNAME))
+                .thenReturn(Optional.of(user));
+        when(userRepository.findUserByUsername(ADMIN_USERNAME))
+                .thenReturn(Optional.of(user));
 
         when(roleService.getRoleByName(Roles.ROLE_USER.name()))
                 .thenReturn(getRoleUser());

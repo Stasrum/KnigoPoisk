@@ -15,6 +15,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.util.Optional;
+
 import static com.geekbrains.knigopoisk.testUtils.Users.*;
 import static org.mockito.Mockito.when;
 
@@ -40,10 +42,10 @@ class UserServiceTest {
         admin = getAdmin();
 
         MockitoAnnotations.openMocks(this);
-        when(userRepository.findUserByUsername(USER_USERNAME).get())
-                .thenReturn(user);
-        when(userRepository.findUserByUsername(ADMIN_USERNAME).get())
-                .thenReturn(admin);
+        when(userRepository.findUserByUsername(USER_USERNAME))
+                .thenReturn(Optional.of(user));
+        when(userRepository.findUserByUsername(ADMIN_USERNAME))
+                .thenReturn(Optional.of(admin));
 
         when(roleService.getRoleByName(Roles.ROLE_USER.name()))
                 .thenReturn(getRoleUser());

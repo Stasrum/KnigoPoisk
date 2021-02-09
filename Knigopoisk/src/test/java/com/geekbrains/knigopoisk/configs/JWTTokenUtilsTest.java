@@ -54,13 +54,15 @@ class JWTTokenUtilsTest {
 
     @Test
     void getUsernameFromToken() {
-        String username = jwtTokenUtils.getUsernameFromToken(TEST_TOKEN);
+        String token = jwtTokenUtils.generateToken(user);
+        String username = jwtTokenUtils.getUsernameFromToken(token);
         Assertions.assertEquals(USER_USERNAME, username);
     }
 
     @Test
     void getRoles() {
-        List<String> roles = jwtTokenUtils.getRoles(TEST_TOKEN);
+        String token = jwtTokenUtils.generateToken(user);
+        List<String> roles = jwtTokenUtils.getRoles(token);
         Assertions.assertEquals(Roles.ROLE_USER.name(), roles.get(0));
     }
 }
