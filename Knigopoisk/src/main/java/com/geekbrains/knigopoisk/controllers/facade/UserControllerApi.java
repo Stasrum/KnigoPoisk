@@ -27,8 +27,8 @@ public interface UserControllerApi {
     @PostMapping("/users/register")
     void register(@Valid @RequestBody UserRegistrationDto userRegistrationDto, BindingResult theBindingResult);
 
-    @PostMapping("/users/update/{id}")
-    void update(@Valid @RequestBody UserDetailsDto userDetailsDto, BindingResult theBindingResult, @NotNull @PathVariable Long id);
+    @PostMapping("/users/update")
+    void update(@Valid @RequestBody UserDetailsDto userDetailsDto, BindingResult theBindingResult);
 
     @PostMapping("/users/changePassword/{id}")
     void changePassword(@Valid @RequestBody UserPasswordDto userPasswordDto, BindingResult theBindingResult,

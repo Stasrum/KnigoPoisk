@@ -11,6 +11,7 @@ import javax.validation.constraints.Size;
 @Data
 @NoArgsConstructor
 public class UserDetailsDto {
+    @NotNull(message = "требуется")
     private Long id;
 
     @NotNull(message = "требуется")
