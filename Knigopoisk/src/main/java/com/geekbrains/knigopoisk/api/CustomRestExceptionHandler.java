@@ -188,8 +188,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-    @ExceptionHandler({UserAlreadyExistsException.class})
-    public ResponseEntity<Object> handleUserAlreadyExistsException(final UserAlreadyExistsException ex, final WebRequest request) {
+    @ExceptionHandler({ElementAlreadyExistsException.class})
+    public ResponseEntity<Object> handleUserAlreadyExistsException(final ElementAlreadyExistsException ex, final WebRequest request) {
         logger.info(ex.getClass().getName());
 
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), Collections.EMPTY_LIST);
@@ -206,7 +206,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({NoSuchElementException.class, AuthorNotFoundException.class, BookNotFoundException.class,
             GenreNotFoundException.class, LanguageNotFoundException.class, PublisherNotFoundException.class,
-            UserNotFoundException.class, RoleAttributeNotValidException.class})
+            UserNotFoundException.class, RoleNotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleBadElementException(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), Collections.emptyList());
