@@ -20,9 +20,9 @@
       <th scope="row">{{i+1}}</th>
       <td>{{item.isbn}}</td>
       <td>{{item.title}}</td>
-      <td>{{item.author.name}}</td>
-      <td>{{item.genre.name}}</td>
-      <td>{{item.lang.name}}</td>
+      <td><div *ngFor="let authors of item.authors">{{authors.name}}</div></td>
+      <td><div *ngFor="let genres of item.genres">{{genres.name}}</div></td>
+      <td><div *ngFor="let laguages of item.languages">{{laguages.name}}</div></td>
       <td>{{item.publisher.name}}</td>
       <td>{{item.year}}</td>
       <td>{{item.description}}</td>

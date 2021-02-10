@@ -22,7 +22,8 @@
 
       <div class="form-group col-6">
         <label>Название книги</label>
-        <input type="text" class="form-control" [(ngModel)]="newBook.title" name="title" required minlength="4" #title="ngModel"
+        <input type="text" class="form-control" [(ngModel)]="newBook.title" name="title" required minlength="4"
+               #title="ngModel"
                placeholder="Введите название книги">
         <small class="text-danger" *ngIf="title.hasError('required')">
           Обязательно для заполнения
@@ -35,29 +36,35 @@
 
     <div class="row">
       <div class="form-group col-6">
-        <label>Жанр</label>
-        <div class="input-group-prepend">
-          <select type="text" class="custom-select" [(ngModel)]="edit[0]" name="genre" required #genre="ngModel">
-            <option [ngValue]="0" disabled>Выберите или добавте жанр книги</option>
-            <option *ngFor="let item of genres" [ngValue]='item.id'>{{item.name}}</option>
-          </select>
-          <div class="input-group-text" (click)="visibleAdd('жанр')">+</div>
+        <label>Жанр</label>{{addGenres | json}}
+        <div *ngFor="let iGenre = index of addGenres">
+          <div class="input-group-prepend" *ngIf="addGenres[iGenre] != 0">
+            <select type="text" class="custom-select" [(ngModel)]="addGenres[iGenre + 1]" name="genre{{iGenre + 1}}" (change)="addGenres = addSelect(addGenres)">
+              <option *ngIf="addGenres[iGenre+1] == 0" [ngValue]="0" disabled>Выберите или добавте жанр книги</option>
+              <option *ngIf="addGenres[iGenre+1] != 0" [ngValue]="0" >Удалить</option>
+              <option *ngFor="let item of genres" [ngValue]='item.id'>{{item.name}}</option>
+            </select>
+            <div class="input-group-text" (click)="visibleAdd('жанр')">+</div>
+          </div>
         </div>
-        <small class="text-danger" *ngIf="edit[0] == 0">
+        <small class="text-danger" *ngIf="addGenres.length <= 2">
           Обязательно для заполнения
         </small>
       </div>
 
       <div class="form-group col-6">
-        <label>Автор книги</label>
-        <div class="input-group-prepend">
-          <select type="text" class="custom-select" [(ngModel)]="edit[1]" name="autor">
-            <option [ngValue]="0" disabled>Выберите или добавте автора книги</option>
-            <option *ngFor="let item of authors" [ngValue]='item.id'>{{item.name}}</option>
-          </select>
-          <div class="input-group-text" (click)="visibleAdd('автора')">+</div>
+        <label>Автор книги</label>{{addAuthors | json}}
+        <div *ngFor="let iAuthor = index of addAuthors">
+          <div class="input-group-prepend" *ngIf="addAuthors[iAuthor] != 0">
+            <select type="text" class="custom-select" [(ngModel)]="addAuthors[iAuthor + 1]" name="autor{{iAuthor + 1}}" (change)="addAuthors = addSelect(addAuthors)">
+              <option *ngIf="addAuthors[iAuthor + 1] == 0" [ngValue]="0" disabled>Выберите или добавте автора книги</option>
+              <option *ngIf="addAuthors[iAuthor + 1] != 0" [ngValue]="0" >Удалить</option>
+              <option *ngFor="let item of authors" [ngValue]='item.id'>{{item.name}}</option>
+            </select>
+            <div class="input-group-text" (click)="visibleAdd('автора')">+</div>
+          </div>
         </div>
-        <small class="text-danger" *ngIf="edit[1] == 0">
+        <small class="text-danger" *ngIf="addAuthors.length <= 2">
           Обязательно для заполнения
         </small>
       </div>
@@ -77,15 +84,19 @@
       </div>
 
       <div class="form-group col-4">
-        <label>Язык написания книги</label>
-        <div class="input-group-prepend">
-          <select type="text" class="custom-select" [(ngModel)]="edit[2]" name="lang">
-            <option [ngValue]="0" disabled>Выберите или добавте язык книги</option>
-            <option *ngFor="let item of languages" [ngValue]='item.id'>{{item.name}}</option>
-          </select>
-          <div class="input-group-text" (click)="visibleAdd('язык')">+</div>
+        <label>Язык написания книги</label>{{addLanguages | json}}
+        <div *ngFor="let iLanguages = index of addLanguages">
+          <div class="input-group-prepend" *ngIf="addLanguages[iLanguages] != 0">
+            <select type="text" class="custom-select" [(ngModel)]="addLanguages[iLanguages + 1]"
+                    name="language{{iLanguages + 1}}" (click)="addLanguages = addSelect(addLanguages)">
+              <option *ngIf="addLanguages[iLanguages + 1] == 0" [ngValue]="0" disabled>Выберите или добавте язык книги</option>
+              <option *ngIf="addLanguages[iLanguages + 1] != 0" [ngValue]="0">Удалить</option>
+              <option *ngFor="let item of languages" [ngValue]='item.id'>{{item.name}}</option>
+            </select>
+            <div class="input-group-text" (click)="visibleAdd('язык')">+</div>
+          </div>
         </div>
-        <small class="text-danger" *ngIf="edit[2] == 0">
+        <small class="text-danger" *ngIf="addLanguages.length <= 2">
           Обязательно для заполнения
         </small>
       </div>
@@ -93,13 +104,13 @@
       <div class="form-group col-4">
         <label>Издатель</label>
         <div class="input-group-prepend">
-          <select type="text" class="custom-select" [(ngModel)]="edit[3]" name="publisher">
+          <select type="text" class="custom-select" [(ngModel)]="addPublisher" name="publisher">
             <option [ngValue]="0" disabled>Выберите или добавте издателя книги</option>
             <option *ngFor="let item of publishers" [ngValue]='item.id'>{{item.name}}</option>
           </select>
           <span class="input-group-text" (click)="visibleAdd('издателя')">+</span>
         </div>
-        <small class="text-danger" *ngIf="edit[3] == 0">
+        <small class="text-danger" *ngIf="addPublisher == 0">
           Обязательно для заполнения
         </small>
       </div>
@@ -113,12 +124,13 @@
     <div class="row p-3">
       <div class="col-7"></div>
       <button
-        [disabled]="isbn.errors || title.errors || edit[0] == 0 || edit[1] == 0 || year.errors || edit[2] == 0 || edit[3] == 0"
-        type="submit" class="btn btn-warning col-2" (click)="addNewBook(); formnewbook.reset()">Записать
+              [disabled]="isbn.errors || title.errors || addPublisher[0] == 0 || addLanguages[0] == 0 || year.errors || addAuthors[0] == 0 || addGenres[0] == 0"
+      type="submit" class="btn btn-warning col-2" (click)="addNewBook()">Записать
       </button>
       <div class="col-1"></div>
       <button (click)="visible = false" class=" btn btn-warning col-2" [routerLink]="['']">Отмена</button>
     </div>
+    {{newBook | json}}
   </form>
 </div>
 
