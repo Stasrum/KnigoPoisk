@@ -1,6 +1,8 @@
 package com.geekbrains.knigopoisk.api;
 
 import com.geekbrains.knigopoisk.exceptions.*;
+import com.geekbrains.knigopoisk.exceptions.types.AttributeNotValidException;
+import com.geekbrains.knigopoisk.exceptions.types.ElementAlreadyExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.TypeMismatchException;
@@ -177,7 +179,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     // custom 400
 
     @ExceptionHandler({AttributeNotValidException.class})
-    public ResponseEntity<Object> handleUserAttributeNotValidException(final UserAttributeNotValidException ex, final WebRequest request) {
+    public ResponseEntity<Object> handleUserAttributeNotValidException(final AttributeNotValidException ex, final WebRequest request) {
         logger.info(ex.getClass().getName());
 
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),

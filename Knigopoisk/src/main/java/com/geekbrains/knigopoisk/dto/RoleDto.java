@@ -8,6 +8,6 @@ import javax.validation.constraints.Size;
 @Data
 public class RoleDto {
     @NotNull(message = "Role name must be not null")
-    @Size(min = 4)
+    @Size(min = 4, max = 45)
     private String name;
 }

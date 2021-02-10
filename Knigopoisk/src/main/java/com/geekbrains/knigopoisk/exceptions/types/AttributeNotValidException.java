@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.exceptions;
+package com.geekbrains.knigopoisk.exceptions.types;
 
 import lombok.*;
 import org.springframework.validation.BindingResult;

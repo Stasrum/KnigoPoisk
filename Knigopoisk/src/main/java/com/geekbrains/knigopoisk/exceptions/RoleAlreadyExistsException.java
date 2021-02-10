@@ -1,6 +1,8 @@
 package com.geekbrains.knigopoisk.exceptions;
 
-public class RoleAlreadyExistsException extends ElementAlreadyExistsException{
+import com.geekbrains.knigopoisk.exceptions.types.ElementAlreadyExistsException;
+
+public class RoleAlreadyExistsException extends ElementAlreadyExistsException {
     public RoleAlreadyExistsException(String message) {
         super(message);
     }
