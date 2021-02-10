@@ -10,14 +10,15 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Collections;
 
-@RequiredArgsConstructor
 public abstract class UserMapperDecorator implements UserMapper {
 
     @Autowired
     @Qualifier("delegate")
     private UserMapper delegate;
 
+    @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+    @Autowired
     private RoleService roleService;
 
     @Override
