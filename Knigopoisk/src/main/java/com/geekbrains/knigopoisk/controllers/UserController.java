@@ -1,15 +1,19 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.UserControllerApi;
+import com.geekbrains.knigopoisk.dto.RoleDto;
 import com.geekbrains.knigopoisk.dto.UserDetailsDto;
 import com.geekbrains.knigopoisk.dto.UserPasswordDto;
 import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
+import com.geekbrains.knigopoisk.dto.mappers.RoleMapper;
 import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
+import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
+import com.geekbrains.knigopoisk.exceptions.RoleAttributeNotValidException;
 import com.geekbrains.knigopoisk.exceptions.UserAlreadyExistsException;
 import com.geekbrains.knigopoisk.exceptions.UserAttributeNotValidException;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,26 +26,22 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController implements UserControllerApi {
-    private UserService userService;
-    @Autowired
-    private UserMapper mapper;
-
-    @Autowired
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService;
+    private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
 
     @Override
     public List<UserDetailsDto> getAllUser() {
-        List<UserDetailsDto> userDtoList = mapper.getUserDetailsDtoListFromUserList(userService.getAll());
+        List<UserDetailsDto> userDtoList = userMapper.getUserDetailsDtoListFromUserList(userService.getAll());
         return userDtoList;
     }
 
     @Override
     public UserDetailsDto getUser(@NotNull Long id) {
         User user = userService.findByUserId(id);
-        return mapper.getUserDetailsDtoFromUser(user);
+        return userMapper.getUserDetailsDtoFromUser(user);
     }
 
     @Override
@@ -83,5 +83,35 @@ public class UserController implements UserControllerApi {
         }
 
         userService.updateUserPasswordFromUserPasswordDto(id, userPasswordDto);
+    }
+
+    @Override
+    public List<RoleDto> getAssignedRoles(@NotNull @PathVariable Long id) {
+        return roleMapper.getRoleDtoListFromRoleList(userService.getAssignedRolesByUserId(id));
+    }
+
+    @Override
+    public List<RoleDto> getUnAssignedRoles(@NotNull @PathVariable Long id) {
+        return roleMapper.getRoleDtoListFromRoleList(userService.getUnAssignedRolesByUserId(id));
+    }
+
+    @Override
+    public List<RoleDto> addRole(@Valid RoleDto roleDto, BindingResult theBindingResult, @NotNull @PathVariable Long id) {
+        if (theBindingResult.hasErrors()) {
+            throw new RoleAttributeNotValidException("Ошибка валидации роли", theBindingResult);
+        }
+
+        List<Role> userRoles = userService.addRoleByRoleName(id, roleDto.getName());
+        return roleMapper.getRoleDtoListFromRoleList(userRoles);
+    }
+
+    @Override
+    public List<RoleDto> removeRole(@Valid RoleDto roleDto, BindingResult theBindingResult, @NotNull @PathVariable Long id) {
+        if (theBindingResult.hasErrors()) {
+            throw new RoleAttributeNotValidException("Ошибка валидации роли", theBindingResult);
+        }
+
+        List<Role> userRoles = userService.removeRoleByRoleName(id, roleDto.getName());
+        return roleMapper.getRoleDtoListFromRoleList(userRoles);
     }
 }

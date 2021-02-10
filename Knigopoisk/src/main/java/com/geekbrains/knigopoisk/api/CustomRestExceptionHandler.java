@@ -1,6 +1,8 @@
 package com.geekbrains.knigopoisk.api;
 
 import com.geekbrains.knigopoisk.exceptions.*;
+import com.geekbrains.knigopoisk.exceptions.types.AttributeNotValidException;
+import com.geekbrains.knigopoisk.exceptions.types.ElementAlreadyExistsException;
 import lombok.extern.slf4j.Slf4j;
 import org.postgresql.util.PSQLException;
 import org.springframework.beans.TypeMismatchException;
@@ -29,7 +31,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.Flow;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -177,8 +178,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     // custom 400
 
-    @ExceptionHandler({UserAttributeNotValidException.class})
-    public ResponseEntity<Object> handleUserAttributeNotValidException(final UserAttributeNotValidException ex, final WebRequest request) {
+    @ExceptionHandler({AttributeNotValidException.class})
+    public ResponseEntity<Object> handleUserAttributeNotValidException(final AttributeNotValidException ex, final WebRequest request) {
         logger.info(ex.getClass().getName());
 
         final ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(),
@@ -189,8 +190,8 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-    @ExceptionHandler({UserAlreadyExistsException.class})
-    public ResponseEntity<Object> handleUserAlreadyExistsException(final UserAlreadyExistsException ex, final WebRequest request) {
+    @ExceptionHandler({ElementAlreadyExistsException.class})
+    public ResponseEntity<Object> handleUserAlreadyExistsException(final ElementAlreadyExistsException ex, final WebRequest request) {
         logger.info(ex.getClass().getName());
 
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getLocalizedMessage(), Collections.EMPTY_LIST);
@@ -205,7 +206,9 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-    @ExceptionHandler({NoSuchElementException.class, AuthorNotFoundException.class,BookNotFoundException.class, GenreNotFoundException.class,LanguageNotFoundException.class, PublisherNotFoundException.class,UserNotFoundException.class})
+    @ExceptionHandler({NoSuchElementException.class, AuthorNotFoundException.class, BookNotFoundException.class,
+            GenreNotFoundException.class, LanguageNotFoundException.class, PublisherNotFoundException.class,
+            UserNotFoundException.class, RoleNotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleBadElementException(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), Collections.emptyList());

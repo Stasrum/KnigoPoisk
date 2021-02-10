@@ -1,5 +1,6 @@
 package com.geekbrains.knigopoisk.controllers.facade;
 
+import com.geekbrains.knigopoisk.dto.RoleDto;
 import com.geekbrains.knigopoisk.dto.UserDetailsDto;
 import com.geekbrains.knigopoisk.dto.UserPasswordDto;
 import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
@@ -21,7 +22,7 @@ public interface UserControllerApi {
     @GetMapping("/users/{id}")
     UserDetailsDto getUser(@PathVariable("id") @NotNull Long id);
 
-    @GetMapping("/users/delete/{id}")
+    @GetMapping("/users/{id}/delete")
     void deleteUserById(@PathVariable("id") @NotNull Long id);
 
     @PostMapping("/users/register")
@@ -30,7 +31,21 @@ public interface UserControllerApi {
     @PostMapping("/users/update")
     void update(@Valid @RequestBody UserDetailsDto userDetailsDto, BindingResult theBindingResult);
 
-    @PostMapping("/users/changePassword/{id}")
+    @PostMapping("/users/{id}/changePassword")
     void changePassword(@Valid @RequestBody UserPasswordDto userPasswordDto, BindingResult theBindingResult,
+                        @NotNull @PathVariable Long id);
+
+    @GetMapping("/users/{id}/assignedRoles")
+    List<RoleDto> getAssignedRoles(@NotNull @PathVariable Long id);
+
+    @GetMapping("/users/{id}/unAssignedRoles")
+    List<RoleDto> getUnAssignedRoles(@NotNull @PathVariable Long id);
+
+    @PostMapping("/users/{id}/addRole")
+    List<RoleDto> addRole(@Valid @RequestBody RoleDto roleDto, BindingResult theBindingResult,
+                        @NotNull @PathVariable Long id);
+
+    @PostMapping("/users/{id}/removeRole")
+    List<RoleDto> removeRole(@Valid @RequestBody RoleDto roleDto, BindingResult theBindingResult,
                         @NotNull @PathVariable Long id);
 }
