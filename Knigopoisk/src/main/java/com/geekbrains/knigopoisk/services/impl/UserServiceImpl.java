@@ -28,14 +28,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private UserMapper userMapper;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final UserMapper userMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -86,6 +81,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean updateUserPasswordFromUserPasswordDto(Long userId, UserPasswordDto userPasswordDto) {
         User user = userRepository.findById(userId).orElseThrow(() ->
                 new UserNotFoundException("User id = <" + userId + "> not found"));

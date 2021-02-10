@@ -6,8 +6,10 @@ import com.geekbrains.knigopoisk.configs.Roles;
 import com.geekbrains.knigopoisk.dto.JwtRequest;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
+import com.geekbrains.knigopoisk.repositories.RoleRepository;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
 import com.geekbrains.knigopoisk.services.contracts.RoleService;
+import com.geekbrains.knigopoisk.services.impl.RoleServiceImpl;
 import com.geekbrains.knigopoisk.services.impl.UserServiceImpl;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +44,9 @@ class AuthControllerTest {
     private UserRepository userRepository;
 
     @Mock
-    private RoleService roleService;
+    private RoleRepository roleRepository;
+
+    private RoleService roleService = new RoleServiceImpl(roleRepository);
 
     @Mock
     private BCryptPasswordEncoder passwordEncoder;
@@ -71,7 +75,7 @@ class AuthControllerTest {
     @Test
     @DisplayName("User authorization test")
     @Disabled
-    public void userAuthorizationTest() throws Exception {
+    void userAuthorizationTest() throws Exception {
         when(userRepository.findUserByUsername(USER_USERNAME))
                 .thenReturn(Optional.of(user));
         when(userRepository.findUserByUsername(ADMIN_USERNAME))

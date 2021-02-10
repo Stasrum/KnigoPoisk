@@ -9,6 +9,7 @@ import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.exceptions.UserAlreadyExistsException;
 import com.geekbrains.knigopoisk.exceptions.UserAttributeNotValidException;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindingResult;
@@ -22,10 +23,10 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 public class UserController implements UserControllerApi {
     private UserService userService;
-    @Autowired
-    private UserMapper mapper;
+    private final UserMapper mapper;
 
     @Autowired
     public void setUserService(UserService userService) {
