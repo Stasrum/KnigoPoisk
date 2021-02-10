@@ -29,7 +29,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.concurrent.Flow;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -177,7 +176,7 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
 
     // custom 400
 
-    @ExceptionHandler({UserAttributeNotValidException.class})
+    @ExceptionHandler({AttributeNotValidException.class})
     public ResponseEntity<Object> handleUserAttributeNotValidException(final UserAttributeNotValidException ex, final WebRequest request) {
         logger.info(ex.getClass().getName());
 
@@ -205,7 +204,9 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-    @ExceptionHandler({NoSuchElementException.class, AuthorNotFoundException.class,BookNotFoundException.class, GenreNotFoundException.class,LanguageNotFoundException.class, PublisherNotFoundException.class,UserNotFoundException.class})
+    @ExceptionHandler({NoSuchElementException.class, AuthorNotFoundException.class, BookNotFoundException.class,
+            GenreNotFoundException.class, LanguageNotFoundException.class, PublisherNotFoundException.class,
+            UserNotFoundException.class, RoleAttributeNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleBadElementException(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), Collections.emptyList());
