@@ -1,5 +1,6 @@
 package com.geekbrains.knigopoisk.controllers.facade;
 
+import com.geekbrains.knigopoisk.dto.RoleDto;
 import com.geekbrains.knigopoisk.dto.UserDetailsDto;
 import com.geekbrains.knigopoisk.dto.UserPasswordDto;
 import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
@@ -32,5 +33,19 @@ public interface UserControllerApi {
 
     @PostMapping("/users/changePassword/{id}")
     void changePassword(@Valid @RequestBody UserPasswordDto userPasswordDto, BindingResult theBindingResult,
+                        @NotNull @PathVariable Long id);
+
+    @GetMapping("/users/assignedRoles/{id}")
+    List<RoleDto> getAssignedRoles(@NotNull @PathVariable Long id);
+
+    @GetMapping("/users/unAssignedRoles/{id}")
+    List<RoleDto> getUnAssignedRoles(@NotNull @PathVariable Long id);
+
+    @PostMapping("/users/addRole/{id}")
+    List<RoleDto> addRole(@Valid @RequestBody RoleDto roleDto, BindingResult theBindingResult,
+                        @NotNull @PathVariable Long id);
+
+    @PostMapping("/users/removeRole/{id}")
+    List<RoleDto> removeRole(@Valid @RequestBody RoleDto roleDto, BindingResult theBindingResult,
                         @NotNull @PathVariable Long id);
 }
