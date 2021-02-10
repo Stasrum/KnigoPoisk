@@ -7,6 +7,7 @@ import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
 import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
+import com.geekbrains.knigopoisk.exceptions.RoleAlreadyExistsException;
 import com.geekbrains.knigopoisk.exceptions.UserNotFoundException;
 import com.geekbrains.knigopoisk.repositories.UserRepository;
 import com.geekbrains.knigopoisk.services.contracts.RoleService;
@@ -133,7 +134,6 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public List<Role> getUnAssignedRolesByUserId(Long userId) {
         User user = getUserWithExistenceCheck(userId);
-
         return roleService.getAll().stream()
                 .filter(role -> user.getRoles().stream().noneMatch(userRole -> userRole.equals(role)))
                 .collect(Collectors.toList());
@@ -153,6 +153,9 @@ public class UserServiceImpl implements UserService {
     public List<Role> addRoleByRoleName(Long userId, String roleName) {
         User user = getUserWithExistenceCheck(userId);
         Role role = roleService.getRoleByName(roleName);
+        if (user.getRoles().stream().anyMatch(currentRole -> currentRole.equals(role))) {
+            throw new RoleAlreadyExistsException("Данная роль уже назначена");
+        }
         user.getRoles().add(role);
         return new ArrayList<>(user.getRoles());
     }

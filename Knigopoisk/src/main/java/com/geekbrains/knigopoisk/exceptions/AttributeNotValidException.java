@@ -1,15 +1,11 @@
 package com.geekbrains.knigopoisk.exceptions;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.validation.BindingResult;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-@NoArgsConstructor
+@Getter
 public class AttributeNotValidException extends RuntimeException {
-    private BindingResult bindingResult;
+    private final BindingResult bindingResult;
 
     public AttributeNotValidException(String message, BindingResult bindingResult) {
         super(message);
