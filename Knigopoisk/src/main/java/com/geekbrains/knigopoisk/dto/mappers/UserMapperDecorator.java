@@ -17,8 +17,8 @@ public abstract class UserMapperDecorator implements UserMapper {
     @Qualifier("delegate")
     private UserMapper delegate;
 
-    private BCryptPasswordEncoder passwordEncoder;
-    private RoleService roleService;
+    private final BCryptPasswordEncoder passwordEncoder;
+    private final RoleService roleService;
 
     @Override
     public User getUserFromUserRegistrationDto(UserRegistrationDto userRegistrationDto) {
