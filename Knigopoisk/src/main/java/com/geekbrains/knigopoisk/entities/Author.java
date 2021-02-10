@@ -8,6 +8,7 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.Objects;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "Author")
 @Table(name = "authors")
 @Data
@@ -25,9 +26,9 @@ public class Author extends DefaultEntity {
     private String description;
 
     // TODO Развязать циклическую зависимость
-//    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(name = "books_authors",
-//            joinColumns = @JoinColumn(name = "author_id"),
-//            inverseJoinColumns = @JoinColumn(name = "book_id"))
-//    private Collection<Book> books;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "books_authors",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
+    private Collection<Book> books;
 }

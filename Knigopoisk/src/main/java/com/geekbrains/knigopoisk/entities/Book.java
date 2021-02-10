@@ -5,8 +5,11 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "Book")
 @Table(name = "books")
 @Data
@@ -19,12 +22,15 @@ public class Book extends DefaultEntity {
     @Column(name = "title")
     @Size(min = 4, max = 255, message = "4 - 255 symbols")
     private String title;
+//
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(name = "books_authors",
+//            joinColumns = @JoinColumn(name = "book_id"),
+//            inverseJoinColumns = @JoinColumn(name = "author_id"))
+//    private List<Author> authors;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "books_authors",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private List<Author> authors;
+    @ManyToMany(mappedBy = "books")
+    private Collection<Author> authors;
 
     @Column(name = "year")
     private int year;
