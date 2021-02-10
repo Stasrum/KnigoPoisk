@@ -61,7 +61,9 @@ export class AdminBookComponent implements OnInit {
         this.addPublisher = this.newBook.publisher.id;
       });
     }
-    this.authorcontroller.getAllAuthor().subscribe((rec: any) => this.authors = rec);
+    this.authorcontroller.getAllAuthor().subscribe((rec: any) => {
+      this.authors = rec;
+    });
     this.langcontroller.getAllLang().subscribe((rec: any) => this.languages = rec);
     this.genrecontroller.getAllGenre().subscribe((rec: any) => this.genres = rec);
     this.publishercontroller.getAllPublisher().subscribe((rec: any) => this.publishers = rec);

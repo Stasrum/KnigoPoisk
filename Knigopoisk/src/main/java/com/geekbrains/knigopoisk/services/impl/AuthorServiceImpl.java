@@ -4,19 +4,22 @@ import com.geekbrains.knigopoisk.entities.Author;
 import com.geekbrains.knigopoisk.repositories.AuthorRepository;
 import com.geekbrains.knigopoisk.services.contracts.AuthorService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class AuthorServiceImpl implements AuthorService {
+public class
+AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
 
     @Override
     public List<Author> getAll() {
-        return authorRepository.findAll();
+        return authorRepository.findAllByOrderByNameAsc();
     }
 
     @Override

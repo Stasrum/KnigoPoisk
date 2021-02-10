@@ -36,7 +36,7 @@
 
     <div class="row">
       <div class="form-group col-6">
-        <label>Жанр</label>{{addGenres | json}}
+        <label>Жанр</label>
         <div *ngFor="let iGenre = index of addGenres">
           <div class="input-group-prepend" *ngIf="addGenres[iGenre] != 0">
             <select type="text" class="custom-select" [(ngModel)]="addGenres[iGenre + 1]" name="genre{{iGenre + 1}}" (change)="addGenres = addSelect(addGenres)">
@@ -53,7 +53,7 @@
       </div>
 
       <div class="form-group col-6">
-        <label>Автор книги</label>{{addAuthors | json}}
+        <label>Автор книги</label>
         <div *ngFor="let iAuthor = index of addAuthors">
           <div class="input-group-prepend" *ngIf="addAuthors[iAuthor] != 0">
             <select type="text" class="custom-select" [(ngModel)]="addAuthors[iAuthor + 1]" name="autor{{iAuthor + 1}}" (change)="addAuthors = addSelect(addAuthors)">
@@ -84,7 +84,7 @@
       </div>
 
       <div class="form-group col-4">
-        <label>Язык написания книги</label>{{addLanguages | json}}
+        <label>Язык написания книги</label>
         <div *ngFor="let iLanguages = index of addLanguages">
           <div class="input-group-prepend" *ngIf="addLanguages[iLanguages] != 0">
             <select type="text" class="custom-select" [(ngModel)]="addLanguages[iLanguages + 1]"
@@ -130,7 +130,6 @@
       <div class="col-1"></div>
       <button (click)="visible = false" class=" btn btn-warning col-2" [routerLink]="['']">Отмена</button>
     </div>
-    {{newBook | json}}
   </form>
 </div>
 
