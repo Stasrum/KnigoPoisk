@@ -16,8 +16,12 @@ export class BookController {
     return this.http.get(path + 'books/' + id)
   }
 
-  create(book: Book) {
-    return this.http.post(path + 'books/create', book);
+  add(book: Book) {
+    return this.http.post(path + 'api/v1/admin/books/add', book);
+  }
+
+  edit(book: Book) {
+    return this.http.post(path + 'api/v1/admin/books/edit', book);
   }
 
   deleteById(id) {
