@@ -6,6 +6,10 @@ CREATE TABLE comments (
     updated TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id)
 )
+GO
+
+alter table if exists comments add constraint FK8omq0tc18jd43bu5tjh6jvraq
+        foreign key (user_id) references users
 
 GO
 
