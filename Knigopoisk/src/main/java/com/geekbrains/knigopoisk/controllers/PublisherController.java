@@ -1,6 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.PublisherControllerApi;
+import com.geekbrains.knigopoisk.dto.PublisherDto;
 import com.geekbrains.knigopoisk.entities.Publisher;
 import com.geekbrains.knigopoisk.services.contracts.PublisherService;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,12 @@ public class PublisherController implements PublisherControllerApi {
     private final PublisherService publisherService;
 
     @Override
-    public List<Publisher> getAllPublishers() {
+    public List<PublisherDto> getAllPublishers() {
         return publisherService.getAll();
     }
 
     @Override
-    public Publisher createPublisher(@RequestBody @Valid Publisher publisher) {
+    public PublisherDto createPublisher(@RequestBody @Valid PublisherDto publisher) {
         return publisherService.save(publisher);
     }
 }

@@ -18,6 +18,7 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -30,14 +31,17 @@ public class BookServiceImpl implements BookService {
 
 
     @Override
-    public List<Book> getAll() {
-        return bookRepository.findAll();
+    public List<BookDto> getAll() {
+        List<Book> books = bookRepository.findAllByOrderByTitleAsc();
+        return books.stream().map(BookDto::new).collect(Collectors.toList());
     }
 
     @Override
-    public Book save(Book book) {
-        book.setId(null);
-        return bookRepository.save(book);
+    public BookDto save(BookDto bookDto) {
+        Book b = BookDto.fromDto(bookDto);
+        b.setId(null);
+        Book book = bookRepository.save(b);
+        return new BookDto(book);
     }
 
     @Override
@@ -104,10 +108,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Optional<Book> findById(Long id) {
-        Optional<Book> book = bookRepository.findById(id);
-        if (!book.isPresent()) { throw  new BookNotFoundException("Книга с таким ID не найдена");}
-        return book;
+    public BookDto findById(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(()->new BookNotFoundException("Книга с таким ID не найдена"));
+        return new BookDto(book);
     }
 
     @Override
@@ -116,8 +119,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public Book update(Book book) {
-        book.setUpdated(OffsetDateTime.now());
-        return bookRepository.save(book);
+    public BookDto update(BookDto bookDto) {
+        Book b = bookRepository.findOneByTitle(bookDto.getTitle()).orElseThrow(()-> new BookNotFoundException("Book isn't found"));
+        b.setUpdated(OffsetDateTime.now());
+        Book book = bookRepository.save(b);
+        return new BookDto(book);
     }
 }

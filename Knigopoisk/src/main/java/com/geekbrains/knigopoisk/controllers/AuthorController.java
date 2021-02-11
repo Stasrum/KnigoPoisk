@@ -1,6 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.AuthorControllerApi;
+import com.geekbrains.knigopoisk.dto.AuthorDto;
 import com.geekbrains.knigopoisk.entities.Author;
 import com.geekbrains.knigopoisk.services.contracts.AuthorService;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,12 @@ public class AuthorController implements AuthorControllerApi {
     private final AuthorService authorService;
 
     @Override
-    public List<Author> getAllAuthors() {
+    public List<AuthorDto> getAllAuthors() {
         return authorService.getAll();
     }
 
     @Override
-    public Author createAuthor(@RequestBody @Valid Author author) {
+    public AuthorDto createAuthor(@RequestBody @Valid AuthorDto author) {
         return authorService.save(author);
     }
 

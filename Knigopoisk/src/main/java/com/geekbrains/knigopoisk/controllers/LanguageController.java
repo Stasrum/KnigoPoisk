@@ -1,6 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.LanguageControllerApi;
+import com.geekbrains.knigopoisk.dto.LanguageDto;
 import com.geekbrains.knigopoisk.entities.Language;
 import com.geekbrains.knigopoisk.services.contracts.LanguageService;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +18,12 @@ public class LanguageController implements LanguageControllerApi {
     private final LanguageService languageService;
 
     @Override
-    public List<Language> getAllLanguages() {
+    public List<LanguageDto> getAllLanguages() {
         return languageService.getAll();
     }
 
     @Override
-    public Language createLanguage(@RequestBody @Valid Language language) {
+    public LanguageDto createLanguage(@RequestBody @Valid LanguageDto language) {
         return languageService.save(language);
     }
 }

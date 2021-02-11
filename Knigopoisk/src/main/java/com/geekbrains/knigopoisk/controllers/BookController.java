@@ -35,7 +35,7 @@ public class BookController implements BookControllerApi {
     }
 
     @Override
-    public Optional<Book> findById(@PathVariable("id") @NotNull Long id) {
+    public BookDto findById(@PathVariable("id") @NotNull Long id) {
         return bookService.findById(id);
     }
 
@@ -46,7 +46,7 @@ public class BookController implements BookControllerApi {
     }
 
     @Override
-    public Book createBook(@RequestBody Book book) {
-        return bookService.save(book);
+    public BookDto createBook(@RequestBody BookDto bookDto) {
+        return bookService.save(bookDto);
     }
 }

@@ -16,4 +16,12 @@ public class AuthorDto {
         this.name = author.getName();
         this.description = author.getDescription();
     }
+
+    public static Author fromDto(AuthorDto authorDto) {
+        Author author = new Author();
+        author.setId(authorDto.getId());
+        author.setName(authorDto.getName());
+        author.setDescription(authorDto.getDescription());
+        return author;
+    }
 }
