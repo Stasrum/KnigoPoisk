@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -57,5 +58,19 @@ public class BookDto {
         this.publisher = publisherDto;
         this.description = book.getDescription();
         this.isbn = book.getIsbn();
+    }
+
+    public static Book fromDto(BookDto bookDto) {
+        Book book = new Book();
+        book.setId(bookDto.getId());
+        book.setTitle(bookDto.getTitle());
+        book.setAuthors(bookDto.getAuthors().stream().map(AuthorDto::fromDto).collect(Collectors.toList()));
+        book.setGenres(bookDto.getGenres().stream().map(GenreDto::fromDto).collect(Collectors.toList()));
+        book.setLanguages(bookDto.getLanguages().stream().map(LanguageDto::fromDto).collect(Collectors.toList()));
+        book.setYear(bookDto.getYear());
+        book.setPublisher(book.getPublisher());
+        book.setDescription(bookDto.getDescription());
+        book.setIsbn(bookDto.getIsbn());
+        return book;
     }
 }

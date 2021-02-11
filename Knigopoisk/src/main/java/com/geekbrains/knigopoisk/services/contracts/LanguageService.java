@@ -1,14 +1,15 @@
 package com.geekbrains.knigopoisk.services.contracts;
 
+import com.geekbrains.knigopoisk.dto.LanguageDto;
 import com.geekbrains.knigopoisk.entities.Language;
 
 import java.util.List;
 
 public interface LanguageService {
 
-    List<Language> getAll();
+    List<LanguageDto> getAll();
 
-    Language save(Language language);
+    LanguageDto save(LanguageDto languageDto);
 
-    Language update(Language language);
+    LanguageDto update(LanguageDto languageDto);
 }

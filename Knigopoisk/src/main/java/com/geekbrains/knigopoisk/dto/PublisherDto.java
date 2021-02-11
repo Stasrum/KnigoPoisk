@@ -16,4 +16,12 @@ public class PublisherDto {
         this.name = publisher.getName();
         this.description = publisher.getDescription();
     }
+
+    public static Publisher fromDto(PublisherDto publisherDto) {
+        Publisher publisher = new Publisher();
+        publisher.setId(publisherDto.getId());
+        publisher.setName(publisherDto.getName());
+        publisher.setDescription(publisherDto.getDescription());
+        return publisher;
+    }
 }

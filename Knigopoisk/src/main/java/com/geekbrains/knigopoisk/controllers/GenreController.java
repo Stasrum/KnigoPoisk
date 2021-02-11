@@ -1,7 +1,7 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.GenreControllerApi;
-import com.geekbrains.knigopoisk.entities.Genre;
+import com.geekbrains.knigopoisk.dto.GenreDto;
 import com.geekbrains.knigopoisk.services.contracts.GenreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -17,12 +17,12 @@ public class GenreController implements GenreControllerApi {
     private final GenreService genreService;
 
     @Override
-    public List<Genre> getAllGenres() {
+    public List<GenreDto> getAllGenres() {
         return genreService.getAll();
     }
 
     @Override
-    public Genre createGenre(@RequestBody @Valid Genre genre) {
-        return genreService.save(genre);
+    public GenreDto createGenre(@RequestBody @Valid GenreDto genreDto) {
+        return genreService.save(genreDto);
     }
 }

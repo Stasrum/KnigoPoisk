@@ -1,14 +1,15 @@
 package com.geekbrains.knigopoisk.services.contracts;
 
+import com.geekbrains.knigopoisk.dto.PublisherDto;
 import com.geekbrains.knigopoisk.entities.Publisher;
 
 import java.util.List;
 
 public interface PublisherService {
 
-    List<Publisher> getAll();
+    List<PublisherDto> getAll();
 
-    Publisher save(Publisher publisher);
+    PublisherDto save(PublisherDto publisher);
 
-    Publisher update(Publisher publisher);
+    PublisherDto update(PublisherDto publisher);
 }

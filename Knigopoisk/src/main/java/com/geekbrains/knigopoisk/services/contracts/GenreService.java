@@ -1,14 +1,14 @@
 package com.geekbrains.knigopoisk.services.contracts;
 
-import com.geekbrains.knigopoisk.entities.Genre;
+import com.geekbrains.knigopoisk.dto.GenreDto;
 
 import java.util.List;
 
 public interface GenreService {
 
-    List<Genre> getAll();
+    List<GenreDto> getAll();
 
-    Genre save(Genre genre);
+    GenreDto save(GenreDto genreDto);
 
-    Genre update(Genre genre);
+    GenreDto update(GenreDto genreDto);
 }
