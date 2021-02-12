@@ -1,0 +1,38 @@
+<app-header></app-header>
+
+<div class="row" style="width: 100%">
+  <form class="col-2 p-4" #findForm = "ngForm">
+    <label>Наименование книги</label>
+    <input type="text" class="form-control col-12" [(ngModel)]="title" name="title5">
+    <label>Автор книги</label>
+    <input type="text" class="form-control col-12" [(ngModel)]="author" name="author5">
+    <label>Жанр книги</label>
+    <input type="text" class="form-control col-12" [(ngModel)]="genre" name="genre5">
+    <button type="submit" class="btn btn-warning col-12 mt-3" (click)="findBook()">Поиск</button>
+    <button type="submit" class="btn btn-warning col-12 mt-3" (click)="title=''; genre=''; author=''; findBook(); findForm.reset()">Сброс</button>
+  </form>
+  <div class="col-10">
+    <div>
+    <div style="display: flex; flex-wrap: wrap; justify-content: space-around">
+      <div *ngFor="let item of allBooks" class="shadowBorder m-4" style="width: 20rem">
+        <div style="height: 12rem; background-color: darkgray">
+        </div>
+        <div class="card-body">
+          <h5 class="card-title" style="height: 3rem">{{item.title}}</h5>
+          <p><span *ngFor="let genre of item.genres" class="card-text">{{genre.name}}&nbsp;</span></p>
+          <p class="card-text overflow-auto" style="height: 10rem; font-size: 11px">{{item.description}}</p>
+        </div>
+      </div>
+    </div>
+      <nav>
+        <ul class="pagination" style="justify-content: center">
+          <li *ngFor="let i = index of pageadle[3]" class="page-item"><a class="page-link {{activeNumber[i+1]}}" (click)="pageable(i + 1)">{{i + 1}}</a></li>
+          <li class="page-item"><a class="page-link">Элементов на странице</a></li>
+          <li class="page-item"><a class="page-link {{activeSize[1]}}" (click)="pageadleSize(10)">1</a></li>
+          <li class="page-item"><a class="page-link {{activeSize[2]}}" (click)="pageadleSize(20)">2</a></li>
+          <li class="page-item"><a class="page-link {{activeSize[3]}}" (click)="pageadleSize(30)">3</a></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

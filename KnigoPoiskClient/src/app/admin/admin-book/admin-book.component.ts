@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Author, Book, Genre, Lang, Publisher} from '../entities/Book';
-import {AuthorController} from '../controllers/AuthorController';
-import {LangController} from '../controllers/LangController';
-import {GenreController} from '../controllers/GenreController';
-import {PublisherController} from '../controllers/PublisherController';
-import {BookController} from '../controllers/BookController';
+import {Author, Book, Genre, Lang, Publisher} from '../../utils/entities/Book';
+import {AuthorController} from '../../utils/controllers/AuthorController';
+import {LangController} from '../../utils/controllers/LangController';
+import {GenreController} from '../../utils/controllers/GenreController';
+import {PublisherController} from '../../utils/controllers/PublisherController';
+import {BookController} from '../../utils/controllers/BookController';
 import {ActivatedRoute, Router} from "@angular/router";
 import {Subscription} from "rxjs";
 
@@ -77,12 +77,12 @@ export class AdminBookComponent implements OnInit {
     if (this.id) {
       this.bookcontroller.edit(this.newBook).subscribe(error => {
         console.log(this.newBook);
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('/editbook');
       });
     } else {
       this.bookcontroller.add(this.newBook).subscribe(error => {
         console.log(this.newBook);
-        this.router.navigateByUrl('');
+        this.router.navigateByUrl('/editbook');
       });
     }
   }

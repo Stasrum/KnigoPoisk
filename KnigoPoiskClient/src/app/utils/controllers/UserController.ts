@@ -4,7 +4,7 @@ import {LoginUser, UserDto} from "../entities/User";
 import {path} from "../entities/Constant";
 
 @Injectable({providedIn: 'root'})
-export class AuthController{
+export class UserController {
 
   constructor(private http: HttpClient) {
   }
@@ -14,5 +14,9 @@ export class AuthController{
 
   registrationUser(userDto: UserDto){
     return this.http.post(path + 'users/register', userDto)
+  }
+
+  userInfo(userDto: UserDto){
+    return this.http.get(path + 'users/register')
   }
 }

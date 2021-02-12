@@ -1,13 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import {Book} from '../entities/Book';
-import {BookController} from '../controllers/BookController';
+import {Book} from '../../utils/entities/Book';
+import {BookController} from '../../utils/controllers/BookController';
 
 @Component({
   selector: 'app-main',
-  templateUrl: './main.component.html',
-  styleUrls: ['./main.component.css']
+  templateUrl: './all-books.component.html',
+  styleUrls: ['./all-books.component.css']
 })
-export class MainComponent implements OnInit {
+export class AllBooksComponent implements OnInit {
   public allBooks: Array<Book>;
 
   constructor(private bookcontroller: BookController) {
