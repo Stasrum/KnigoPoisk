@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {LoginUser} from '../entities/User';
-import {AuthController} from '../controllers/AuthController';
+import {LoginUser} from '../../utils/entities/User';
+import {UserController} from '../../utils/controllers/UserController';
 import {Router} from "@angular/router";
-import {AppComponent} from "../app.component";
+import {AppComponent} from "../../app.component";
 
 @Component({
   selector: 'app-login-user',
@@ -14,7 +14,7 @@ export class LoginUserComponent implements OnInit {
   public passwordCheck = 'password';
 
   constructor(private router: Router,
-              private authController: AuthController) {
+              private authController: UserController) {
   }
 
   ngOnInit(): void {
@@ -22,10 +22,12 @@ export class LoginUserComponent implements OnInit {
 
   loginUser(user: LoginUser) {
     this.authController.authUser(user).subscribe((rec: any) => {
-      localStorage.setItem('auth_token', rec.token);
+      if (rec.token) {
+        localStorage.setItem('auth_token', rec.token);
+        localStorage.setItem('user', user.username);
+      }
       this.router.navigateByUrl('');
-      });
-    localStorage.setItem('user', user.username);
+    });
   }
 
   visiblePassword() {

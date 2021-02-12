@@ -3,10 +3,19 @@
     WELCOM to KnigoPoisk
     <img src="../assets/spring@angular.png" height="89" width="500">
     <div>
-      <a class="btn btn-warning m-1" href="http://localhost:8080/swagger-ui/">Swagger</a>
       <button class="btn btn-warning m-1" [routerLink]="['']">Главная</button>
-      <button class="btn btn-warning m-1" [routerLink]="['/addbook']">+ Kнига </button>
-      <button class="btn btn-warning m-1" [routerLink]="['/registration']">+ Пользователь </button>
+      <button *ngIf="!username" class="btn btn-warning m-1" [routerLink]="['/registration']">+ Пользователь</button>
+
+      <a *ngIf="username" class="btn btn-warning" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Админка</a>
+      <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="#" [routerLink]="['/addbook']">Добавление книг</a></li>
+        <li><a class="dropdown-item" href="#" [routerLink]="['/editbook']">Редактирование книг</a></li>
+        <li>
+          <hr class="dropdown-divider">
+        </li>
+        <li><a class="dropdown-item" target="_blank" href="http://localhost:8080/swagger-ui/">Swagger</a></li>
+      </ul>
+
       <button *ngIf="!username" class="btn btn-warning m-1" [routerLink]="['/login']">Вход</button>
       <button *ngIf="username" class="btn btn-warning m-1" (click)="delJwt()" [routerLink]="['']">{{username}} <img
         src="../../assets/exit.png"></button>

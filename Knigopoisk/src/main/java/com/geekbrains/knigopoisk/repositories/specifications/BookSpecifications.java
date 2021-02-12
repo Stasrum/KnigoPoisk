@@ -9,10 +9,10 @@ public class BookSpecifications {
     }
 
     public static Specification<Book> nameAuthorLike(String nameAuthor) {
-        return (Specification<Book>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("author").get("name"), String.format("%%%s%%", nameAuthor)); // where book.author.name like %nameAuthor%
+        return (Specification<Book>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.joinList("authors").get("name"), String.format("%%%s%%", nameAuthor)); // where book.author.name like %nameAuthor%
     }
 
     public static Specification<Book> nameGenreLike(String nameGenre) {
-        return (Specification<Book>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.get("genre").get("name"), String.format("%%%s%%", nameGenre)); // where book.genre.name like %nameGenre%
+        return (Specification<Book>) (root, criteriaQuery, criteriaBuilder) -> criteriaBuilder.like(root.joinList("genres").get("name"), String.format("%%%s%%", nameGenre)); // where book.genre.name like %nameGenre%
     }
 }

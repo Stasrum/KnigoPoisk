@@ -1,27 +1,28 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
-import { MainComponent } from './main/main.component';
-import { AdminBookComponent } from './admin-book/admin-book.component';
+import { AllBooksComponent } from './admin/all-books/all-books.component';
+import { AdminBookComponent } from './admin/admin-book/admin-book.component';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
-import { LoginUserComponent } from './login-user/login-user.component';
-import {Interceptor} from "./controllers/Interceptor";
-import { ModalWindowComponent } from './modal-window/modal-window.component';
+import { LoginUserComponent } from './user/login-user/login-user.component';
+import {Interceptor} from "./utils/controllers/Interceptor";
+import { ModalWindowComponent } from './utils/modal-window/modal-window.component';
 import { HeaderComponent } from './header/header.component';
-import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationComponent } from './user/registration/registration.component';
+import { MainComponent } from './user/main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent,
+    AllBooksComponent,
     AdminBookComponent,
     LoginUserComponent,
     ModalWindowComponent,
     HeaderComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,

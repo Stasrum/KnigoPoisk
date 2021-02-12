@@ -8,8 +8,13 @@ export class BookController {
   constructor(private http: HttpClient) {
   }
 
-  getAll() {
-    return this.http.get(path + 'books?d=1');
+  getAll(page?: number, size?: number, title?: string, author?: string, genre?: string) {
+    if (!page) page = 1;
+    if (!size) size = 0;
+    if (!author) author = '';
+    if (!genre) genre = '';
+    if (!title) title = '';
+    return this.http.get(path + 'books?p=' + page + '&s=' + size + '&title=' + title + '&nameAuthor=' + author + '&nameGenre=' + genre);
   }
 
   findById(id: number) {

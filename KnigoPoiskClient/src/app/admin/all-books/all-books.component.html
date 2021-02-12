@@ -27,10 +27,10 @@
       <td>{{item.year}}</td>
       <td>{{item.description}}</td>
       <td>
-        <button class="btn btn-warning mr-1" [routerLink]="['/addbook',item.id]"><img src="../../assets/pen.png"
+        <button class="btn btn-warning mr-1" [routerLink]="['/addbook',item.id]"><img src="../../../assets/pen.png"
                                                                                      height="15" width="15"/></button>
-        <button class="btn btn-danger ml-1" (click)="deleteBook(item.id)"><img src="../../assets/trash.png" height="15"
-                                                                              width="15"></button>
+        <button class="btn btn-danger ml-1" (click)="deleteBook(item.id)"><img src="../../../assets/trash.png" height="15"
+                                                                               width="15"></button>
       </td>
     </tr>
     </tbody>

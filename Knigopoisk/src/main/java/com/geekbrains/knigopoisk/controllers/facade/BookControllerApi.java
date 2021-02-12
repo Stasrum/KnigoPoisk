@@ -12,8 +12,9 @@ import java.util.Optional;
 public interface BookControllerApi {
 
     @GetMapping(value = "/books", produces = "application/json")
-    Page<BookDto> getAllBooks(@RequestParam(defaultValue = "1", name = "b") Integer page,
-                              @RequestParam Map<String, String> params);
+    Page<BookDto> getAllBooks(@RequestParam(defaultValue = "1", name = "p") Integer page,
+                              @RequestParam Map<String, String> params,
+                              @RequestParam (name = "s") int size);
 
     @GetMapping(value = "/books/{id}")
     BookDto findById(@PathVariable("id") @NotNull Long id);
@@ -21,7 +22,7 @@ public interface BookControllerApi {
     @GetMapping(value = "/books/delete/{id}")
     boolean deleteById(@PathVariable("id") @NotNull Long id);
 
-    @PostMapping(value = "/books/create", consumes = "application/json", produces = "application/json")
-    BookDto createBook(@RequestBody BookDto book);
+//    @PostMapping(value = "/books/create", consumes = "application/json", produces = "application/json")
+//    BookDto createBook(@RequestBody BookDto book);
 
 }

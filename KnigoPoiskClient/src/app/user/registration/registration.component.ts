@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {UserDto} from "../entities/User";
-import {AuthController} from "../controllers/AuthController";
+import {UserDto} from "../../utils/entities/User";
+import {UserController} from "../../utils/controllers/UserController";
 
 @Component({
   selector: 'app-registration',
@@ -11,7 +11,7 @@ export class RegistrationComponent implements OnInit {
   public userDto: UserDto = new UserDto('', '', '', '', '', '', '');
   visiblePassword = 'password';
 
-  constructor(private authController: AuthController) {
+  constructor(private authController: UserController) {
   }
 
   ngOnInit(): void {

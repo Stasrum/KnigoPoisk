@@ -38,13 +38,13 @@
       <div class="form-group col-6">
         <label>Жанр</label>
         <div *ngFor="let iGenre = index of addGenres">
-          <div class="input-group-prepend" *ngIf="addGenres[iGenre] != 0">
-            <select type="text" class="custom-select" [(ngModel)]="addGenres[iGenre + 1]" name="genre{{iGenre + 1}}" (change)="addGenres = addSelect(addGenres)">
+          <div class="input-group" *ngIf="addGenres[iGenre] != 0">
+            <select type="text" class="form-select" [(ngModel)]="addGenres[iGenre + 1]" name="genre{{iGenre + 1}}" (change)="addGenres = addSelect(addGenres)">
               <option *ngIf="addGenres[iGenre+1] == 0" [ngValue]="0" disabled>Выберите или добавте жанр книги</option>
               <option *ngIf="addGenres[iGenre+1] != 0" [ngValue]="0" >Удалить</option>
               <option *ngFor="let item of genres" [ngValue]='item.id'>{{item.name}}</option>
             </select>
-            <div class="input-group-text" (click)="visibleAdd('жанр')">+</div>
+            <div *ngIf="iGenre == 0" class="input-group-text" (click)="visibleAdd('жанр')">+</div>
           </div>
         </div>
         <small class="text-danger" *ngIf="addGenres.length <= 2">
@@ -55,13 +55,13 @@
       <div class="form-group col-6">
         <label>Автор книги</label>
         <div *ngFor="let iAuthor = index of addAuthors">
-          <div class="input-group-prepend" *ngIf="addAuthors[iAuthor] != 0">
-            <select type="text" class="custom-select" [(ngModel)]="addAuthors[iAuthor + 1]" name="autor{{iAuthor + 1}}" (change)="addAuthors = addSelect(addAuthors)">
+          <div class="input-group" *ngIf="addAuthors[iAuthor] != 0">
+            <select type="text" class="form-select" [(ngModel)]="addAuthors[iAuthor + 1]" name="autor{{iAuthor + 1}}" (change)="addAuthors = addSelect(addAuthors)">
               <option *ngIf="addAuthors[iAuthor + 1] == 0" [ngValue]="0" disabled>Выберите или добавте автора книги</option>
               <option *ngIf="addAuthors[iAuthor + 1] != 0" [ngValue]="0" >Удалить</option>
               <option *ngFor="let item of authors" [ngValue]='item.id'>{{item.name}}</option>
             </select>
-            <div class="input-group-text" (click)="visibleAdd('автора')">+</div>
+            <div *ngIf="iAuthor == 0" class="input-group-text" (click)="visibleAdd('автора')">+</div>
           </div>
         </div>
         <small class="text-danger" *ngIf="addAuthors.length <= 2">
@@ -86,14 +86,14 @@
       <div class="form-group col-4">
         <label>Язык написания книги</label>
         <div *ngFor="let iLanguages = index of addLanguages">
-          <div class="input-group-prepend" *ngIf="addLanguages[iLanguages] != 0">
-            <select type="text" class="custom-select" [(ngModel)]="addLanguages[iLanguages + 1]"
+          <div class="input-group" *ngIf="addLanguages[iLanguages] != 0">
+            <select type="text" class="form-select" [(ngModel)]="addLanguages[iLanguages + 1]"
                     name="language{{iLanguages + 1}}" (click)="addLanguages = addSelect(addLanguages)">
               <option *ngIf="addLanguages[iLanguages + 1] == 0" [ngValue]="0" disabled>Выберите или добавте язык книги</option>
               <option *ngIf="addLanguages[iLanguages + 1] != 0" [ngValue]="0">Удалить</option>
               <option *ngFor="let item of languages" [ngValue]='item.id'>{{item.name}}</option>
             </select>
-            <div class="input-group-text" (click)="visibleAdd('язык')">+</div>
+            <div *ngIf="iLanguages == 0" class="input-group-text" (click)="visibleAdd('язык')">+</div>
           </div>
         </div>
         <small class="text-danger" *ngIf="addLanguages.length <= 2">
@@ -103,8 +103,8 @@
 
       <div class="form-group col-4">
         <label>Издатель</label>
-        <div class="input-group-prepend">
-          <select type="text" class="custom-select" [(ngModel)]="addPublisher" name="publisher">
+        <div class="input-group">
+          <select type="text" class="form-select" [(ngModel)]="addPublisher" name="publisher">
             <option [ngValue]="0" disabled>Выберите или добавте издателя книги</option>
             <option *ngFor="let item of publishers" [ngValue]='item.id'>{{item.name}}</option>
           </select>

@@ -22,13 +22,12 @@ public class BookController implements BookControllerApi {
     private final BookService bookService;
 
     @Override
-    public Page<BookDto> getAllBooks(Integer page, Map<String, String> params) {
-        if (page < 1) {
-            page = 1;
-        }
+    public Page<BookDto> getAllBooks(Integer page, Map<String, String> params, int size) {
+        if (page < 1) page = 1;
+        if (size == 0) size = 100;
 
         BookFilter bookFilter = new BookFilter(params);
-        Page<Book> content = bookService.findAll(bookFilter.getSpec(), page - 1, 10);
+        Page<Book> content = bookService.findAll(bookFilter.getSpec(), page - 1, size);
         Page<BookDto> out = new PageImpl<>(content.getContent().stream().map(BookDto::new).collect(Collectors.toList()), content.getPageable(), content.getTotalElements());
 
         return out;
@@ -45,8 +44,8 @@ public class BookController implements BookControllerApi {
         return true;
     }
 
-    @Override
-    public BookDto createBook(@RequestBody BookDto bookDto) {
-        return bookService.save(bookDto);
-    }
+//    @Override
+//    public BookDto createBook(@RequestBody BookDto bookDto) {
+//        return bookService.save(bookDto);
+//    }
 }
