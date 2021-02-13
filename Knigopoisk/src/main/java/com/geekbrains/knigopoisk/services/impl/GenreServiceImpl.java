@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,5 +38,15 @@ public class GenreServiceImpl implements GenreService {
         g.setUpdated(OffsetDateTime.now());
         Genre genre = genreRepository.save(g);
         return new GenreDto(genre);
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        Optional<Genre> genre = genreRepository.findById(id);
+        if (!genre.isPresent()) {
+            throw new GenreNotFoundException("Жанр с id = " + id + " не существует");
+        }
+        genreRepository.delete(genre.get());
+        return true;
     }
 }

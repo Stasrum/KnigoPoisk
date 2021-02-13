@@ -2,7 +2,6 @@ package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.PublisherControllerApi;
 import com.geekbrains.knigopoisk.dto.PublisherDto;
-import com.geekbrains.knigopoisk.entities.Publisher;
 import com.geekbrains.knigopoisk.services.contracts.PublisherService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -25,5 +24,15 @@ public class PublisherController implements PublisherControllerApi {
     @Override
     public PublisherDto createPublisher(@RequestBody @Valid PublisherDto publisher) {
         return publisherService.save(publisher);
+    }
+
+    @Override
+    public PublisherDto updatePublisher(@RequestBody @Valid PublisherDto publisherDto) {
+        return publisherService.update(publisherDto);
+    }
+
+    @Override
+    public boolean deletePublisherById(@PathVariable Long id) {
+        return publisherService.deleteById(id);
     }
 }
