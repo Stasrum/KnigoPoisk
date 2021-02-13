@@ -44,10 +44,10 @@ public class UserController implements UserControllerApi {
         return userMapper.getUserDetailsDtoFromUser(user);
     }
 
-    @Override
-    public void deleteUserById(@PathVariable("id") @NotNull Long id) {
-        userService.deleteByUserId(id);
-    }
+//    @Override
+//    public void deleteUserById(@PathVariable("id") @NotNull Long id) {
+//        userService.deleteByUserId(id);
+//    }
 
     // Binding Result после @ValidModel !!!
     @Override

@@ -25,7 +25,7 @@ public interface AdminControllerApi {
     @GetMapping("/users/{id}")
     ResponseEntity<?> getUserById(@PathVariable("id") @NotNull Long id);
 
-    @GetMapping("/users/delete/{id}")
+    @DeleteMapping("/users/delete/{id}")
     ResponseEntity<?> deleteUserById(@PathVariable("id") @NotNull Long id);
 
     @PostMapping("/users/edit")

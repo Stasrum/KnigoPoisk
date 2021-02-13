@@ -56,7 +56,7 @@ public class AdminController implements AdminControllerApi {
 
     @Override
     public ResponseEntity<?> deleteUserById(@PathVariable("id") @NotNull Long id) {
-        return null;
+        return ResponseEntity.ok(userService.deleteByUserId(id));
     }
 
     @Override

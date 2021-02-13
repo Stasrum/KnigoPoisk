@@ -22,8 +22,8 @@ public interface UserControllerApi {
     @GetMapping("/users/{id}")
     UserDetailsDto getUser(@PathVariable("id") @NotNull Long id);
 
-    @GetMapping("/users/{id}/delete")
-    void deleteUserById(@PathVariable("id") @NotNull Long id);
+//    @GetMapping("/users/{id}/delete")
+//    void deleteUserById(@PathVariable("id") @NotNull Long id);
 
     @PostMapping("/users/register")
     void register(@Valid @RequestBody UserRegistrationDto userRegistrationDto, BindingResult theBindingResult);
