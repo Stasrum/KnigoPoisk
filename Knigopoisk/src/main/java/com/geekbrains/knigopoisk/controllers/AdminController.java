@@ -11,10 +11,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @Slf4j
@@ -24,30 +26,32 @@ public class AdminController implements AdminControllerApi {
     private BookService bookService;
 
     @Override
-    public ResponseEntity<?> addBook(@RequestBody @Valid BookDto bookDto) {
-        if (bookDto==null){
-            log.warn("Request for book adding is empty");
-            return new ResponseEntity<>(new ReqErrorResponse(HttpStatus.BAD_REQUEST.value(), "Request for book adding is empty"), HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> addBook(@RequestBody  @NotNull @Valid BookDto bookDto) {
         return ResponseEntity.ok(bookService.add(bookDto));
     }
 
     @Override
-    public ResponseEntity<Book> getBookById(Long id) {
-        return null;
+    public ResponseEntity<?> getBookById(@PathVariable("id") @NotNull Long id) {
+        return ResponseEntity.ok(bookService.findById(id));
+    }
+
+    @Override
+    public ResponseEntity<?> deleteBookById(@PathVariable("id") @NotNull Long id) {
+        return ResponseEntity.ok(bookService.deleteById(id));
     }
 
     @Override
     public ResponseEntity<?> editBook(@RequestBody @Valid BookDto bookDto) {
-        if (bookDto==null){
-            log.warn("Request for book editing is empty");
-            return new ResponseEntity<>(new ReqErrorResponse(HttpStatus.BAD_REQUEST.value(), "Request for book editing is empty"), HttpStatus.BAD_REQUEST);
-        }
         return ResponseEntity.ok(bookService.edit(bookDto));
     }
 
     @Override
-    public ResponseEntity<User> getUserById(Long id) {
+    public ResponseEntity<User> getUserById(@PathVariable("id") @NotNull Long id) {
+        return null;
+    }
+
+    @Override
+    public ResponseEntity<?> deleteUserById(@PathVariable("id") @NotNull Long id) {
         return null;
     }
 

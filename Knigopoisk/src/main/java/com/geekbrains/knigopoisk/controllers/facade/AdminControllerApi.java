@@ -5,6 +5,8 @@ import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.constraints.NotNull;
+
 @RequestMapping("/api/v1/admin")
 public interface AdminControllerApi {
 
@@ -12,13 +14,19 @@ public interface AdminControllerApi {
     ResponseEntity<?> addBook(@RequestBody BookDto bookDto);
 
     @GetMapping("/books/{id}")
-    ResponseEntity<?> getBookById(@PathVariable("id") Long id);
+    ResponseEntity<?> getBookById(@PathVariable("id") @NotNull Long id);
+
+    @DeleteMapping("/books/delete/{id}")
+    ResponseEntity<?> deleteBookById(@PathVariable("id") @NotNull Long id);
 
     @PostMapping("/books/edit")
     ResponseEntity<?> editBook(@RequestBody BookDto bookDto);
 
     @GetMapping("/users/{id}")
-    ResponseEntity<?> getUserById(@PathVariable("id") Long id);
+    ResponseEntity<?> getUserById(@PathVariable("id") @NotNull Long id);
+
+    @GetMapping("/users/delete/{id}")
+    ResponseEntity<?> deleteUserById(@PathVariable("id") @NotNull Long id);
 
     @PostMapping("/users/edit")
     ResponseEntity<?> editUser(@RequestBody UserForAdminsEditDto userDto);

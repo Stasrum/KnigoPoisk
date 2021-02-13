@@ -8,6 +8,7 @@ import com.geekbrains.knigopoisk.entities.*;
 import com.geekbrains.knigopoisk.exceptions.*;
 import com.geekbrains.knigopoisk.repositories.*;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
+import liquibase.pro.packaged.B;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -98,18 +99,14 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean deleteById(Long id) {
-        Optional<Book> book = bookRepository.findById(id);
-        if (!book.isPresent()) {
-            throw new BookNotFoundException("Книга с id = " + id + " не существует");
-        }
-        bookRepository.delete(book.get());
-        //bookRepository.deleteById(id);
+        Book book = bookRepository.findById(id).orElseThrow(() -> new BookNotFoundException("Book with id=" + id + " isn't found"));
+        bookRepository.delete(book);
         return true;
     }
 
     @Override
     public BookDto findById(Long id) {
-        Book book = bookRepository.findById(id).orElseThrow(()->new BookNotFoundException("Книга с таким ID не найдена"));
+        Book book = bookRepository.findById(id).orElseThrow(()->new BookNotFoundException("Book with id=" + id + " isn't found"));
         return new BookDto(book);
     }
 
