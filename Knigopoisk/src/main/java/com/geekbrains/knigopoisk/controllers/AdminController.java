@@ -46,7 +46,7 @@ public class AdminController implements AdminControllerApi {
     }
 
     @Override
-    public ResponseEntity<User> getUserById(@PathVariable("id") @NotNull Long id) {
+    public ResponseEntity<?> getUserById(@PathVariable("id") @NotNull Long id) {
         return null;
     }
 
