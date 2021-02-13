@@ -1,7 +1,6 @@
 package com.geekbrains.knigopoisk.services.contracts;
 
 import com.geekbrains.knigopoisk.dto.AuthorDto;
-import com.geekbrains.knigopoisk.entities.Author;
 
 import java.util.List;
 
@@ -11,4 +10,6 @@ public interface AuthorService {
     AuthorDto save(AuthorDto authorDto);
 
     AuthorDto update(AuthorDto authorDto);
+
+    boolean deleteById(Long id);
 }

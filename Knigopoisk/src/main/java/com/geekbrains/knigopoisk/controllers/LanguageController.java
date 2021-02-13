@@ -2,7 +2,6 @@ package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.LanguageControllerApi;
 import com.geekbrains.knigopoisk.dto.LanguageDto;
-import com.geekbrains.knigopoisk.entities.Language;
 import com.geekbrains.knigopoisk.services.contracts.LanguageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -25,5 +24,15 @@ public class LanguageController implements LanguageControllerApi {
     @Override
     public LanguageDto createLanguage(@RequestBody @Valid LanguageDto language) {
         return languageService.save(language);
+    }
+
+    @Override
+    public LanguageDto updateLanguage(@RequestBody @Valid LanguageDto languageDto) {
+        return languageService.update(languageDto);
+    }
+
+    @Override
+    public boolean deleteLanguageById(@PathVariable Long id) {
+        return languageService.deleteById(id);
     }
 }

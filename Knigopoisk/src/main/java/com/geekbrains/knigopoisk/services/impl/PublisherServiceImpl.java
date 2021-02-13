@@ -1,11 +1,7 @@
 package com.geekbrains.knigopoisk.services.impl;
 
-import com.geekbrains.knigopoisk.dto.AuthorDto;
 import com.geekbrains.knigopoisk.dto.PublisherDto;
-import com.geekbrains.knigopoisk.entities.Author;
-import com.geekbrains.knigopoisk.entities.Language;
 import com.geekbrains.knigopoisk.entities.Publisher;
-import com.geekbrains.knigopoisk.exceptions.LanguageNotFoundException;
 import com.geekbrains.knigopoisk.exceptions.PublisherNotFoundException;
 import com.geekbrains.knigopoisk.repositories.PublisherRepository;
 import com.geekbrains.knigopoisk.services.contracts.PublisherService;
@@ -14,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -41,5 +38,15 @@ public class PublisherServiceImpl implements PublisherService {
         p.setUpdated(OffsetDateTime.now());
         Publisher publisher = publisherRepository.save(p);
         return new PublisherDto(publisher);
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        Optional<Publisher> publisher = publisherRepository.findById(id);
+        if (!publisher.isPresent()) {
+            throw new PublisherNotFoundException("Издательство с id = " + id + " не существует");
+        }
+        publisherRepository.delete(publisher.get());
+        return true;
     }
 }
