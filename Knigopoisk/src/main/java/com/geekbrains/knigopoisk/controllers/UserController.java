@@ -32,11 +32,11 @@ public class UserController implements UserControllerApi {
     private final UserMapper userMapper;
     private final RoleMapper roleMapper;
 
-    @Override
-    public List<UserDetailsDto> getAllUser() {
-        List<UserDetailsDto> userDtoList = userMapper.getUserDetailsDtoListFromUserList(userService.getAll());
-        return userDtoList;
-    }
+//    @Override
+//    public List<UserDetailsDto> getAllUser() {
+//        List<UserDetailsDto> userDtoList = userMapper.getUserDetailsDtoListFromUserList(userService.getAll());
+//        return userDtoList;
+//    }
 
     @Override
     public UserDetailsDto getUser(@NotNull Long id) {

@@ -6,6 +6,7 @@ import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
 import com.geekbrains.knigopoisk.dto.UserPasswordDto;
 import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
 import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
+import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.exceptions.RoleAlreadyExistsException;
@@ -14,8 +15,12 @@ import com.geekbrains.knigopoisk.repositories.UserRepository;
 import com.geekbrains.knigopoisk.services.contracts.RoleService;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -122,8 +127,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<UserDetailsDto> getAll() {
+        List<User> users = userRepository.findAll();
+        return userMapper.getUserDetailsDtoListFromUserList(users);
+    }
+
+    @Override
+    public Page<UserDetailsDto> getAll(Specification<User> spec, int page, int size) {
+        Page<User> userPage = userRepository.findAll(spec, PageRequest.of(page, size));
+        return userPage.map(userMapper::getUserDetailsDtoFromUser);
     }
 
     @Override

@@ -16,8 +16,8 @@ import java.util.List;
 
 public interface UserControllerApi {
 
-    @GetMapping("/users")
-    List<UserDetailsDto> getAllUser();
+//    @GetMapping("/users")
+//    List<UserDetailsDto> getAllUser();
 
     @GetMapping("/users/{id}")
     UserDetailsDto getUser(@PathVariable("id") @NotNull Long id);

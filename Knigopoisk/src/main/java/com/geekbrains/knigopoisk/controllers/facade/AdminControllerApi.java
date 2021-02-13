@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.NotNull;
+import java.util.Map;
 
 @RequestMapping("/api/v1/admin")
 public interface AdminControllerApi {
@@ -22,6 +23,11 @@ public interface AdminControllerApi {
     @PostMapping("/books/edit")
     ResponseEntity<?> editBook(@RequestBody BookDto bookDto);
 
+    @GetMapping("/users")
+    ResponseEntity<?> getAllUsers(Integer page,
+                                  @RequestParam Map<String, String> params,
+                                  Integer size);
+
     @GetMapping("/users/{id}")
     ResponseEntity<?> getUserById(@PathVariable("id") @NotNull Long id);
 
@@ -29,5 +35,5 @@ public interface AdminControllerApi {
     ResponseEntity<?> deleteUserById(@PathVariable("id") @NotNull Long id);
 
     @PostMapping("/users/edit")
-    ResponseEntity<?> editUser(@RequestBody UserForAdminsEditDto userDto);
+    ResponseEntity<?> editUsersRights(@RequestBody UserForAdminsEditDto userDto);
 }

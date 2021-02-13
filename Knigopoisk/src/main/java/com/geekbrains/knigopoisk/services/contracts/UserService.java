@@ -6,6 +6,8 @@ import com.geekbrains.knigopoisk.dto.UserPasswordDto;
 import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +41,9 @@ public interface UserService extends UserDetailsService {
     boolean deleteByUserId(Long id);
 
     @Transactional
-    List<User> getAll();
+    List<UserDetailsDto> getAll();
+
+    Page<UserDetailsDto> getAll(Specification<User> spec, int page, int size);
 
     @Transactional
     boolean isUserByNameExists(String userName);
