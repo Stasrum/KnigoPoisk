@@ -215,5 +215,11 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
+    @ExceptionHandler(UserNotAuthorizedException.class)
+    public ResponseEntity<Object> handleUserNotAuthorizedException(UserNotAuthorizedException ex) {
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage(), Collections.emptyList());
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
 
 }

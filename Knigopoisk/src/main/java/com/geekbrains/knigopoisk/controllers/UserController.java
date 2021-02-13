@@ -12,6 +12,7 @@ import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.exceptions.RoleAttributeNotValidException;
 import com.geekbrains.knigopoisk.exceptions.UserAlreadyExistsException;
 import com.geekbrains.knigopoisk.exceptions.UserAttributeNotValidException;
+import com.geekbrains.knigopoisk.exceptions.UserNotAuthorizedException;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -32,11 +34,22 @@ public class UserController implements UserControllerApi {
     private final UserMapper userMapper;
     private final RoleMapper roleMapper;
 
-//    @Override
-//    public List<UserDetailsDto> getAllUser() {
-//        List<UserDetailsDto> userDtoList = userMapper.getUserDetailsDtoListFromUserList(userService.getAll());
-//        return userDtoList;
-//    }
+    @Override
+    public UserDetailsDto getUserProfile(@NotNull Principal principal) {
+        if (principal == null) {
+            throw new UserNotAuthorizedException("User is not authorized");
+        }
+
+        String userName = principal.getName();
+        User user = userService.findByUserName(userName);
+        return userMapper.getUserDetailsDtoFromUser(user);
+    }
+
+    @Override
+    public List<UserDetailsDto> getAllUser() {
+        List<UserDetailsDto> userDtoList = userMapper.getUserDetailsDtoListFromUserList(userService.getAll());
+        return userDtoList;
+    }
 
     @Override
     public UserDetailsDto getUser(@NotNull Long id) {

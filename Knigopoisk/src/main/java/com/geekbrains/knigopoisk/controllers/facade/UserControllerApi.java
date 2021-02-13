@@ -12,12 +12,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
 import java.util.List;
 
 public interface UserControllerApi {
 
-//    @GetMapping("/users")
-//    List<UserDetailsDto> getAllUser();
+    @GetMapping("/user/profile")
+    UserDetailsDto getUserProfile(@NotNull Principal principal);
+
+    @GetMapping("/users")
+    List<UserDetailsDto> getAllUser();
 
     @GetMapping("/users/{id}")
     UserDetailsDto getUser(@PathVariable("id") @NotNull Long id);
