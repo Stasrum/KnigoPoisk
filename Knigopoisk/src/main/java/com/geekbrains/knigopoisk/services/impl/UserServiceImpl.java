@@ -1,12 +1,9 @@
 package com.geekbrains.knigopoisk.services.impl;
 
 
-import com.geekbrains.knigopoisk.dto.UserDetailsDto;
-import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
-import com.geekbrains.knigopoisk.dto.UserPasswordDto;
-import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
+import com.geekbrains.knigopoisk.dto.*;
+import com.geekbrains.knigopoisk.dto.mappers.RoleMapper;
 import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
-import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.exceptions.RoleAlreadyExistsException;
@@ -20,7 +17,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -39,6 +35,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
     private final UserMapper userMapper;
+    private final RoleMapper roleMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -179,6 +176,19 @@ public class UserServiceImpl implements UserService {
         }
         user.getRoles().add(role);
         return new ArrayList<>(user.getRoles());
+    }
+
+    @Override
+    public UserForAdminsEditDto editUsersRights(UserForAdminsEditDto userDto) {
+        User user = userRepository.findById(userDto.getId()).orElseThrow(()->new UserNotFoundException("User with id=" + userDto.getId() + " not found"));
+        user.setRoles(userDto.getRoles().stream().map(roleDto -> roleService.getRoleByName(roleDto.getName())).collect(Collectors.toList()));
+        user.setEnabled(userDto.getEnabled());
+        user.setAccountNotLocked(userDto.getAccountNotLocked());
+        user.setCredentialsNotExpired(userDto.getCredentialsNotExpired());
+        user.setAccountNotExpired(userDto.getAccountNotExpired());
+        User u = userRepository.save(user);
+
+        return new UserForAdminsEditDto(u);
     }
 
     private User getUserWithExistenceCheck(Long userId) {

@@ -78,6 +78,6 @@ public class AdminController implements AdminControllerApi {
 
     @Override
     public ResponseEntity<?> editUsersRights(@RequestBody UserForAdminsEditDto userDto) {
-        return null;
+        return ResponseEntity.ok(userService.editUsersRights(userDto));
     }
 }

@@ -1,6 +1,5 @@
 package com.geekbrains.knigopoisk.dto;
 
-import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -15,7 +14,7 @@ public class UserForAdminsEditDto {
     // Поля, которые не может изменять администратор
     // Fields which admin can't change
     private Long id;
-    private String username;
+    private String userName;
     private String firstName;
     private String lastName;
     private String email;
@@ -32,7 +31,7 @@ public class UserForAdminsEditDto {
     public UserForAdminsEditDto(User user){
 
         this.id = user.getId();
-        this.username = user.getUsername();
+        this.userName = user.getUsername();
         this.firstName = user.getFirstName();
         this.lastName = user.getLastName();
         this.email = user.getEmail();
@@ -48,7 +47,7 @@ public class UserForAdminsEditDto {
     public static User fromAdminsEditDto(UserForAdminsEditDto userDto){
         User user = new User();
         user.setId(userDto.getId());
-        user.setUsername(userDto.getUsername());
+        user.setUsername(userDto.getUserName());
         user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setEmail(userDto.getEmail());

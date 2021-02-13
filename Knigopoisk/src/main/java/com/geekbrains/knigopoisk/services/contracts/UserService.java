@@ -43,6 +43,7 @@ public interface UserService extends UserDetailsService {
     @Transactional
     List<UserDetailsDto> getAll();
 
+    @Transactional
     Page<UserDetailsDto> getAll(Specification<User> spec, int page, int size);
 
     @Transactional
@@ -59,4 +60,7 @@ public interface UserService extends UserDetailsService {
 
     @Transactional
     List<Role> addRoleByRoleName(Long userId, String roleName);
+
+    @Transactional
+    UserForAdminsEditDto editUsersRights(UserForAdminsEditDto userDto);
 }
