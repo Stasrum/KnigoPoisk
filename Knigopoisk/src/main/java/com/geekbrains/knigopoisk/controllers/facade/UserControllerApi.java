@@ -20,8 +20,8 @@ public interface UserControllerApi {
     @GetMapping("/user/profile")
     UserDetailsDto getUserProfile(@NotNull Principal principal);
 
-    @GetMapping("/users")
-    List<UserDetailsDto> getAllUser();
+//    @GetMapping("/users")
+//    List<UserDetailsDto> getAllUser();
 
     @GetMapping("/users/{id}")
     UserDetailsDto getUser(@PathVariable("id") @NotNull Long id);
