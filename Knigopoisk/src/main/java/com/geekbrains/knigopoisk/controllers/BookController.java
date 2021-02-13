@@ -37,12 +37,12 @@ public class BookController implements BookControllerApi {
     public BookDto findById(@PathVariable("id") @NotNull Long id) {
         return bookService.findById(id);
     }
-
-    @Override
-    public boolean deleteById(@PathVariable("id") @NotNull Long id){
-        bookService.deleteById(id);
-        return true;
-    }
+//
+//    @Override
+//    public boolean deleteById(@PathVariable("id") @NotNull Long id){
+//        bookService.deleteById(id);
+//        return true;
+//    }
 
 //    @Override
 //    public BookDto createBook(@RequestBody BookDto bookDto) {
