@@ -1,6 +1,7 @@
 package com.geekbrains.knigopoisk.services.contracts;
 
 import com.geekbrains.knigopoisk.dto.UserDetailsDto;
+import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
 import com.geekbrains.knigopoisk.dto.UserPasswordDto;
 import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
 import com.geekbrains.knigopoisk.entities.Role;
@@ -13,6 +14,8 @@ import java.util.List;
 public interface UserService extends UserDetailsService {
     @Transactional
     User findByUserId(Long userId);
+
+    UserForAdminsEditDto findOneForAdminByUserId(Long userId);
 
     @Transactional
     User findByUserName(String userName);

@@ -2,6 +2,7 @@ package com.geekbrains.knigopoisk.services.impl;
 
 
 import com.geekbrains.knigopoisk.dto.UserDetailsDto;
+import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
 import com.geekbrains.knigopoisk.dto.UserPasswordDto;
 import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
 import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
@@ -56,6 +57,12 @@ public class UserServiceImpl implements UserService {
     public User findByUserId(Long userId) {
         return userRepository.findById(userId).orElseThrow(() ->
                 new UserNotFoundException("User id = <" + userId + "> not found"));
+    }
+
+    @Override
+    public UserForAdminsEditDto findOneForAdminByUserId(Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(()->new UserNotFoundException("User with id=" + userId + " not found"));
+        return new UserForAdminsEditDto(user);
     }
 
     @Override

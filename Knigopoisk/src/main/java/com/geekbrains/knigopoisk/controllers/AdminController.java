@@ -7,6 +7,8 @@ import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.User;
 import com.geekbrains.knigopoisk.responsies.ReqErrorResponse;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
+import com.geekbrains.knigopoisk.services.contracts.UserService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,8 @@ public class AdminController implements AdminControllerApi {
 
     @Autowired
     private BookService bookService;
+    @Autowired
+    private UserService userService;
 
     @Override
     public ResponseEntity<?> addBook(@RequestBody  @NotNull @Valid BookDto bookDto) {
@@ -47,7 +51,7 @@ public class AdminController implements AdminControllerApi {
 
     @Override
     public ResponseEntity<?> getUserById(@PathVariable("id") @NotNull Long id) {
-        return null;
+        return ResponseEntity.ok(userService.findOneForAdminByUserId(id));
     }
 
     @Override
