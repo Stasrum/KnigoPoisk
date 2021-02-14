@@ -14,6 +14,7 @@ import com.geekbrains.knigopoisk.services.contracts.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,22 +44,11 @@ public class UserController implements UserControllerApi {
         return userMapper.getUserDetailsDtoFromUser(user);
     }
 
-//    @Override
-//    public List<UserDetailsDto> getAllUser() {
-//        List<UserDetailsDto> userDtoList = userMapper.getUserDetailsDtoListFromUserList(userService.getAll());
-//        return userDtoList;
-//    }
-
     @Override
     public UserDetailsDto getUser(@NotNull Long id) {
         User user = userService.findByUserId(id);
         return userMapper.getUserDetailsDtoFromUser(user);
     }
-
-//    @Override
-//    public void deleteUserById(@PathVariable("id") @NotNull Long id) {
-//        userService.deleteByUserId(id);
-//    }
 
     // Binding Result после @ValidModel !!!
     @Override
@@ -78,9 +68,13 @@ public class UserController implements UserControllerApi {
 
     @Override
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public UserDetailsDto update(@Valid UserDetailsDto userDetailsDto, BindingResult theBindingResult) {
+    public UserDetailsDto update(@Valid UserDetailsDto userDetailsDto, BindingResult theBindingResult, @NotNull Principal principal) {
         if (theBindingResult.hasErrors()) {
             throw new UserAttributeNotValidException("Ошибка валидации", theBindingResult);
+        }
+
+        if (principal == null || !userDetailsDto.getUserName().equals(principal.getName())) {
+            throw new AccessDeniedException("Изменения других пользователей не допускается");
         }
 
         User updatedUser = userService.updateUserDetailsFromUserDetailsDto(userDetailsDto);
@@ -109,7 +103,8 @@ public class UserController implements UserControllerApi {
         return roleMapper.getRoleDtoListFromRoleList(userService.getUnAssignedRolesByUserId(id));
     }
 
-    @Override
+    //=> AdminController
+    /*@Override
     public List<RoleDto> addRole(@Valid RoleDto roleDto, BindingResult theBindingResult, @NotNull @PathVariable Long id) {
         if (theBindingResult.hasErrors()) {
             throw new RoleAttributeNotValidException("Ошибка валидации роли", theBindingResult);
@@ -127,5 +122,5 @@ public class UserController implements UserControllerApi {
 
         List<Role> userRoles = userService.removeRoleByRoleName(id, roleDto.getName());
         return roleMapper.getRoleDtoListFromRoleList(userRoles);
-    }
+    }*/
 }
