@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.api;
+package com.geekbrains.knigopoisk.exceptions;
 
 import lombok.Data;
 import org.springframework.http.HttpStatus;

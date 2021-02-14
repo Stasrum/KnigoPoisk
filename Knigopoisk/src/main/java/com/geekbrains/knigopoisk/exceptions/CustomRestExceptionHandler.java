@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.api;
+package com.geekbrains.knigopoisk.exceptions;
 
 import com.geekbrains.knigopoisk.exceptions.*;
 import com.geekbrains.knigopoisk.exceptions.types.AttributeNotValidException;
@@ -206,9 +206,16 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-    @ExceptionHandler({NoSuchElementException.class, AuthorNotFoundException.class, BookNotFoundException.class,
-            GenreNotFoundException.class, LanguageNotFoundException.class, PublisherNotFoundException.class,
-            UserNotFoundException.class, RoleNotFoundException.class})
+    @ExceptionHandler({
+            NoSuchElementException.class,
+            AuthorNotFoundException.class,
+            BookNotFoundException.class,
+            GenreNotFoundException.class,
+            LanguageNotFoundException.class,
+            PublisherNotFoundException.class,
+            UserNotFoundException.class,
+            RoleNotFoundException.class,
+            CommentNotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleBadElementException(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), Collections.emptyList());
