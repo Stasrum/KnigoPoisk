@@ -21,8 +21,8 @@ public class TestDtoModels {
 
     public UserDetailsDto getUserDetailsDto() {
         UserDetailsDto userDetailsDto = new UserDetailsDto();
-        userDetailsDto.setId(1L);
-        userDetailsDto.setUserName("newName");
+        userDetailsDto.setId(2L);
+        userDetailsDto.setUserName("testUser2");
         userDetailsDto.setFirstName("newFirstName");
         userDetailsDto.setLastName("newLastName");
         userDetailsDto.setEmail("new-email@mail.com");
