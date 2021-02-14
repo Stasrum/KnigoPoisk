@@ -18,4 +18,12 @@ public class CommentDto {
         this.text = comment.getText();
         this.user = comment.getUser();
     }
+
+    public static Comment fromDto(CommentDto commentDto) {
+        Comment comment = new Comment();
+        comment.setId(commentDto.getId());
+        comment.setText(commentDto.getText());
+        comment.setUser(commentDto.getUser());
+        return comment;
+    }
 }
