@@ -163,6 +163,8 @@ public class UserServiceImpl implements UserService {
         User user = getUserWithExistenceCheck(userId);
         Role role = roleService.getRoleByName(roleName);
         user.getRoles().remove(role);
+        userRepository.save(user);
+
         return new ArrayList<>(user.getRoles());
     }
 
@@ -175,6 +177,8 @@ public class UserServiceImpl implements UserService {
             throw new RoleAlreadyExistsException("Данная роль уже назначена");
         }
         user.getRoles().add(role);
+        userRepository.save(user);
+
         return new ArrayList<>(user.getRoles());
     }
 
