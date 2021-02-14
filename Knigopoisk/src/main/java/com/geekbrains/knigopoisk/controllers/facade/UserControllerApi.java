@@ -4,6 +4,8 @@ import com.geekbrains.knigopoisk.dto.RoleDto;
 import com.geekbrains.knigopoisk.dto.UserDetailsDto;
 import com.geekbrains.knigopoisk.dto.UserPasswordDto;
 import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
+import com.geekbrains.knigopoisk.exceptions.ApiMessage;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,14 +32,14 @@ public interface UserControllerApi {
 //    void deleteUserById(@PathVariable("id") @NotNull Long id);
 
     @PostMapping("/users/register")
-    void register(@Valid @RequestBody UserRegistrationDto userRegistrationDto, BindingResult theBindingResult);
+    UserDetailsDto register(@Valid @RequestBody UserRegistrationDto userRegistrationDto, BindingResult theBindingResult);
 
     @PostMapping("/users/update")
-    void update(@Valid @RequestBody UserDetailsDto userDetailsDto, BindingResult theBindingResult);
+    UserDetailsDto update(@Valid @RequestBody UserDetailsDto userDetailsDto, BindingResult theBindingResult);
 
     @PostMapping("/users/{id}/changePassword")
-    void changePassword(@Valid @RequestBody UserPasswordDto userPasswordDto, BindingResult theBindingResult,
-                        @NotNull @PathVariable Long id);
+    ResponseEntity<ApiMessage> changePassword(@Valid @RequestBody UserPasswordDto userPasswordDto, BindingResult theBindingResult,
+                                              @NotNull @PathVariable Long id);
 
     @GetMapping("/users/{id}/assignedRoles")
     List<RoleDto> getAssignedRoles(@NotNull @PathVariable Long id);

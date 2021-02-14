@@ -83,27 +83,27 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean updateUserDetailsFromUserDetailsDto(UserDetailsDto userDetailsDto) {
+    public User updateUserDetailsFromUserDetailsDto(UserDetailsDto userDetailsDto) {
         User user = userRepository.findById(userDetailsDto.getId()).orElseThrow(() ->
                 new UserNotFoundException("User id = <" + userDetailsDto.getId() + "> name = <" + userDetailsDto.getUserName() + "> not found"));
         userMapper.updateUserFromUserDetailsDto(userDetailsDto, user);
-        userRepository.save(user);
-        return true;
+
+        return userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public boolean updateUserPasswordFromUserPasswordDto(Long userId, UserPasswordDto userPasswordDto) {
+    public User updateUserPasswordFromUserPasswordDto(Long userId, UserPasswordDto userPasswordDto) {
         User user = getUserWithExistenceCheck(userId);
         user.setPassword(passwordEncoder.encode(userPasswordDto.getPassword()));
-        return save(user);
+
+        return userRepository.save(user);
     }
 
     @Override
     @Transactional
-    public boolean save(User user) {
-        userRepository.save(user);
-        return true;
+    public User save(User user) {
+        return userRepository.save(user);
     }
 
     @Override
