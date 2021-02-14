@@ -26,13 +26,13 @@ public interface UserService extends UserDetailsService {
     User save(UserRegistrationDto userRegistrationDto);
 
     @Transactional
-    boolean updateUserDetailsFromUserDetailsDto(UserDetailsDto userDetailsDto);
+    User updateUserDetailsFromUserDetailsDto(UserDetailsDto userDetailsDto);
 
     @Transactional
-    boolean updateUserPasswordFromUserPasswordDto(Long userId, UserPasswordDto userPasswordDto);
+    User updateUserPasswordFromUserPasswordDto(Long userId, UserPasswordDto userPasswordDto);
 
     @Transactional
-    boolean save(User user);
+    User save(User user);
 
     @Transactional
     boolean deleteByUserName(String userName);
