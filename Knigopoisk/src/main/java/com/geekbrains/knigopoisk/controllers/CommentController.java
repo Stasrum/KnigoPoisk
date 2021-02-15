@@ -1,10 +1,11 @@
 package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.CommentControllerApi;
-import com.geekbrains.knigopoisk.entities.Comment;
+import com.geekbrains.knigopoisk.dto.CommentDto;
 import com.geekbrains.knigopoisk.services.impl.CommentServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,24 +21,29 @@ public class CommentController implements CommentControllerApi {
     private final CommentServiceImpl commentService;
 
     @Override
-    public List<Comment> getAllComments() {
+    public List<CommentDto> getAllComments() {
         return commentService.getAll();
     }
 
     @Override
-    public Comment findById(@NotNull Long id) {
+    public CommentDto findById(@NotNull Long id) {
         return commentService.findById(id);
     }
 
     @Override
-    public boolean deleteById(@NotNull Long id) {
-        commentService.deleteById(id);
-        return false;
-    }
-
-    @Override
-    public Comment createComment(@RequestBody @Valid Comment commentDto) {
+    public CommentDto createComment(@RequestBody @Valid CommentDto commentDto) {
         return commentService.save(commentDto);
     }
 
+    @Override
+    public CommentDto updateComment(@RequestBody @Valid CommentDto commentDto) {
+
+        return commentService.update(commentDto);
+    }
+
+    @Override
+    public boolean deleteById(@PathVariable @NotNull Long id) {
+        return commentService.deleteById(id);
+    }
 }
+
