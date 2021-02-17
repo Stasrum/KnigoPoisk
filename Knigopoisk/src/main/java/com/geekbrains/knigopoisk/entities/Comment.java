@@ -24,8 +24,8 @@ public class Comment extends DefaultEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
-//    @OneToOne
-//    @JoinColumn(name = "book_id")
-//    private Book book;
+    @OneToOne
+    @JoinColumn(name = "book_id")
+    private Book book;
 
 }
