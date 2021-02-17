@@ -85,7 +85,7 @@ class CommentServiceImplTest {
         comment.setId(1L);
         comment.setText("Очень интересно о чем они пишут");
         comment.setUser(user);
-        //comment.setBook(book);
+        comment.setBook(book);
         comment.setCreated(created);
         comment.setUpdated(updated);
 
@@ -95,13 +95,13 @@ class CommentServiceImplTest {
         comment1.setUser(user);
         comment1.setCreated(created);
         comment1.setUpdated(updated);
-        //comment1.setBook(book);
+        comment1.setBook(book);
 
         comment2 = new Comment();
         comment2.setId(1L);
-        comment2.setText("Очень интересно о чем они пишут");
+        comment2.setText("Ye Очень интересно о чем они пишут");
         comment2.setUser(user);
-        //comment2.setBook(book);
+        comment2.setBook(book);
         comment2.setCreated(created);
         comment2.setUpdated(updated);
 
