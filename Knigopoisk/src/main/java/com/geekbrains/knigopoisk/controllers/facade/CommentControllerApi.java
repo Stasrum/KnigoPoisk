@@ -1,12 +1,18 @@
 package com.geekbrains.knigopoisk.controllers.facade;
 
+import com.geekbrains.knigopoisk.dto.BookDto;
 import com.geekbrains.knigopoisk.dto.CommentDto;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.Map;
 
+
+@RestController
 @RequestMapping("/api/v1")
 public interface CommentControllerApi {
 

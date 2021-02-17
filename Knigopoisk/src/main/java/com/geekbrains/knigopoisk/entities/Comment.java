@@ -7,7 +7,6 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Entity(name = "Comment")
 @Table(name = "comments")
@@ -24,5 +23,9 @@ public class Comment extends DefaultEntity{
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+//    @OneToOne
+//    @JoinColumn(name = "book_id")
+//    private Book book;
 
 }
