@@ -4,6 +4,7 @@ import com.geekbrains.knigopoisk.dto.LanguageDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.Language;
 import com.geekbrains.knigopoisk.repositories.LanguageRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,23 +29,33 @@ class LanguageServiceImplTest {
     @Mock
     private LanguageRepository languageRepository;
 
-    @Test
-    void getAll() {
-        Collection<Book> books = new ArrayList<>();
+    private OffsetDateTime created;
+    private OffsetDateTime updated;
+    private Collection<Book> books;
+    private Language language1;
+    private Language language2;
 
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-        OffsetDateTime updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
+    @BeforeEach
+    void setUp() {
+        books = new ArrayList<>();
 
-        Language language1 = new Language("Английский", books);
+        created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+        updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
+
+        language1 = new Language("Английский", books);
         language1.setId(1L);
         language1.setCreated(created);
         language1.setUpdated(updated);
 
-        Language language2 = new Language("Испанский", books);
+        language2 = new Language("Испанский", books);
         language2.setId(2L);
         language2.setCreated(created);
         language2.setUpdated(updated);
 
+    }
+
+    @Test
+    void getAll() {
         List<Language> languages = Arrays.asList(language1, language2);
 
         when(languageRepository.findAllByOrderByNameAsc()).thenReturn(languages);
@@ -58,40 +69,21 @@ class LanguageServiceImplTest {
 
     @Test
     void save() {
-        Collection<Book> books = new ArrayList<>();
-
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-        OffsetDateTime updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
-
-        Language language = new Language("Английский", books);
-        language.setId(1L);
-        language.setCreated(created);
-        language.setUpdated(updated);
-
-        when(languageRepository.save(any())).thenReturn(language);
+        when(languageRepository.save(any())).thenReturn(language1);
 
         LanguageDto expectedLanguage = languageService.save(new LanguageDto());
-        LanguageDto actualLanguage = new LanguageDto(language);
+        LanguageDto actualLanguage = new LanguageDto(language1);
 
         assertEquals(expectedLanguage, actualLanguage);
     }
 
     @Test
     void update() {
-        Collection<Book> books = new ArrayList<>();
-
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-
-        Language language = new Language("Английский", books);
-        language.setId(1L);
-        language.setCreated(created);
-        language.setUpdated(OffsetDateTime.now());
-
-        when(languageRepository.findOneByName(any())).thenReturn(Optional.of(language));
-        when(languageRepository.save(any())).thenReturn(language);
+        when(languageRepository.findOneByName(any())).thenReturn(Optional.of(language1));
+        when(languageRepository.save(any())).thenReturn(language1);
 
         LanguageDto expectedLanguage= languageService.update(new LanguageDto());
-        LanguageDto actualLanguage = new LanguageDto(language);
+        LanguageDto actualLanguage = new LanguageDto(language1);
 
         assertEquals(expectedLanguage, actualLanguage);
     }

@@ -3,6 +3,7 @@ package com.geekbrains.knigopoisk.services.impl;
 import com.geekbrains.knigopoisk.dto.AuthorDto;
 import com.geekbrains.knigopoisk.entities.Author;
 import com.geekbrains.knigopoisk.repositories.AuthorRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,21 +29,30 @@ class AuthorServiceImplTest {
     @Mock
     private AuthorRepository authorRepository;
 
-    @Test
-    void getAll() {
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-        OffsetDateTime updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
+    private OffsetDateTime created;
+    private OffsetDateTime updated;
+    private Author author1;
+    private Author author2;
 
-        Author author1 = new Author("Джошуа Блох", "java author");
+    @BeforeEach
+    void setUp() {
+        created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+        updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
+
+        author1 = new Author("Джошуа Блох", "java author");
         author1.setId(1L);
         author1.setCreated(created);
         author1.setUpdated(updated);
 
-        Author author2 = new Author("Герберт Шилдт", "java author");
+        author2 = new Author("Герберт Шилдт", "java author");
         author2.setId(2L);
         author2.setCreated(created);
         author2.setUpdated(updated);
+    }
 
+
+    @Test
+    void getAll() {
         List<Author> authors = Arrays.asList(author1, author2);
 
         when(authorRepository.findAllByOrderByNameAsc()).thenReturn(authors);
@@ -56,36 +66,21 @@ class AuthorServiceImplTest {
 
     @Test
     void save() {
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-        OffsetDateTime updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
-
-        Author author = new Author("Джошуа Блох", "java author");
-        author.setId(1L);
-        author.setCreated(created);
-        author.setUpdated(updated);
-
-        when(authorRepository.save(any())).thenReturn(author);
+        when(authorRepository.save(any())).thenReturn(author1);
 
         AuthorDto expectedAuthor = authorService.save(new AuthorDto());
-        AuthorDto actualAuthor = new AuthorDto(author);
+        AuthorDto actualAuthor = new AuthorDto(author1);
 
         assertEquals(expectedAuthor, actualAuthor);
     }
 
     @Test
     void update() {
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-
-        Author author = new Author("Джошуа Блох", "java author");
-        author.setId(1L);
-        author.setCreated(created);
-        author.setUpdated(OffsetDateTime.now());
-
-        when(authorRepository.findOneByName(any())).thenReturn(Optional.of(author));
-        when(authorRepository.save(any())).thenReturn(author);
+        when(authorRepository.findOneByName(any())).thenReturn(Optional.of(author1));
+        when(authorRepository.save(any())).thenReturn(author1);
 
         AuthorDto expectedAuthor = authorService.update(new AuthorDto());
-        AuthorDto actualAuthor = new AuthorDto(author);
+        AuthorDto actualAuthor = new AuthorDto(author1);
 
         assertEquals(expectedAuthor, actualAuthor);
     }
