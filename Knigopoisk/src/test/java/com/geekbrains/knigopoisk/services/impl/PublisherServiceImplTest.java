@@ -1,8 +1,10 @@
 package com.geekbrains.knigopoisk.services.impl;
 
 import com.geekbrains.knigopoisk.dto.PublisherDto;
+import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.Publisher;
 import com.geekbrains.knigopoisk.repositories.PublisherRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -11,9 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,21 +29,29 @@ class PublisherServiceImplTest {
     @Mock
     private PublisherRepository publisherRepository;
 
-    @Test
-    void getAll() {
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-        OffsetDateTime updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
+    private OffsetDateTime created;
+    private OffsetDateTime updated;
+    private Publisher publisher1;
+    private Publisher publisher2;
 
-        Publisher publisher1 = new Publisher("Наука", "Советское и российское академическое издательство книг и журналов.");
+    @BeforeEach
+    void setUp() {
+        created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+        updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
+
+        publisher1 = new Publisher("Наука", "Советское и российское академическое издательство книг и журналов.");
         publisher1.setId(1L);
         publisher1.setCreated(created);
         publisher1.setUpdated(updated);
 
-        Publisher publisher2 = new Publisher("Дрофа", "Российское специализированное издательство учебной литературы.");
+        publisher2 = new Publisher("Дрофа", "Российское специализированное издательство учебной литературы.");
         publisher2.setId(2L);
         publisher2.setCreated(created);
         publisher2.setUpdated(updated);
+    }
 
+    @Test
+    void getAll() {
         List<Publisher> publishers = Arrays.asList(publisher1, publisher2);
 
         when(publisherRepository.findAllByOrderByNameAsc()).thenReturn(publishers);
@@ -57,36 +65,21 @@ class PublisherServiceImplTest {
 
     @Test
     void save() {
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-        OffsetDateTime updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
-
-        Publisher publisher = new Publisher("Наука", "Советское и российское академическое издательство книг и журналов.");
-        publisher.setId(1L);
-        publisher.setCreated(created);
-        publisher.setUpdated(updated);
-
-        when(publisherRepository.save(any())).thenReturn(publisher);
+        when(publisherRepository.save(any())).thenReturn(publisher1);
 
         PublisherDto expectedPublisher = publisherService.save(new PublisherDto());
-        PublisherDto actualPublisher = new PublisherDto(publisher);
+        PublisherDto actualPublisher = new PublisherDto(publisher1);
 
         assertEquals(expectedPublisher, actualPublisher);
     }
 
     @Test
     void update() {
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-
-        Publisher publisher = new Publisher("Наука", "Советское и российское академическое издательство книг и журналов.");
-        publisher.setId(1L);
-        publisher.setCreated(created);
-        publisher.setUpdated(OffsetDateTime.now());
-
-        when(publisherRepository.findOneByName(any())).thenReturn(Optional.of(publisher));
-        when(publisherRepository.save(any())).thenReturn(publisher);
+        when(publisherRepository.findOneByName(any())).thenReturn(Optional.of(publisher1));
+        when(publisherRepository.save(any())).thenReturn(publisher1);
 
         PublisherDto expectedPublisher = publisherService.update(new PublisherDto());
-        PublisherDto actualPublisher = new PublisherDto(publisher);
+        PublisherDto actualPublisher = new PublisherDto(publisher1);
 
         assertEquals(expectedPublisher, actualPublisher);
     }
