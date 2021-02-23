@@ -10,10 +10,10 @@ export class GenreController {
   }
 
   getAllGenre() {
-    return this.http.get(path + 'genres');
+    return this.http.get(path + 'api/v1/genres');
   }
 
   createGenre(genre: Genre){
-    return this.http.post(path + 'genre/create', genre);
+    return this.http.post(path + 'api/v1/genre/create', genre);
   }
 }

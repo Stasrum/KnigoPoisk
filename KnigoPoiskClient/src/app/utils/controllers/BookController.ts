@@ -30,7 +30,7 @@ export class BookController {
   }
 
   deleteById(id) {
-    return this.http.get(path + 'books/delete/' + id);
+    return this.http.get(path + 'api/v1/admin/books/delete/' + id);
   }
 
 }

@@ -4,9 +4,9 @@
     <img src="../assets/spring@angular.png" height="89" width="500">
     <div>
       <button class="btn btn-warning m-1" [routerLink]="['']">Главная</button>
-      <button *ngIf="!username" class="btn btn-warning m-1" [routerLink]="['/registration']">+ Пользователь</button>
+      <button *ngIf="!userName" class="btn btn-warning m-1" [routerLink]="['/registration']">+ Пользователь</button>
 
-      <a *ngIf="username" class="btn btn-warning" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Админка</a>
+      <a *ngIf="userRoles == 'ADMIN'" class="btn btn-warning" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Админка</a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="#" [routerLink]="['/addbook']">Добавление книг</a></li>
         <li><a class="dropdown-item" href="#" [routerLink]="['/editbook']">Редактирование книг</a></li>
@@ -16,8 +16,8 @@
         <li><a class="dropdown-item" target="_blank" href="http://localhost:8080/swagger-ui/">Swagger</a></li>
       </ul>
 
-      <button *ngIf="!username" class="btn btn-warning m-1" [routerLink]="['/login']">Вход</button>
-      <button *ngIf="username" class="btn btn-warning m-1" (click)="delJwt()" [routerLink]="['']">{{username}} <img
+      <button *ngIf="!userName" class="btn btn-warning m-1" [routerLink]="['/login']">Вход</button>
+      <button *ngIf="userName" class="btn btn-warning m-1" (click)="delJwt()" [routerLink]="['']">{{userName}} <img
         src="../../assets/exit.png"></button>
     </div>
   </div>

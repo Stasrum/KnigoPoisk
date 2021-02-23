@@ -13,7 +13,7 @@ export class UserController {
   }
 
   registrationUser(userDto: UserDto){
-    return this.http.post(path + 'users/register', userDto)
+    return this.http.post(path + 'api/v1/users/register', userDto)
   }
 
   userInfo(userDto: UserDto){
