@@ -13,7 +13,7 @@
     <div class="row">
       <div class="form-group col-6">
         <label>Пароль</label>
-        <div class="input-group-prepend">
+        <div class="input-group">
           <input type="{{visiblePassword}}" class="form-control" [(ngModel)]="userDto.password" name="password" required
                  pattern="(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–\[\]{}:;',?/*~$^+=<>]).{8,}"
                  #password="ngModel">
@@ -26,7 +26,7 @@
       </div>
       <div class="form-group col-6">
         <label>Повторите пароль</label>
-        <div class="input-group-prepend">
+        <div class="input-group">
           <input type="{{visiblePassword}}" class="form-control" [(ngModel)]="userDto.matchingPassword"
                  name="matchingPassword" required #matchingPassword="ngModel">
           <span class="input-group-text" (click)="changeVisiblePassword()"><img src="../../../assets/eye.png" height="15"
