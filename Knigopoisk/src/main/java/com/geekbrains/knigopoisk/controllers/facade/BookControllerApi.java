@@ -18,9 +18,9 @@ public interface BookControllerApi {
 
     @GetMapping(value = "/books/{id}")
     BookDto findById(@PathVariable("id") @NotNull Long id);
-
-    @GetMapping(value = "/books/delete/{id}")
-    boolean deleteById(@PathVariable("id") @NotNull Long id);
+//
+//    @GetMapping(value = "/books/delete/{id}")
+//    boolean deleteById(@PathVariable("id") @NotNull Long id);
 
 //    @PostMapping(value = "/books/create", consumes = "application/json", produces = "application/json")
 //    BookDto createBook(@RequestBody BookDto book);

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,5 +38,15 @@ public class AuthorServiceImpl implements AuthorService {
         a.setUpdated(OffsetDateTime.now());
         Author author = authorRepository.save(a);
         return new AuthorDto(author);
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        Optional<Author> author = authorRepository.findById(id);
+        if (!author.isPresent()) {
+            throw new AuthorNotFoundException("Автор с id = " + id + " не существует");
+        }
+        authorRepository.delete(author.get());
+        return true;
     }
 }

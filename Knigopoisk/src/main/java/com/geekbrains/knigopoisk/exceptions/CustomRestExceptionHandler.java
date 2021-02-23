@@ -1,4 +1,4 @@
-package com.geekbrains.knigopoisk.api;
+package com.geekbrains.knigopoisk.exceptions;
 
 import com.geekbrains.knigopoisk.exceptions.*;
 import com.geekbrains.knigopoisk.exceptions.types.AttributeNotValidException;
@@ -9,6 +9,7 @@ import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
@@ -206,13 +207,32 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
-    @ExceptionHandler({NoSuchElementException.class, AuthorNotFoundException.class, BookNotFoundException.class,
-            GenreNotFoundException.class, LanguageNotFoundException.class, PublisherNotFoundException.class,
-            UserNotFoundException.class, RoleNotFoundException.class})
+    @ExceptionHandler({
+            NoSuchElementException.class,
+            AuthorNotFoundException.class,
+            BookNotFoundException.class,
+            GenreNotFoundException.class,
+            LanguageNotFoundException.class,
+            PublisherNotFoundException.class,
+            UserNotFoundException.class,
+            RoleNotFoundException.class,
+            CommentNotFoundException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleBadElementException(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), Collections.emptyList());
         return new ResponseEntity<Object>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler(UserNotAuthorizedException.class)
+    public ResponseEntity<Object> handleUserNotAuthorizedException(UserNotAuthorizedException ex) {
+        ApiError apiError = new ApiError(HttpStatus.UNAUTHORIZED, ex.getMessage(), Collections.emptyList());
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<Object> handleUserNotAuthorizedException(AccessDeniedException ex) {
+        ApiError apiError = new ApiError(HttpStatus.NOT_ACCEPTABLE, ex.getMessage(), Collections.emptyList());
+        return new ResponseEntity<>(apiError, new HttpHeaders(), apiError.getStatus());
     }
 
 

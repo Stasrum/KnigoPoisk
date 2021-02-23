@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,5 +38,15 @@ public class LanguageServiceImpl implements LanguageService {
         l.setUpdated(OffsetDateTime.now());
         Language language = languageRepository.save(l);
         return new LanguageDto(language);
+    }
+
+    @Override
+    public boolean deleteById(Long id) {
+        Optional<Language> language = languageRepository.findById(id);
+        if (!language.isPresent()) {
+            throw new LanguageNotFoundException("Язык с id = " + id + " не существует");
+        }
+        languageRepository.delete(language.get());
+        return true;
     }
 }

@@ -25,4 +25,14 @@ public class GenreController implements GenreControllerApi {
     public GenreDto createGenre(@RequestBody @Valid GenreDto genreDto) {
         return genreService.save(genreDto);
     }
+
+    @Override
+    public GenreDto updateGenre(@RequestBody @Valid GenreDto genreDto) {
+        return genreService.update(genreDto);
+    }
+
+    @Override
+    public boolean deleteGenreById(@PathVariable Long id) {
+        return genreService.deleteById(id);
+    }
 }

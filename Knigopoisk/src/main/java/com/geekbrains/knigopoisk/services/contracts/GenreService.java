@@ -11,4 +11,6 @@ public interface GenreService {
     GenreDto save(GenreDto genreDto);
 
     GenreDto update(GenreDto genreDto);
+
+    boolean deleteById(Long id);
 }

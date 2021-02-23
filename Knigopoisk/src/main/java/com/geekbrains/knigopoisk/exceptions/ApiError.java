@@ -1,29 +1,28 @@
-package com.geekbrains.knigopoisk.api;
+package com.geekbrains.knigopoisk.exceptions;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import org.springframework.http.HttpStatus;
 
 import java.util.Arrays;
 import java.util.List;
 
 @Data
-public class ApiError {
+@EqualsAndHashCode(callSuper = true)
+public class ApiError extends ApiMessage {
 
     private HttpStatus status;
-    private String message;
     private List<String> errors;
 
     public ApiError(HttpStatus status, String message, List<String> errors) {
-        super();
+        super(message);
         this.status = status;
-        this.message = message;
         this.errors = errors;
     }
 
     public ApiError(HttpStatus status, String message, String error) {
-        super();
+        super(message);
         this.status = status;
-        this.message = message;
         errors = Arrays.asList(error);
     }
 }

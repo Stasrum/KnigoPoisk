@@ -1,10 +1,13 @@
 package com.geekbrains.knigopoisk.services.contracts;
 
 import com.geekbrains.knigopoisk.dto.UserDetailsDto;
+import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
 import com.geekbrains.knigopoisk.dto.UserPasswordDto;
 import com.geekbrains.knigopoisk.dto.UserRegistrationDto;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +17,8 @@ public interface UserService extends UserDetailsService {
     @Transactional
     User findByUserId(Long userId);
 
+    UserForAdminsEditDto findOneForAdminByUserId(Long userId);
+
     @Transactional
     User findByUserName(String userName);
 
@@ -21,13 +26,13 @@ public interface UserService extends UserDetailsService {
     User save(UserRegistrationDto userRegistrationDto);
 
     @Transactional
-    boolean updateUserDetailsFromUserDetailsDto(UserDetailsDto userDetailsDto);
+    User updateUserDetailsFromUserDetailsDto(UserDetailsDto userDetailsDto);
 
     @Transactional
-    boolean updateUserPasswordFromUserPasswordDto(Long userId, UserPasswordDto userPasswordDto);
+    User updateUserPasswordFromUserPasswordDto(Long userId, UserPasswordDto userPasswordDto);
 
     @Transactional
-    boolean save(User user);
+    User save(User user);
 
     @Transactional
     boolean deleteByUserName(String userName);
@@ -36,7 +41,10 @@ public interface UserService extends UserDetailsService {
     boolean deleteByUserId(Long id);
 
     @Transactional
-    List<User> getAll();
+    List<UserDetailsDto> getAll();
+
+    @Transactional
+    Page<UserDetailsDto> getAll(Specification<User> spec, int page, int size);
 
     @Transactional
     boolean isUserByNameExists(String userName);
@@ -52,4 +60,7 @@ public interface UserService extends UserDetailsService {
 
     @Transactional
     List<Role> addRoleByRoleName(Long userId, String roleName);
+
+    @Transactional
+    UserForAdminsEditDto editUsersRights(UserForAdminsEditDto userDto);
 }

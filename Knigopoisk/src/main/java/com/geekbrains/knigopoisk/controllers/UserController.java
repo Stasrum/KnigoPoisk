@@ -9,12 +9,12 @@ import com.geekbrains.knigopoisk.dto.mappers.RoleMapper;
 import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.exceptions.RoleAttributeNotValidException;
-import com.geekbrains.knigopoisk.exceptions.UserAlreadyExistsException;
-import com.geekbrains.knigopoisk.exceptions.UserAttributeNotValidException;
+import com.geekbrains.knigopoisk.exceptions.*;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -33,9 +34,14 @@ public class UserController implements UserControllerApi {
     private final RoleMapper roleMapper;
 
     @Override
-    public List<UserDetailsDto> getAllUser() {
-        List<UserDetailsDto> userDtoList = userMapper.getUserDetailsDtoListFromUserList(userService.getAll());
-        return userDtoList;
+    public UserDetailsDto getUserProfile(@NotNull Principal principal) {
+        if (principal == null) {
+            throw new UserNotAuthorizedException("User is not authorized");
+        }
+
+        String userName = principal.getName();
+        User user = userService.findByUserName(userName);
+        return userMapper.getUserDetailsDtoFromUser(user);
     }
 
     @Override
@@ -44,15 +50,10 @@ public class UserController implements UserControllerApi {
         return userMapper.getUserDetailsDtoFromUser(user);
     }
 
-    @Override
-    public void deleteUserById(@PathVariable("id") @NotNull Long id) {
-        userService.deleteByUserId(id);
-    }
-
     // Binding Result после @ValidModel !!!
     @Override
     @ResponseStatus(HttpStatus.CREATED)
-    public void register(@Valid @RequestBody UserRegistrationDto userRegistrationDto, BindingResult theBindingResult) {
+    public UserDetailsDto register(@Valid @RequestBody UserRegistrationDto userRegistrationDto, BindingResult theBindingResult) {
         if (theBindingResult.hasErrors()) {
             throw new UserAttributeNotValidException("Ошибка валидации", theBindingResult);
         }
@@ -62,27 +63,34 @@ public class UserController implements UserControllerApi {
             throw new UserAlreadyExistsException("Пользователь с таким именем уже существует");
         }
 
-        userService.save(userRegistrationDto);
+        return userMapper.getUserDetailsDtoFromUser(userService.save(userRegistrationDto));
     }
 
     @Override
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public void update(@Valid UserDetailsDto userDetailsDto, BindingResult theBindingResult) {
+    public UserDetailsDto update(@Valid UserDetailsDto userDetailsDto, BindingResult theBindingResult, @NotNull Principal principal) {
         if (theBindingResult.hasErrors()) {
             throw new UserAttributeNotValidException("Ошибка валидации", theBindingResult);
         }
 
-        userService.updateUserDetailsFromUserDetailsDto(userDetailsDto);
+        if (principal == null || !userDetailsDto.getUserName().equals(principal.getName())) {
+            throw new AccessDeniedException("Изменения других пользователей не допускается");
+        }
+
+        User updatedUser = userService.updateUserDetailsFromUserDetailsDto(userDetailsDto);
+
+        return userMapper.getUserDetailsDtoFromUser(updatedUser);
     }
 
     @Override
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public void changePassword(@Valid UserPasswordDto userPasswordDto, BindingResult theBindingResult, @NotNull @PathVariable Long id) {
+    public ResponseEntity<ApiMessage> changePassword(@Valid UserPasswordDto userPasswordDto, BindingResult theBindingResult, @NotNull @PathVariable Long id) {
         if (theBindingResult.hasErrors()) {
             throw new UserAttributeNotValidException("Ошибка валидации", theBindingResult);
         }
 
         userService.updateUserPasswordFromUserPasswordDto(id, userPasswordDto);
+
+        return new ResponseEntity<>(new ApiMessage("Пароль успешно изменён"), HttpStatus.ACCEPTED);
     }
 
     @Override
@@ -95,7 +103,8 @@ public class UserController implements UserControllerApi {
         return roleMapper.getRoleDtoListFromRoleList(userService.getUnAssignedRolesByUserId(id));
     }
 
-    @Override
+    //=> AdminController
+    /*@Override
     public List<RoleDto> addRole(@Valid RoleDto roleDto, BindingResult theBindingResult, @NotNull @PathVariable Long id) {
         if (theBindingResult.hasErrors()) {
             throw new RoleAttributeNotValidException("Ошибка валидации роли", theBindingResult);
@@ -113,5 +122,5 @@ public class UserController implements UserControllerApi {
 
         List<Role> userRoles = userService.removeRoleByRoleName(id, roleDto.getName());
         return roleMapper.getRoleDtoListFromRoleList(userRoles);
-    }
+    }*/
 }

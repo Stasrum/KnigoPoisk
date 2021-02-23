@@ -4,6 +4,7 @@ import com.geekbrains.knigopoisk.dto.GenreDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.Genre;
 import com.geekbrains.knigopoisk.repositories.GenreRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,25 +29,34 @@ class GenreServiceImplTest {
     @Mock
     private GenreRepository genreRepository;
 
-    @Test
-    void getAll() {
-        Collection<Book> books = new ArrayList<>();
+    private OffsetDateTime created;
+    private OffsetDateTime updated;
+    private Collection<Book> books;
+    private Genre genre1;
+    private Genre genre2;
 
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-        OffsetDateTime updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
+    @BeforeEach
+    void setUp() {
+        books = new ArrayList<>();
 
-        Genre genre1 = new Genre("Научная статья",
+        created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
+        updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
+
+        genre1 = new Genre("Научная статья",
                 "Произведение, рассматривающее определенную научную проблему, методы ее решения.", books);
         genre1.setId(1L);
         genre1.setCreated(created);
         genre1.setUpdated(updated);
 
-        Genre genre2 = new Genre("Научно-популярная статья",
+        genre2 = new Genre("Научно-популярная статья",
                 "В отличие от научной статьи, в ней излагаются данные, понятные широкой аудитории.", books);
         genre2.setId(2L);
         genre2.setCreated(created);
         genre2.setUpdated(updated);
+    }
 
+    @Test
+    void getAll() {
         List<Genre> genres = Arrays.asList(genre1, genre2);
 
         when(genreRepository.findAllByOrderByNameAsc()).thenReturn(genres);
@@ -60,42 +70,21 @@ class GenreServiceImplTest {
 
     @Test
     void save() {
-        Collection<Book> books = new ArrayList<>();
-
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-        OffsetDateTime updated = OffsetDateTime.of(2000, 1, 1, 1, 2, 1, 1, ZoneOffset.UTC);
-
-        Genre genre = new Genre("Научная статья",
-                "Произведение, рассматривающее определенную научную проблему, методы ее решения.", books);
-        genre.setId(1L);
-        genre.setCreated(created);
-        genre.setUpdated(updated);
-
-        when(genreRepository.save(any())).thenReturn(genre);
+        when(genreRepository.save(any())).thenReturn(genre1);
 
         GenreDto expectedGenre = genreService.save(new GenreDto());
-        GenreDto actualGenre = new GenreDto(genre);
+        GenreDto actualGenre = new GenreDto(genre1);
 
         assertEquals(expectedGenre, actualGenre);
     }
 
     @Test
     void update() {
-        Collection<Book> books = new ArrayList<>();
-
-        OffsetDateTime created = OffsetDateTime.of(2000, 1, 1, 1, 1, 1, 1, ZoneOffset.UTC);
-
-        Genre genre = new Genre("Научная статья",
-                "Произведение, рассматривающее определенную научную проблему, методы ее решения.", books);
-        genre.setId(1L);
-        genre.setCreated(created);
-        genre.setUpdated(OffsetDateTime.now());
-
-        when(genreRepository.findOneByName(any())).thenReturn(Optional.of(genre));
-        when(genreRepository.save(any())).thenReturn(genre);
+        when(genreRepository.findOneByName(any())).thenReturn(Optional.of(genre1));
+        when(genreRepository.save(any())).thenReturn(genre1);
 
         GenreDto expectedGenre= genreService.update(new GenreDto());
-        GenreDto actualGenre = new GenreDto(genre);
+        GenreDto actualGenre = new GenreDto(genre1);
 
         assertEquals(expectedGenre, actualGenre);
     }
