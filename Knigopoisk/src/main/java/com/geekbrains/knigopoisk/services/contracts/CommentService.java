@@ -10,4 +10,5 @@ public interface CommentService {
     CommentDto save(CommentDto commentDto);
     CommentDto update(CommentDto commentDto);
     boolean deleteById(Long id);
+    List<CommentDto> findAllCommentsByBookId(Long id);
 }

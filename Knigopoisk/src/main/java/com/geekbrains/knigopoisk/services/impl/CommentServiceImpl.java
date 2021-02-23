@@ -55,6 +55,12 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
+    public List<CommentDto> findAllCommentsByBookId(Long id) {
+        List<Comment> comments = commentRepository.findAllCommentsByBookId(id);
+        return comments.stream().map(CommentDto::new).collect(Collectors.toList());
+    }
+
+    @Override
     public CommentDto save(CommentDto commentDto) {
         Comment comment = CommentDto.fromDto(commentDto);
         comment.setId(null);
@@ -69,5 +75,6 @@ public class CommentServiceImpl implements CommentService {
         comment.setUpdated(OffsetDateTime.now());
         return new CommentDto(commentRepository.save(comment));
     }
+
 }
 
