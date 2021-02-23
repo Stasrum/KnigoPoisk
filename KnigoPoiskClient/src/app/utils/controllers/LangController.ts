@@ -10,10 +10,10 @@ export class LangController {
   }
 
   getAllLang() {
-    return this.http.get(path + 'languages');
+    return this.http.get(path + 'api/v1/languages');
   }
 
   createLang(lang: Lang){
-    return this.http.post(path + 'language/create', lang);
+    return this.http.post(path + 'api/v1/language/create', lang);
   }
 }

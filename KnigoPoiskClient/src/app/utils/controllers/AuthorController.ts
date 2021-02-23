@@ -10,10 +10,10 @@ export class AuthorController {
   }
 
   getAllAuthor() {
-    return this.http.get(path + 'authors');
+    return this.http.get(path + 'api/v1/authors');
   }
 
   createAuthor(author: Author){
-    return this.http.post(path + 'author/create', author);
+    return this.http.post(path + 'api/v1/author/create', author);
   }
 }

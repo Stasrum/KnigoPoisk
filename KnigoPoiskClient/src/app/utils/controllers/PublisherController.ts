@@ -10,10 +10,10 @@ export class PublisherController {
   }
 
   getAllPublisher() {
-    return this.http.get(path + 'publishers');
+    return this.http.get(path + 'api/v1/publishers');
   }
 
   createPublisher(publisher: Publisher){
-    return this.http.post(path + 'publisher/create', publisher);
+    return this.http.post(path + 'api/v1/publisher/create', publisher);
   }
 }

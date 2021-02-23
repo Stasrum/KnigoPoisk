@@ -12,6 +12,7 @@ import { ModalWindowComponent } from './utils/modal-window/modal-window.componen
 import { HeaderComponent } from './header/header.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { MainComponent } from './user/main/main.component';
+import {JwtService} from "./utils/controllers/JwtService";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { MainComponent } from './user/main/main.component';
     ReactiveFormsModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: Interceptor, multi: true},
+    JwtService
   ],
   bootstrap: [AppComponent]
 })

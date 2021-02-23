@@ -7,13 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   title = 'KnigoPoiskClient';
-  public username = localStorage.getItem('user');
+  public userRoles = localStorage.getItem('roles');
+  public userName = localStorage.getItem('user')
   ngOnInit(): void {
   }
 
   delJwt() {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user');
-    this.username = null;
+    localStorage.removeItem('roles');
+    this.userRoles = null;
+    this.userName = null;
   }
 }
