@@ -63,7 +63,7 @@ class AuthControllerTest {
     @Test
     @DisplayName("User authorization test is success")
     void successUserAuthorizationTest() throws Exception{
-        String token = getJwtToken();
+        String token = getJwtToken("nick", "123");
         mockMvc
                 .perform(
                         get("/api/v1/user/profile")
@@ -75,7 +75,6 @@ class AuthControllerTest {
     @Test
     @DisplayName("User authorization test is fail (Forbidden)")
     void failUserAuthorizationTest() throws Exception{
-        String token = getJwtToken();
         mockMvc
                 .perform(
                         get("/api/v1/user/profile")
@@ -83,10 +82,44 @@ class AuthControllerTest {
                 .andExpect(status().isForbidden());
     }
 
-    private String getJwtToken() throws Exception{
+    @Test
+    @DisplayName("Admin authorization test is success")
+    void successAdminAuthorizationTest() throws Exception{
+        String token = getJwtToken("admin", "123");
+        mockMvc
+                .perform(
+                        get("/api/v1/admin/users")
+                                .header("Authorization", "Bearer " + token)
+                )
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    @DisplayName("Admin authorization test is fail (Forbidden, trying without token)")
+    void failAdminAuthorizationWithoutTokenTest() throws Exception{
+        mockMvc
+                .perform(
+                        get("/api/v1/admin/users")
+                )
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @DisplayName("Admin authorization test is fail (Forbidden, with users rights)")
+    void failAdminAuthorizationWithUsersRightsTest() throws Exception{
+        String token = getJwtToken("nick", "123");
+        mockMvc
+                .perform(
+                        get("/api/v1/admin/users")
+                                .header("Authorization", "Bearer " + token)
+                )
+                .andExpect(status().isForbidden());
+    }
+
+    private String getJwtToken(String username, String password) throws Exception{
         JwtRequest jwtRequest = new JwtRequest();
-        jwtRequest.setUsername("admin");
-        jwtRequest.setPassword("123");
+        jwtRequest.setUsername(username);
+        jwtRequest.setPassword(password);
         ObjectMapper mapper = new ObjectMapper();
         String jwtRequestStr = mapper.writeValueAsString(jwtRequest);
         final String[] token = new String[1];
