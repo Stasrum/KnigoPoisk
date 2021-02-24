@@ -6,6 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "Publisher")
 @Table(name = "publishers")
 @Data
