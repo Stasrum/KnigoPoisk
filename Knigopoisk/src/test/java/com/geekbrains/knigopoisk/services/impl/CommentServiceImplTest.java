@@ -80,6 +80,16 @@ class CommentServiceImplTest {
                 .andExpect(jsonPath("$.[0].text").value("Какая классная книга"));
     }
 
+    @Test
+    void getAllCommentsForBook() throws Exception {
+
+        mockMvc.perform(get("/api/v1/comments/book/{id}",1L))
+                .andDo(print()).andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.[0].text").value("Какая классная книга"));
+    }
+
+
 
     @Test
     void updateComment() throws Exception {
