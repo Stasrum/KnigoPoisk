@@ -38,8 +38,15 @@ export class Interceptor implements HttpInterceptor {
             if (event.url.includes('create')) {
                 this.message = 'Записано в базу';
                 this.errok = 'ok';
-              this.open()
+              this.open();
             }
+            if (event.status == 202){
+              if (event.body.message)this.message = event.body.message;
+              else this.message = 'Изменения записанны';
+              this.errok = 'ok';
+              this.open();
+            }
+
           }
         },
         (err) => {

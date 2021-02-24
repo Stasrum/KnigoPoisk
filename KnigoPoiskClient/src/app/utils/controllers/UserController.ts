@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {LoginUser, UserDto} from "../entities/User";
+import {ChangePassword, LoginUser, UserChangeDto, UserDto} from "../entities/User";
 import {path} from "../entities/Constant";
 
 @Injectable({providedIn: 'root'})
@@ -16,7 +16,15 @@ export class UserController {
     return this.http.post(path + 'api/v1/users/register', userDto)
   }
 
-  userInfo(userDto: UserDto){
-    return this.http.get(path + 'users/register')
+  userInfo(){
+    return this.http.get(path + 'api/v1/user/profile')
+  }
+
+  userChangePassword(id: number, password: ChangePassword){
+    return this.http.post(path + 'api/v1/user/' + id + '/changePassword', password)
+  }
+
+  userUpdate(user: UserChangeDto){
+    return this.http.post(path + 'api/v1/user/update', user)
   }
 }

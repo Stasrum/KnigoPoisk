@@ -13,6 +13,7 @@ import { HeaderComponent } from './header/header.component';
 import { RegistrationComponent } from './user/registration/registration.component';
 import { MainComponent } from './user/main/main.component';
 import {JwtService} from "./utils/controllers/JwtService";
+import { UserProfileComponent } from './user/user-profile/user-profile.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import {JwtService} from "./utils/controllers/JwtService";
     ModalWindowComponent,
     HeaderComponent,
     RegistrationComponent,
-    MainComponent
+    MainComponent,
+    UserProfileComponent
   ],
   imports: [
     BrowserModule,

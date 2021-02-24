@@ -5,7 +5,7 @@
     <div>
       <button class="btn btn-warning m-1" [routerLink]="['']">Главная</button>
       <button *ngIf="!userName" class="btn btn-warning m-1" [routerLink]="['/registration']">+ Пользователь</button>
-
+      <button *ngIf="userName" class="btn btn-warning m-1" [routerLink]="['/profile']">Профиль</button>
       <a *ngIf="userRoles == 'ADMIN'" class="btn btn-warning" id="navbarDropdown" role="button" data-bs-toggle="dropdown">Админка</a>
       <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <li><a class="dropdown-item" href="#" [routerLink]="['/addbook']">Добавление книг</a></li>

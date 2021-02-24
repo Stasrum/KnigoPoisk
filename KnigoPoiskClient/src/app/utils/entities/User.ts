@@ -17,3 +17,23 @@ export class UserDto{
   ) {
   }
 }
+
+export class UserChangeDto{
+  constructor(
+    public id: number,
+    public userName: string,
+    public firstName: string,
+    public lastName: string,
+    public email: string,
+    public birthDay: string
+  ) {
+  }
+}
+
+export class ChangePassword{
+  constructor(
+    public password: string,
+    public matchingPassword: string
+  ) {
+  }
+}
