@@ -1,16 +1,14 @@
 package com.geekbrains.knigopoisk.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Collection;
 
+@EqualsAndHashCode(callSuper = true)
 @Entity(name = "User")
 @Table(name = "users")
 @Data
