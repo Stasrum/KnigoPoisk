@@ -26,6 +26,11 @@ public class CommentController implements CommentControllerApi {
     }
 
     @Override
+    public List<CommentDto> getAllCommentsByBookId(@NotNull Long id) {
+        return commentService.findAllCommentsByBookId(id);
+    }
+
+    @Override
     public CommentDto findById(@NotNull Long id) {
         return commentService.findById(id);
     }
