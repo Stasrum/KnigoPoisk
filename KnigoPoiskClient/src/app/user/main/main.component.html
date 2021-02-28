@@ -15,7 +15,9 @@
     <div>
     <div style="display: flex; flex-wrap: wrap; justify-content: space-around">
       <div *ngFor="let item of allBooks" class="shadowBorder m-4" style="width: 20rem">
-        <div style="height: 12rem; background-color: darkgray">
+        <div style="height: 12rem; background-color: darkgray; display: flex; justify-content: space-around;">
+          <img src="http://localhost:8080/images/{{item.images[0]}}" alt="image" style="height: 12rem;"/>
+<!--          <img src="/images/{{item.images[0]}}" alt="image" style="height: 12rem;"/>-->
         </div>
         <div class="card-body">
           <h5 class="card-title" style="height: 3rem">{{item.title}}</h5>

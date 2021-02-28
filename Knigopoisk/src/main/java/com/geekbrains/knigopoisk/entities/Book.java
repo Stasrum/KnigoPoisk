@@ -53,4 +53,7 @@ public class Book extends DefaultEntity {
 
     @Column(name = "description")
     private String description;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+    private List<BookImage> images;
 }
