@@ -14,6 +14,7 @@ import { RegistrationComponent } from './user/registration/registration.componen
 import { MainComponent } from './user/main/main.component';
 import {JwtService} from "./utils/controllers/JwtService";
 import { UserProfileComponent } from './user/user-profile/user-profile.component';
+import { BookProfileComponent } from './user/book-profile/book-profile.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { UserProfileComponent } from './user/user-profile/user-profile.component
     HeaderComponent,
     RegistrationComponent,
     MainComponent,
-    UserProfileComponent
+    UserProfileComponent,
+    BookProfileComponent
   ],
   imports: [
     BrowserModule,
