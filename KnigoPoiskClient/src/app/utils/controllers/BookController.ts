@@ -33,4 +33,7 @@ export class BookController {
     return this.http.get(path + 'api/v1/admin/books/delete/' + id);
   }
 
+  getComments(id) {
+    return this.http.get(path + 'api/v1/comments/book/' +id);
+  }
 }

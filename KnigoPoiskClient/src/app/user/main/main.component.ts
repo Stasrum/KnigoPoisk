@@ -19,6 +19,8 @@ export class MainComponent implements OnInit {
   public author = '';
   public genre = '';
   public title = '';
+  public visible = false;
+  public id: number;
 
   constructor(private bookcontroller: BookController) {
   }
@@ -40,7 +42,7 @@ export class MainComponent implements OnInit {
     this.number = number;
     this.activeNumber = new Array<string>();
     this.activeNumber[number] = "select"
-    this.bookcontroller.getAll(number, this.size).subscribe((rec: any) => {
+    this.bookcontroller.getAll(number, this.size, this.title, this.author, this.genre).subscribe((rec: any) => {
       this.allBooks = rec.content;
       this.pageadle[0] = rec.pageable.pageNumber;
       this.pageadle[1] = rec.totalPages;
@@ -56,7 +58,7 @@ export class MainComponent implements OnInit {
     this.activeSize[size / 10] = 'select';
     this.activeNumber = new Array<string>();
     this.activeNumber[1] = "select"
-    this.bookcontroller.getAll(1, size / 10).subscribe((rec: any) => {
+    this.bookcontroller.getAll(1, size / 10, this.title, this.author, this.genre).subscribe((rec: any) => {
       this.allBooks = rec.content;
       this.pageadle[0] = rec.pageable.pageNumber;
       this.pageadle[1] = rec.totalPages;
