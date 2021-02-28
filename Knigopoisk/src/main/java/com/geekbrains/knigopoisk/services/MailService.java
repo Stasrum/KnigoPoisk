@@ -21,10 +21,16 @@ public class MailService {
 
     private static final String BROADCAST_TITLE = "Новинки недели";
     private JavaMailSender javaMailSender;
-    private MailMessageBuilder messageBuilder;
+    private final MailMessageBuilder messageBuilder = new MailMessageBuilder();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    public void sendMail(String email, String subject, String text) {
+    public void sendBroadcastMail(List<User> users, List<Book> books) {
+        for (User user : users) {
+            sendMail(user.getEmail(), BROADCAST_TITLE, messageBuilder.buildBroadcastMail(user, books));
+        }
+    }
+
+    private void sendMail(String email, String subject, String text) {
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
 
@@ -40,12 +46,6 @@ public class MailService {
             executorService.submit(() -> javaMailSender.send(message));
         } catch (MailException e) {
             e.printStackTrace();
-        }
-    }
-
-    public void sendOrderMail(List<User> users, List<Book> books) {
-        for (User user : users) {
-            sendMail(user.getEmail(), BROADCAST_TITLE, messageBuilder.buildBroadcastMail(user, books));
         }
     }
 }
