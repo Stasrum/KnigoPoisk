@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Book} from "../../utils/entities/Book";
-import {BookController} from "../../utils/controllers/BookController";
+import {Book} from '../../utils/entities/Book';
+import {BookController} from '../../utils/controllers/BookController';
 
 @Component({
   selector: 'app-book-profile',
@@ -10,7 +10,7 @@ import {BookController} from "../../utils/controllers/BookController";
 export class BookProfileComponent implements OnInit {
   @Input() id: number;
   public book: Book;
-  public comments = new Array();
+  public comments = [];
 
   constructor(private bookController: BookController) { }
 
@@ -19,6 +19,6 @@ export class BookProfileComponent implements OnInit {
     this.bookController.getComments(this.id).subscribe((rec:any) => {
       this.comments = rec;
       console.log(this.comments);
-    })
+    });
   }
 }

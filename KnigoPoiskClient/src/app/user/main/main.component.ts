@@ -1,8 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {BookController} from "../../utils/controllers/BookController";
-import {Author, Book, Genre} from "../../utils/entities/Book";
-import {AuthorController} from "../../utils/controllers/AuthorController";
-import {GenreController} from "../../utils/controllers/GenreController";
+import {BookController} from '../../utils/controllers/BookController';
+import {Book} from '../../utils/entities/Book';
 
 @Component({
   selector: 'app-main',
