@@ -19,6 +19,7 @@ public class BookDto {
     private List<GenreDto> genres;
     private PublisherDto publisher;
     private String description;
+    private List<String> images;
 
     @NotNull(message = "title must be not null")
     @Size(min = 4, max = 255, message = "4 - 255 symbols")
@@ -58,6 +59,7 @@ public class BookDto {
         this.publisher = publisherDto;
         this.description = book.getDescription();
         this.isbn = book.getIsbn();
+        this.images = book.getImages().stream().map(BookImage::getPath).collect(Collectors.toList());
     }
 
     public static Book fromDto(BookDto bookDto) {
