@@ -9,7 +9,7 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface BookImageMapper {
     BookImage getBookImageFromBookImageDto(BookImageDto bookImageDto);
-    BookImage getBookImageDtoFromBookImage(BookImage bookImage);
+    BookImageDto getBookImageDtoFromBookImage(BookImage bookImage);
 
     List<BookImage> getBookImageListFromBookImageDtoList(List<BookImageDto> bookImageDtoList);
     List<BookImageDto> getBookImageDtoListFromBookImageList(List<BookImage> bookImageList);
