@@ -1,3 +1,3 @@
-DROP TABLE books_images
+DROP TABLE book_images
 
 GO
