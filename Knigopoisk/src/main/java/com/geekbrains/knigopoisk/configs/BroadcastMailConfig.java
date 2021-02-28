@@ -3,12 +3,14 @@ package com.geekbrains.knigopoisk.configs;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 
 import java.util.Properties;
 
 @Configuration
+@PropertySource("classpath:broadcastmail.properties")
 public class BroadcastMailConfig {
 
     @Value("${mail.broadcast.host}")
@@ -17,10 +19,10 @@ public class BroadcastMailConfig {
     @Value("${mail.broadcast.port}")
     private int port;
 
-    @Value("${mail.username}")
+    @Value("${mail.broadcast.username}")
     private String username;
 
-    @Value("${mail.password}")
+    @Value("${mail.broadcast.password}")
     private String password;
 
     @Bean

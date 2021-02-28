@@ -1,7 +1,11 @@
 package com.geekbrains.knigopoisk.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.geekbrains.knigopoisk.dto.SubscriptionDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.User;
+import com.geekbrains.knigopoisk.services.impl.MailServiceImpl;
 import com.geekbrains.knigopoisk.util.MailMessageBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -9,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
@@ -28,7 +31,7 @@ class MailServiceTest {
     private JavaMailSender javaMailSender;
 
     @InjectMocks
-    private MailService mailService;
+    private MailServiceImpl mailService;
 
     @InjectMocks
     private MailMessageBuilder mailMessageBuilder;
@@ -51,5 +54,14 @@ class MailServiceTest {
             return null;
         }).when(javaMailSender).send(any(MimeMessage.class));
         mailService.sendBroadcastMail(Collections.singletonList(user), Collections.singletonList(book));
+    }
+
+    @Test
+    void dtoPrint() throws JsonProcessingException {
+        SubscriptionDto subscriptionDto = new SubscriptionDto();
+        subscriptionDto.setBooksId(Collections.singletonList(1L));
+        subscriptionDto.setUsersId(Collections.singletonList(5L));
+        ObjectMapper mapper = new ObjectMapper();
+        System.out.println(mapper.writeValueAsString(subscriptionDto));
     }
 }

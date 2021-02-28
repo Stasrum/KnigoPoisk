@@ -1,9 +1,15 @@
-package com.geekbrains.knigopoisk.services;
+package com.geekbrains.knigopoisk.services.impl;
 
+import com.geekbrains.knigopoisk.dto.BookDto;
+import com.geekbrains.knigopoisk.dto.SubscriptionDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.User;
+import com.geekbrains.knigopoisk.services.contracts.BookService;
+import com.geekbrains.knigopoisk.services.contracts.MailService;
+import com.geekbrains.knigopoisk.services.contracts.UserService;
 import com.geekbrains.knigopoisk.util.MailMessageBuilder;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -14,15 +20,34 @@ import javax.mail.internet.MimeMessage;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class MailService {
+public class MailServiceImpl implements MailService {
 
     private static final String BROADCAST_TITLE = "Новинки недели";
-    private JavaMailSender javaMailSender;
+
     private final MailMessageBuilder messageBuilder = new MailMessageBuilder();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+    @Autowired
+    private JavaMailSender javaMailSender;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private BookService bookService;
+
+
+    public void sendLastWeekBooksMail(SubscriptionDto subscriptionDto) {
+        List<User> users = subscriptionDto.getUsersId().stream()
+                .map(userId->userService.findByUserId(userId))
+                .collect(Collectors.toList());
+        List<Book> books = subscriptionDto.getBooksId().stream()
+                .map(bookId-> BookDto.fromDto(bookService.findById(bookId)))
+                .collect(Collectors.toList());
+        sendBroadcastMail(users, books);
+    }
 
     public void sendBroadcastMail(List<User> users, List<Book> books) {
         for (User user : users) {
