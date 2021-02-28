@@ -4,8 +4,10 @@ import com.geekbrains.knigopoisk.dto.BookDto;
 import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
 import java.util.Map;
 
 @RequestMapping("/api/v1/admin")
@@ -22,6 +24,9 @@ public interface AdminControllerApi {
 
     @PostMapping("/books/edit")
     ResponseEntity<?> editBook(@RequestBody BookDto bookDto);
+
+    @PostMapping("/books/addImage/{id}")
+    ResponseEntity<?> addBookImage(@PathVariable("id") @NotNull Long id, @RequestParam(value="file") MultipartFile file) throws IOException;
 
     @GetMapping("/users")
     ResponseEntity<?> getAllUsers(Integer page,

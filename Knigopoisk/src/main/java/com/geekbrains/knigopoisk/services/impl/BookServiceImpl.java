@@ -7,8 +7,8 @@ import com.geekbrains.knigopoisk.dto.LanguageDto;
 import com.geekbrains.knigopoisk.entities.*;
 import com.geekbrains.knigopoisk.exceptions.*;
 import com.geekbrains.knigopoisk.repositories.*;
+import com.geekbrains.knigopoisk.services.contracts.BookImageService;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
-import liquibase.pro.packaged.B;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,7 +29,7 @@ public class BookServiceImpl implements BookService {
     private final LanguageRepository languageRepository;
     private final GenreRepository genreRepository;
     private final PublisherRepository publisherRepository;
-
+    private final BookImageService bookImageService;
 
     @Override
     public List<BookDto> getAll() {
@@ -109,6 +108,12 @@ public class BookServiceImpl implements BookService {
     public BookDto findById(Long id) {
         Book book = bookRepository.findById(id).orElseThrow(()->new BookNotFoundException("Book with id=" + id + " isn't found"));
         return new BookDto(book);
+    }
+
+    @Override
+    public Book findBookById(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(()->new BookNotFoundException("Book with id=" + id + " isn't found"));
+        return book;
     }
 
     @Override

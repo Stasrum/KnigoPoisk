@@ -14,7 +14,7 @@ import {Subscription} from "rxjs";
   styleUrls: ['./admin-book.component.css']
 })
 export class AdminBookComponent implements OnInit {
-  public newBook = new Book(null, '', null, null, null, [], [], null, null);
+  public newBook = new Book(null, '', null, null, null, [], [], null, null, null);
   public authors: Array<Author>;
   public languages: Array<Lang>;
   public genres: Array<Genre>;

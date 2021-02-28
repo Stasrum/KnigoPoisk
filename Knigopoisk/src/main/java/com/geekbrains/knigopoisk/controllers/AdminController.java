@@ -2,40 +2,41 @@ package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.AdminControllerApi;
 import com.geekbrains.knigopoisk.dto.BookDto;
-import com.geekbrains.knigopoisk.dto.UserDetailsDto;
 import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
 import com.geekbrains.knigopoisk.entities.Book;
-import com.geekbrains.knigopoisk.entities.User;
-import com.geekbrains.knigopoisk.responsies.ReqErrorResponse;
+import com.geekbrains.knigopoisk.entities.BookImage;
+import com.geekbrains.knigopoisk.exceptions.ApiError;
+import com.geekbrains.knigopoisk.services.contracts.BookImageService;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
-import com.geekbrains.knigopoisk.util.BookFilter;
 import com.geekbrains.knigopoisk.util.UserFilter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import java.util.List;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 public class AdminController implements AdminControllerApi {
 
     @Autowired
     private BookService bookService;
     @Autowired
     private UserService userService;
+
+    private final BookImageService bookImageService;
 
     @Override
     public ResponseEntity<?> addBook(@RequestBody  @NotNull @Valid BookDto bookDto) {
@@ -55,6 +56,21 @@ public class AdminController implements AdminControllerApi {
     @Override
     public ResponseEntity<?> editBook(@RequestBody @Valid BookDto bookDto) {
         return ResponseEntity.ok(bookService.edit(bookDto));
+    }
+
+    @Override
+    public ResponseEntity<?> addBookImage(@NotNull Long id, MultipartFile file) throws IOException {
+        if (file == null) {
+            ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, "Попытка загрузки пустого файла", "Попытка загрузки пустого файла");
+            return new ResponseEntity<>(apiError, apiError.getStatus());
+        }
+
+        Book book = bookService.findBookById(id);
+        BookImage bookImage = bookImageService.addBookImage(book, file);
+        Map<String, String> props = new HashMap<>();
+        props.put("image_path", bookImage.getPath());
+
+        return ResponseEntity.ok(props);
     }
 
     @Override

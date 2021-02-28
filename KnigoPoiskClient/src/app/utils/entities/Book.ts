@@ -9,6 +9,7 @@ export class Book {
     public genres: Array<Genre>,
     public publisher: Publisher,
     public description: string,
+    public images: Array<string>
   ) {
   }
 }
