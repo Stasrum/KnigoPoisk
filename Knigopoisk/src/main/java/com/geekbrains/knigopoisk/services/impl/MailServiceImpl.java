@@ -9,7 +9,6 @@ import com.geekbrains.knigopoisk.services.contracts.MailService;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
 import com.geekbrains.knigopoisk.util.MailMessageBuilder;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -31,17 +30,14 @@ public class MailServiceImpl implements MailService {
     private final MailMessageBuilder messageBuilder = new MailMessageBuilder();
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
 
-    @Autowired
-    private JavaMailSender javaMailSender;
-    @Autowired
-    private UserService userService;
-    @Autowired
-    private BookService bookService;
+    private final JavaMailSender javaMailSender;
+    private final UserService userService;
+    private final BookService bookService;
 
 
     public void sendLastWeekBooksMail(SubscriptionDto subscriptionDto) {
         List<User> users = subscriptionDto.getUsersId().stream()
-                .map(userId->userService.findByUserId(userId))
+                .map(userService::findByUserId)
                 .collect(Collectors.toList());
         List<Book> books = subscriptionDto.getBooksId().stream()
                 .map(bookId-> BookDto.fromDto(bookService.findById(bookId)))

@@ -55,13 +55,4 @@ class MailServiceTest {
         }).when(javaMailSender).send(any(MimeMessage.class));
         mailService.sendBroadcastMail(Collections.singletonList(user), Collections.singletonList(book));
     }
-
-    @Test
-    void dtoPrint() throws JsonProcessingException {
-        SubscriptionDto subscriptionDto = new SubscriptionDto();
-        subscriptionDto.setBooksId(Collections.singletonList(1L));
-        subscriptionDto.setUsersId(Collections.singletonList(5L));
-        ObjectMapper mapper = new ObjectMapper();
-        System.out.println(mapper.writeValueAsString(subscriptionDto));
-    }
 }
