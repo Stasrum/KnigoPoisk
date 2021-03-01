@@ -7,18 +7,19 @@ import com.geekbrains.knigopoisk.dto.LanguageDto;
 import com.geekbrains.knigopoisk.entities.*;
 import com.geekbrains.knigopoisk.exceptions.*;
 import com.geekbrains.knigopoisk.repositories.*;
+import com.geekbrains.knigopoisk.services.contracts.BookImageService;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
-import liquibase.pro.packaged.B;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,7 +30,7 @@ public class BookServiceImpl implements BookService {
     private final LanguageRepository languageRepository;
     private final GenreRepository genreRepository;
     private final PublisherRepository publisherRepository;
-
+    private final BookImageService bookImageService;
 
     @Override
     public List<BookDto> getAll() {
@@ -48,6 +49,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto add(BookDto bookDto) {
         Book book = new Book();
+        book.setImages(Collections.EMPTY_LIST);
         getBookFromBookDto(bookDto, book);
         book.setCreated(OffsetDateTime.now());
         Book b = bookRepository.save(book);
@@ -111,8 +113,14 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
+    public Book findBookById(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(()->new BookNotFoundException("Book with id=" + id + " isn't found"));
+        return book;
+    }
+
+    @Override
     public Page<Book> findAll(Specification<Book> spec, int page, int size) {
-        return bookRepository.findAll(spec, PageRequest.of(page, size));
+        return bookRepository.findAll(spec, PageRequest.of(page, size, Sort.by("title")));
     }
 
     @Override

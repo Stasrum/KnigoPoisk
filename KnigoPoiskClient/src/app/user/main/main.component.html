@@ -1,6 +1,6 @@
 <app-header></app-header>
 
-<div class="row" style="width: 100%">
+<div class="row" *ngIf="!visible" style="width: 100%">
   <form class="col-2 p-4" #findForm = "ngForm">
     <label>Наименование книги</label>
     <input type="text" class="form-control col-12" [(ngModel)]="title" name="title5">
@@ -14,8 +14,9 @@
   <div class="col-10">
     <div>
     <div style="display: flex; flex-wrap: wrap; justify-content: space-around">
-      <div *ngFor="let item of allBooks" class="shadowBorder m-4" style="width: 20rem">
-        <div style="height: 12rem; background-color: darkgray">
+      <div *ngFor="let item of allBooks" class="shadowBorder m-4" style="width: 20rem" (click)="id = item.id; visible = true">
+        <div style="height: 12rem; display: flex; justify-content: space-around;">
+          <img class="p-2" src="{{path}}images/{{item.images[0]}}" alt="image" style="height: 12rem;"/>
         </div>
         <div class="card-body">
           <h5 class="card-title" style="height: 3rem">{{item.title}}</h5>
@@ -35,4 +36,9 @@
       </nav>
     </div>
   </div>
+</div>
+<div *ngIf="visible" style="width: 100%" class="row">
+  <div class="col-1"></div>
+  <app-book-profile class="col-10" [id] = id></app-book-profile>
+  <div class="col-1"><div class="btn btn-warning" (click)="visible = false">На главную</div></div>
 </div>

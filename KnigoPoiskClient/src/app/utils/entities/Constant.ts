@@ -1,1 +1,1 @@
-export const path='/api/'
+export const path ='/api/'

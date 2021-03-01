@@ -1,0 +1,11 @@
+.book{
+  display: flex;
+  width: 100%;
+}
+.img{
+  height: 400px;
+  background-color: darkgrey;
+}
+.title{
+  padding: 20px;
+}

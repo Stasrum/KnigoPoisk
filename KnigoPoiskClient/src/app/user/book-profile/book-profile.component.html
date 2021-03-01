@@ -1,0 +1,25 @@
+<div class="book">
+  <div class="img shadowBorder">
+    <img src="{{path}}images/{{book.images[0]}}"  alt="image" style="height: 400px;"/>
+  </div>
+  <div class="title">
+    ISBN: {{book.isbn}}
+    <h1>Наименование: {{book.title}}</h1>
+    <h3>Автор:<span *ngFor="let author of book.authors"> {{author.name}}</span></h3>
+    <h5>Жанр:<span *ngFor="let genre of book.genres"> {{genre.name}}</span></h5>
+    <div>Язык: <span *ngFor="let language of book.languages">{{language.name}} </span></div>
+    <div>Издатель: {{book.publisher.name}}</div>
+    <div>Год: {{book.year}}</div>
+    <p></p>
+    <p>{{book.description}}</p>
+  </div>
+</div>
+<div>
+  <p></p>
+  <p>Отзывы:</p>
+  <div *ngFor="let comment of comments" class="row p-2 m-3">
+    <div class="col-2">{{comment.user.userName}}</div>
+    <div class="col-10">{{comment.text}}</div>
+    <hr>
+  </div>
+</div>

@@ -1,11 +1,13 @@
 package com.geekbrains.knigopoisk.services.impl;
 
 import com.geekbrains.knigopoisk.dto.CommentDto;
+import com.geekbrains.knigopoisk.dto.mappers.CommentMapper;
 import com.geekbrains.knigopoisk.entities.Comment;
 import com.geekbrains.knigopoisk.exceptions.CommentNotFoundException;
 import com.geekbrains.knigopoisk.exceptions.UserNotFoundException;
 import com.geekbrains.knigopoisk.repositories.CommentRepository;
-import com.geekbrains.knigopoisk.repositories.UserRepository;
+import com.geekbrains.knigopoisk.services.contracts.UserService;
+import com.geekbrains.knigopoisk.services.contracts.BookService;
 import com.geekbrains.knigopoisk.services.contracts.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,20 +21,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
-
-    private CommentRepository commentRepository;
-
-    @Autowired
-    public void setCommentRepository(CommentRepository commentRepository) {
-        this.commentRepository = commentRepository;
-    }
-
-    private UserRepository userRepository;
-
-    @Autowired
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final CommentRepository commentRepository;
+    private final UserService userService;
+    private final BookService bookService;
+    private final CommentMapper commentMapper;
 
     @Override
     public List<CommentDto> getAll() {
@@ -62,16 +54,17 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public CommentDto save(CommentDto commentDto) {
-        Comment comment = CommentDto.fromDto(commentDto);
+        Comment comment = commentMapper.getCommentFromCommentDto(commentDto);
         comment.setId(null);
-        return new CommentDto(commentRepository.save(comment));
+        Comment newComment = commentRepository.save(comment);
+        return commentMapper.getCommentDtoFromComment(newComment);
     }
 
     @Override
     public CommentDto update(CommentDto commentDto) {
         Comment comment = commentRepository.findById(commentDto.getId()).orElseThrow(()->new CommentNotFoundException("Комментарий с ID=<"+commentDto.getId()+"> для обновления не найден"));
         comment.setText(commentDto.getText());
-        comment.setUser(userRepository.findById(commentDto.getUser().getId()).orElseThrow(()-> new UserNotFoundException("Пользователь с ID=<"+commentDto.getUser().getId()+"> для обновления комментария не найден ")));
+        comment.setUser(userService.findByUserId(commentDto.getUserId()));
         comment.setUpdated(OffsetDateTime.now());
         return new CommentDto(commentRepository.save(comment));
     }

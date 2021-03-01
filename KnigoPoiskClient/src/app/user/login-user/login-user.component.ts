@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {LoginUser} from '../../utils/entities/User';
 import {UserController} from '../../utils/controllers/UserController';
-import {Router} from "@angular/router";
-import {JwtService} from "../../utils/controllers/JwtService";
-import {Jwt} from "../../utils/entities/JWT";
+import {Router} from '@angular/router';
+import {JwtService} from '../../utils/controllers/JwtService';
+import {Jwt} from '../../utils/entities/JWT';
 
 
 @Component({
@@ -32,7 +32,7 @@ export class LoginUserComponent implements OnInit {
         console.log(this.jwtDecoder);
         localStorage.setItem('user', this.jwtDecoder.sub);
         for (let i = 0; i < this.jwtDecoder.roles.length; i++) {
-          if(this.jwtDecoder.roles[i] == 'ADMIN')
+          if (this.jwtDecoder.roles[i] == 'ADMIN')
             localStorage.setItem('roles', this.jwtDecoder.roles[i]);
         }
       }
