@@ -2,6 +2,7 @@ package com.geekbrains.knigopoisk.controllers;
 
 import com.geekbrains.knigopoisk.controllers.facade.AdminControllerApi;
 import com.geekbrains.knigopoisk.dto.BookDto;
+import com.geekbrains.knigopoisk.dto.SubscriptionDto;
 import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.BookImage;
@@ -9,7 +10,9 @@ import com.geekbrains.knigopoisk.exceptions.ApiError;
 import com.geekbrains.knigopoisk.services.contracts.BookImageService;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
 import com.geekbrains.knigopoisk.services.contracts.UserService;
+import com.geekbrains.knigopoisk.services.impl.MailServiceImpl;
 import com.geekbrains.knigopoisk.util.UserFilter;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
