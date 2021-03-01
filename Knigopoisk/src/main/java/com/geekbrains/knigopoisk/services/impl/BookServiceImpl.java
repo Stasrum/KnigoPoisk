@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto add(BookDto bookDto) {
         Book book = new Book();
+        book.setImages(Collections.EMPTY_LIST);
         getBookFromBookDto(bookDto, book);
         book.setCreated(OffsetDateTime.now());
         Book b = bookRepository.save(book);
