@@ -1,12 +1,16 @@
 package com.geekbrains.knigopoisk.controllers.facade;
 
 import com.geekbrains.knigopoisk.dto.BookDto;
+import com.geekbrains.knigopoisk.dto.SubscriptionDto;
 import com.geekbrains.knigopoisk.dto.UserForAdminsEditDto;
+import com.geekbrains.knigopoisk.entities.Book;
+import com.geekbrains.knigopoisk.entities.User;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 import java.io.IOException;
 import java.util.Map;
 
@@ -41,4 +45,7 @@ public interface AdminControllerApi {
 
     @PostMapping("/users/edit")
     ResponseEntity<?> editUsersRights(@RequestBody UserForAdminsEditDto userDto);
+
+    @PostMapping("/subscribtions/send")
+    ResponseEntity<?> sendLastWeekBooksMail(@RequestBody SubscriptionDto subscriptionDto);
 }
