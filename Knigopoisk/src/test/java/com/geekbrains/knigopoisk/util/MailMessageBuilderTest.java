@@ -1,5 +1,6 @@
 package com.geekbrains.knigopoisk.util;
 
+import com.geekbrains.knigopoisk.dto.BookDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.User;
 import org.junit.jupiter.api.Assertions;
@@ -19,10 +20,10 @@ class MailMessageBuilderTest {
     void buildBroadcastMailSuccessTest() {
         User user = getUser();
         Book book = getBook();
-        List<Book> books = new ArrayList<>();
-        books.add(book);
-        books.add(book);
-        books.add(book);
+        List<BookDto> books = new ArrayList<>();
+        books.add(new BookDto(book));
+        books.add(new BookDto(book));
+        books.add(new BookDto(book));
 
         MailMessageBuilder mailMessageBuilder = new MailMessageBuilder();
         String mail = mailMessageBuilder.buildBroadcastMail(user, books);

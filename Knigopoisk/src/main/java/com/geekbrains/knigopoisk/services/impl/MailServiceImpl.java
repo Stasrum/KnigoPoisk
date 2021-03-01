@@ -39,13 +39,13 @@ public class MailServiceImpl implements MailService {
         List<User> users = subscriptionDto.getUsersId().stream()
                 .map(userService::findByUserId)
                 .collect(Collectors.toList());
-        List<Book> books = subscriptionDto.getBooksId().stream()
-                .map(bookId-> BookDto.fromDto(bookService.findById(bookId)))
+        List<BookDto> books = subscriptionDto.getBooksId().stream()
+                .map(bookService::findById)
                 .collect(Collectors.toList());
         sendBroadcastMail(users, books);
     }
 
-    public void sendBroadcastMail(List<User> users, List<Book> books) {
+    public void sendBroadcastMail(List<User> users, List<BookDto> books) {
         for (User user : users) {
             sendMail(user.getEmail(), BROADCAST_TITLE, messageBuilder.buildBroadcastMail(user, books));
         }

@@ -2,6 +2,7 @@ package com.geekbrains.knigopoisk.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.geekbrains.knigopoisk.dto.BookDto;
 import com.geekbrains.knigopoisk.dto.SubscriptionDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.User;
@@ -53,6 +54,6 @@ class MailServiceTest {
             Assertions.assertTrue(content.contains(book.getTitle()));
             return null;
         }).when(javaMailSender).send(any(MimeMessage.class));
-        mailService.sendBroadcastMail(Collections.singletonList(user), Collections.singletonList(book));
+        mailService.sendBroadcastMail(Collections.singletonList(user), Collections.singletonList(new BookDto(book)));
     }
 }

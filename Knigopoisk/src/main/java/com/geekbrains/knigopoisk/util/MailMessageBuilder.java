@@ -1,5 +1,6 @@
 package com.geekbrains.knigopoisk.util;
 
+import com.geekbrains.knigopoisk.dto.BookDto;
 import com.geekbrains.knigopoisk.entities.Book;
 import com.geekbrains.knigopoisk.entities.User;
 import org.springframework.stereotype.Component;
@@ -11,12 +12,12 @@ public class MailMessageBuilder {
     public static final String SITE_NAME = "книгопоиск.ру";
     public static final String SITE_URL = "http://knigopoisk.ru";
 
-    private List<Book> books;
+    private List<BookDto> books;
     private User user;
 
-    public String buildBroadcastMail(User user, List<Book> books) {
+    public String buildBroadcastMail(User user, List<BookDto> books) {
         if (user==null) throw new IllegalArgumentException("User can't be null");
-        if (books.isEmpty()) throw new IllegalArgumentException("Books list can't be empty");
+        if (books==null||books.isEmpty()) throw new IllegalArgumentException("Books list can't be empty");
         this.user = user;
         this.books = books;
         return headBuild() +
@@ -66,7 +67,7 @@ public class MailMessageBuilder {
     private String bookListBuild() {
         StringBuilder bookList = new StringBuilder();
         bookList.append("<div>\n");
-        for (Book book : books) {
+        for (BookDto book : books) {
             bookList.append("<div class=\"row mb-2\">\n");
             bookList.append("    <div class=\"col-md-6\">\n");
             bookList.append("      <div class=\"row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative\">\n");
