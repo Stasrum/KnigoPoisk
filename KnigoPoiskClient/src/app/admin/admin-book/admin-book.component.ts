@@ -74,8 +74,8 @@ export class AdminBookComponent implements OnInit {
     this.newBook.authors = this.authors.filter(rec => this.addAuthors.includes(rec.id));
     this.newBook.languages = this.languages.filter(rec => this.addLanguages.includes(rec.id));
     this.newBook.publisher = this.publishers.find(rec => rec.id == this.addPublisher);
-    // this.newBook.images = new Array<string>();
-    // this.newBook.images.push('nophoto.jpg');
+    this.newBook.images = new Array<string>();
+    this.newBook.images.push('nophoto.jpg');
     if (this.id) {
       this.bookcontroller.edit(this.newBook).subscribe(error => {
         console.log(this.newBook);

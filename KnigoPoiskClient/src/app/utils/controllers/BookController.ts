@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Book} from '../entities/Book';
+import {Book, Comment} from '../entities/Book';
 import {path} from '../entities/Constant';
 
 @Injectable({providedIn: 'root'})
@@ -31,9 +31,5 @@ export class BookController {
 
   deleteById(id) {
     return this.http.delete(path + 'api/v1/admin/books/delete/' + id);
-  }
-
-  getComments(id) {
-    return this.http.get(path + 'api/v1/comments/book/' + id);
   }
 }

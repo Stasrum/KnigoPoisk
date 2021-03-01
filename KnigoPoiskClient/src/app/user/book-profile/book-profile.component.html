@@ -1,6 +1,8 @@
 <div class="book">
   <div class="img shadowBorder">
-    <img src="{{path}}images/{{book.images[0]}}"  alt="image" style="height: 400px;"/>
+    <img *ngIf="book.images[0]" src="{{path}}images/{{book.images[0]}}"  alt="image" style="height: 400px;"/>
+    <img *ngIf="!book.images[0]" src="{{path}}images/nophoto.jpg"  alt="image" style="height: 400px;"/>
+    <div *ngIf="user" class="btn btn-warning mt-2 w-100" (click)="visible = true">Добавить отзыв</div>
   </div>
   <div class="title">
     ISBN: {{book.isbn}}
@@ -15,11 +17,39 @@
   </div>
 </div>
 <div>
-  <p></p>
-  <p>Отзывы:</p>
+
+  <p class="mt-5">Отзывы:</p>
   <div *ngFor="let comment of comments" class="row p-2 m-3">
-    <div class="col-2">{{comment.user.userName}}</div>
-    <div class="col-10">{{comment.text}}</div>
+    <div class="col-2">{{comment.userName}}</div>
+    <div class="col-9">{{comment.text}}</div>
+    <div class="col-1" *ngIf="user == comment.userName">
+      <img (click)="visible = true; commentId = comment.id; textComment = comment.text" class="m-2" src="../../../assets/pen.png" height="15" width="15"/>
+      <img (click)="delComment(comment.id)" class="m-2" src="../../../assets/trash.png" height="15" width="15">
+    </div>
+    <div class="col-1" *ngIf="user != comment.userName"></div>
     <hr>
   </div>
+</div>
+
+
+<div class="parent addNew" *ngIf="visible">
+  <form class="child p-4 shadowBorder" #addNewForm="ngForm">
+    <div class="form-group">
+      <input [(ngModel)]="commentId" name="id" hidden>
+      <h5>Введите текст комментария</h5>
+      <textarea type="text" class="form-control" [(ngModel)]="textComment" name="text" required #text="ngModel" rows="3"></textarea>
+      <small class="text-danger" *ngIf="text.hasError('required')">
+        Поле обязательно для заполнения
+      </small>
+    </div>
+    <div class="row p-3 mt-2">
+      <div class="col-7"></div>
+      <button *ngIf="!commentId" type="submit" [disabled]="text.errors" class="btn btn-warning col-2" (click)="addNewComment(); addNewForm.reset();
+      this.visible = false;">Добавить</button>
+      <button *ngIf="commentId" type="submit" [disabled]="text.errors" class="btn btn-warning col-2" (click)="editNewComment(); addNewForm.reset();
+      this.visible = false;">Изменить</button>
+      <div class="col-1"></div>
+      <button (click)="addNewForm.reset(); visible = false" class=" btn btn-warning col-2">Отмена</button>
+    </div>
+  </form>
 </div>

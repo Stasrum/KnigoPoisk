@@ -16,7 +16,8 @@
     <div style="display: flex; flex-wrap: wrap; justify-content: space-around">
       <div *ngFor="let item of allBooks" class="shadowBorder m-4" style="width: 20rem" (click)="id = item.id; visible = true">
         <div style="height: 12rem; display: flex; justify-content: space-around;">
-          <img class="p-2" src="{{path}}images/{{item.images[0]}}" alt="image" style="height: 12rem;"/>
+          <img *ngIf="item.images[0]" class="p-2" src="{{path}}images/{{item.images[0]}}" alt="image" style="height: 12rem;"/>
+          <img *ngIf="!item.images[0]" class="p-2" src="{{path}}images/nophoto.jpg" alt="image" style="height: 12rem;"/>
         </div>
         <div class="card-body">
           <h5 class="card-title" style="height: 3rem">{{item.title}}</h5>

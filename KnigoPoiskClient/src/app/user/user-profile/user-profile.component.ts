@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {UserController} from "../../utils/controllers/UserController";
-import {ChangePassword, UserChangeDto} from "../../utils/entities/User";
-import {Router} from "@angular/router";
+import {UserController} from '../../utils/controllers/UserController';
+import {ChangePassword, UserChangeDto} from '../../utils/entities/User';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',

@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
     localStorage.removeItem('auth_token');
     localStorage.removeItem('user');
     localStorage.removeItem('roles');
+    localStorage.removeItem('id');
     this.userRoles = null;
     this.userName = null;
   }
