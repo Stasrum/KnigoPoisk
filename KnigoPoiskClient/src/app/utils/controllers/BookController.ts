@@ -18,7 +18,7 @@ export class BookController {
   }
 
   findById(id: number) {
-    return this.http.get(path + 'books/' + id)
+    return this.http.get(path + 'books/' + id);
   }
 
   add(book: Book) {
@@ -30,10 +30,10 @@ export class BookController {
   }
 
   deleteById(id) {
-    return this.http.get(path + 'api/v1/admin/books/delete/' + id);
+    return this.http.delete(path + 'api/v1/admin/books/delete/' + id);
   }
 
   getComments(id) {
-    return this.http.get(path + 'api/v1/comments/book/' +id);
+    return this.http.get(path + 'api/v1/comments/book/' + id);
   }
 }

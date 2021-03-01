@@ -5,8 +5,8 @@ import {LangController} from '../../utils/controllers/LangController';
 import {GenreController} from '../../utils/controllers/GenreController';
 import {PublisherController} from '../../utils/controllers/PublisherController';
 import {BookController} from '../../utils/controllers/BookController';
-import {ActivatedRoute, Router} from "@angular/router";
-import {Subscription} from "rxjs";
+import {ActivatedRoute, Router} from '@angular/router';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-add-new-book',
@@ -74,6 +74,8 @@ export class AdminBookComponent implements OnInit {
     this.newBook.authors = this.authors.filter(rec => this.addAuthors.includes(rec.id));
     this.newBook.languages = this.languages.filter(rec => this.addLanguages.includes(rec.id));
     this.newBook.publisher = this.publishers.find(rec => rec.id == this.addPublisher);
+    // this.newBook.images = new Array<string>();
+    // this.newBook.images.push('nophoto.jpg');
     if (this.id) {
       this.bookcontroller.edit(this.newBook).subscribe(error => {
         console.log(this.newBook);

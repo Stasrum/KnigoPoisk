@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Book} from '../../utils/entities/Book';
 import {BookController} from '../../utils/controllers/BookController';
+import {path} from '../../utils/entities/Constant';
 
 @Component({
   selector: 'app-book-profile',
@@ -11,6 +12,7 @@ export class BookProfileComponent implements OnInit {
   @Input() id: number;
   public book: Book;
   public comments = [];
+  public path = path;
 
   constructor(private bookController: BookController) { }
 

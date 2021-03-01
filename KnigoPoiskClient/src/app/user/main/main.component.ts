@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {BookController} from '../../utils/controllers/BookController';
 import {Book} from '../../utils/entities/Book';
+import {path} from '../../utils/entities/Constant';
 
 @Component({
   selector: 'app-main',
@@ -19,6 +20,7 @@ export class MainComponent implements OnInit {
   public title = '';
   public visible = false;
   public id: number;
+  public path = path;
 
   constructor(private bookcontroller: BookController) {
   }
