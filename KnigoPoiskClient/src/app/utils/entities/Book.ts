@@ -45,6 +45,16 @@ export class Publisher {
     public id: number,
     public name: string,
     public description: string,
- ) {
+  ) {
+  }
+}
+export class Comment {
+  constructor(
+    public bookId: number,
+    public id: number,
+    public text: string,
+    public userId: number,
+    public userName: string
+  ) {
   }
 }

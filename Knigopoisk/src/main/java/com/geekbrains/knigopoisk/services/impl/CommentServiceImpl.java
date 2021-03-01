@@ -48,7 +48,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentDto> findAllCommentsByBookId(Long id) {
-        List<Comment> comments = commentRepository.findAllCommentsByBookId(id);
+        List<Comment> comments = commentRepository.findAllCommentsByBookIdOrderByIdDesc(id);
         return comments.stream().map(CommentDto::new).collect(Collectors.toList());
     }
 
