@@ -216,7 +216,10 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
             PublisherNotFoundException.class,
             UserNotFoundException.class,
             RoleNotFoundException.class,
-            CommentNotFoundException.class})
+            CommentNotFoundException.class,
+            LikeAlreadyExsistException.class,
+            LikeNotFoundException.class
+    })
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ResponseEntity<Object> handleBadElementException(RuntimeException ex) {
         ApiError apiError = new ApiError(HttpStatus.BAD_REQUEST, ex.getMessage(), Collections.emptyList());

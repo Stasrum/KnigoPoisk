@@ -3,6 +3,7 @@ package com.geekbrains.knigopoisk.services.impl;
 import com.geekbrains.knigopoisk.dto.LikeDto;
 import com.geekbrains.knigopoisk.dto.mappers.LikeMapper;
 import com.geekbrains.knigopoisk.entities.Like;
+import com.geekbrains.knigopoisk.exceptions.LikeAlreadyExsistException;
 import com.geekbrains.knigopoisk.exceptions.LikeNotFoundException;
 import com.geekbrains.knigopoisk.repositories.LikeRepository;
 import com.geekbrains.knigopoisk.services.contracts.BookService;
@@ -59,9 +60,14 @@ public class LikeServiceImpl implements LikeService {
     @Override
     public LikeDto save(LikeDto likeDto) {
         Like like = likeMapper.getLikeFromLikeDto(likeDto);
+
+        List<Like> dbLike = likeRepository.findByBookIdAndUserId(likeDto.getBookId(),likeDto.getUserId());
+        if(dbLike.size()!=0){
+            throw new LikeAlreadyExsistException("Лайк с такими параметрами(<book id>="+likeDto.getBookId()+" <user id> ="+likeDto.getUserId()+") уже создан");
+        }
         like.setId(null);
-        Like newLike = likeRepository.save(like);
-        return likeMapper.getLikeDtoFromLike(newLike);
+        Like current = likeRepository.save(like);
+        return likeMapper.getLikeDtoFromLike(current);
     }
 
     @Override

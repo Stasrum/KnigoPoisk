@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface LikeRepository extends JpaRepository<Like, Long> {
     List<Like> findAllLikesByBookId(Long id);
+    List<Like> findByBookIdAndUserId(Long bookId, Long userId);
 }
