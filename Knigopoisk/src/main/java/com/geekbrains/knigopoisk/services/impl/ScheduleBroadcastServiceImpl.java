@@ -15,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,11 +27,14 @@ public class ScheduleBroadcastServiceImpl implements ScheduleBroadcastService {
     private final BookService bookService;
     private final UserService userService;
 
-    @Value("${broadcast.schedule.enable}")
-    boolean broadcastEnable;
+    @Value("${broadcast.schedule.enable:false}")
+    private boolean broadcastEnable;
+
+    @Value("${broadcast.age:604800}")
+    private String age;
 
     @Override
-    @Scheduled(cron = "${broadcast.schedule.time}")
+    @Scheduled(cron = "${broadcast.schedule.time:0 0 3 * * MON}")
     @Transactional
     public void sendScheduleBroadcastMail() {
         if (broadcastEnable)
@@ -41,7 +45,14 @@ public class ScheduleBroadcastServiceImpl implements ScheduleBroadcastService {
         List<User> users = userService.getAll().stream()
                 .map(UserDetailsDto::fromDto)
                 .collect(Collectors.toList());
-        List<BookDto> books = bookService.getAll();
+
+        List<BookDto> books = bookService.getAll()
+                .stream().filter(bookDto -> {
+                    Book book = bookService.findBookById(bookDto.getId());
+                    System.out.println(OffsetDateTime.now().toEpochSecond() - (book.getCreated().toEpochSecond()));
+                    return OffsetDateTime.now().toEpochSecond() - (book.getCreated().toEpochSecond()) < Long.parseLong(age);
+                })
+                .collect(Collectors.toList());
 
         mailService.sendBroadcastMail(users, books);
     }
