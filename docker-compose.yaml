@@ -1,0 +1,31 @@
+version: '3.3'
+
+services:
+  knigopoisk-db:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=knigopoisk_gb
+    ports:
+      - '5433:5432'
+    volumes:
+      - /data/knigopoisk_gb/volume/postgres:/var/lib/postgres
+
+  knigopoisk-server:
+    build:
+      context: .
+      dockerfile: DockerfileServer
+    ports:
+      - '8080:8080'
+    depends_on:
+      - knigopoisk-db
+#    restart: on-failure
+
+  knigopoisk-client:
+    build:
+      context: .
+      dockerfile: DockerfileClient
+    ports:
+      - 80:80
+    depends_on:
+      - knigopoisk-server
