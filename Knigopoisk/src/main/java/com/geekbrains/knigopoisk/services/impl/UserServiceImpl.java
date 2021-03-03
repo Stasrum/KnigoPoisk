@@ -2,7 +2,6 @@ package com.geekbrains.knigopoisk.services.impl;
 
 
 import com.geekbrains.knigopoisk.dto.*;
-import com.geekbrains.knigopoisk.dto.mappers.RoleMapper;
 import com.geekbrains.knigopoisk.dto.mappers.UserMapper;
 import com.geekbrains.knigopoisk.entities.Role;
 import com.geekbrains.knigopoisk.entities.User;
@@ -35,7 +34,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleService roleService;
     private final UserMapper userMapper;
-    private final RoleMapper roleMapper;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

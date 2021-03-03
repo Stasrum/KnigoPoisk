@@ -9,7 +9,7 @@ services:
     ports:
       - '5433:5432'
     volumes:
-      - /data/knigopoisk_gb/volume/postgres:/var/lib/postgres
+      - /home/dmitriy/knigopoisk_gb/volume/postgres:/var/lib/postgres
 
   knigopoisk-server:
     build:

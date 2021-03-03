@@ -1,1 +1,1 @@
-export const path ='/api/'
+export const path ='http://localhost:8080/'
